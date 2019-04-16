@@ -3,30 +3,33 @@
 
 #include <cstdint>
 #include <vector>
+#include "CPInfo.hpp"
 
 using namespace std;
 
-#define MAGIC_NUMBER 0xCAFEBABE;
-
-/*Declarado public, pode ser acessado de fora do pacote*/
-#define ACC_PUBLIC 0x0001;
-/*Declarado final, subclasses nao sao permitidas*/
-#define ACC_FINAL 0x0010;
-/*Trata metodos da superclasse especialmente quando invocados pela instrução invokespecial*/
-#define ACC_SUPER 0x0020;
-/*Eh uma interface, nao uma classe.*/
-#define ACC_INTERFACE 0x0200;
-/*Declarado abstract, nao deve ser instanciado*/
-#define ACC_ABSTRACT 0x0400
-/*Declarado synthetic, nao deve apresentar codigo fonte*/
-#define ACC_SYNTHETIC 0x1000
-/*Declarado como tipo annotation*/
-#define ACC_ANNOTATION 0x2000
-/*Declaram como tipo enum*/
-#define ACC_ENUM 0x4000
-
 class ClassFile {
 private:
+    static const uint32_t MAGIC_NUMBER = 0xCAFEBABE;
+
+    // Class access and property modifiers
+    /*Declarado public, pode ser acessado de fora do pacote*/
+    static const uint16_t ACC_PUBLIC = 0x0001;
+    /*Declarado final, subclasses nao sao permitidas*/
+    static const uint16_t ACC_FINAL = 0x0010;
+    /*Trata metodos da superclasse especialmente quando invocados pela instrução invokespecial*/
+    static const uint16_t ACC_SUPER = 0x0020;
+    /*Eh uma interface, nao uma classe.*/
+    static const uint16_t ACC_INTERFACE = 0x0200;
+    /*Declarado abstract, nao deve ser instanciado*/
+    static const uint16_t ACC_ABSTRACT = 0x0400;
+    /*Declarado synthetic, nao deve apresentar codigo fonte*/
+    static const uint16_t ACC_SYNTHETIC = 0x1000;
+    /*Declarado como tipo annotation*/
+    static const uint16_t ACC_ANNOTATION = 0x2000;
+    /*Declaram como tipo enum*/
+    static const uint16_t ACC_ENUM = 0x4000;
+
+
     /* magic eh o identificador do arquivo .class. Seu valor deve corresponder a 0xCAFEBABE */
     uint32_t magic;
 
@@ -44,7 +47,7 @@ private:
 
     A tabela constantPool eh indexada de 1 a constantPoolCount-1.
     */
-    //vector<CPInfo> constantPool;
+    vector<CPInfo> constantPool;
 
     /* O valor de accessFlags eh a mascaraca de flags usadas para denotar
        as permissões de acesso e propriedades da classe ou interface.
