@@ -3,6 +3,8 @@
 
 #include <cstdint>
 #include <vector>
+#include "AttributeInfo.hpp"
+
 
 using namespace std;
 
@@ -69,7 +71,7 @@ public:
     The rules concerning non-predefined attributes in the attributes table of a
     method_info structure are given in §4.7.1.
     */
-    // vector<AttributeInfo *> attributes;
+    vector<AttributeInfo> attributes;
 
 
 };

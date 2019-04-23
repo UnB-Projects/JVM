@@ -4,13 +4,16 @@
 #include <cstdint>
 #include <vector>
 #include "CPInfo.hpp"
+#include "FieldInfo.hpp"
+#include "MethodInfo.hpp"
+#include "AttributeInfo.hpp"
+
 
 using namespace std;
 
 class ClassFile {
 private:
     static const uint32_t MAGIC_NUMBER = 0xCAFEBABE;
-
     // Class access and property modifiers
     /*Declarado public, pode ser acessado de fora do pacote*/
     static const uint16_t ACC_PUBLIC = 0x0001;
@@ -92,7 +95,7 @@ private:
     A tabela de fields inclui apenas os campos que sao declarados por essa classe ou interface. Nao inclui itens representando campos que
     sao herdados por superclasses ou superinterfaces.
     */
-    //vector<FieldInfo> fields;
+    vector<FieldInfo> fields;
 
     /*
     O valor de methodsCount da o numero de MethodInfo structures na methods table.
@@ -108,7 +111,7 @@ private:
     metodos de inicializacao de instancia e qualquer metodo de inicializacao de classe ou interface.
     A methodsTable nao inclui itens representando metodos que sao herdados de superclasses ou superinterfaces.
     */
-    //vector<MethodInfo> methods;
+    vector<MethodInfo> methods;
 
     /*O valor de attributesCount da o numero de atributos na tabela de atributos dessa classe*/
     uint16_t attributesCount;
@@ -116,7 +119,7 @@ private:
     /*
     Cada valor na tabela de atributos deve ser uma struct AttributeInfo.
     */
-    //vector<AttributeInfo> attributes;
+    vector<AttributeInfo> attributes;
 
 };
 
