@@ -10,7 +10,7 @@ class InterfaceInfo {
     public:
         uint16_t interfaceTable;
         ~InterfaceInfo();
-        void setInterfaceInfo(FILE*);
+        void read(FILE *fp);
 };
 
 #endif

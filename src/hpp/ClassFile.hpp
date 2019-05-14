@@ -1,6 +1,9 @@
 #ifndef __CLASSFILE_H_INCLUDED__
 #define __CLASSFILE_H_INCLUDED__
 
+/*Para diminuir a verbosidade ao verificar o tipo*/
+#define typeof __typeof__
+
 #include <cstdint>
 #include <vector>
 #include <fstream>
@@ -52,7 +55,7 @@ private:
 
     A tabela constantPool eh indexada de 1 a constantPoolCount-1.
     */
-    vector<CPInfo> constantPool;
+    vector<CPInfo*> constantPool;
 
     /* O valor de accessFlags eh a mascaraca de flags usadas para denotar
        as permissões de acesso e propriedades da classe ou interface.
@@ -85,7 +88,7 @@ private:
     deve conter uma CONSTANT_Class_info structure representando uma interface que eh uma superinterface direta dessa classe ou interface
     na ordem da esquerda para direita dada no fonte do tipo.
     */
-    vector<InterfaceInfo> interfaces;
+    vector<InterfaceInfo*> interfaces;
 
     /*O valor de fieldsCount da o numero de FieldInfo strcutures na tabela de fields. As FieldInfo structures representam
       todos os camposm varuaveus de classe e de instancia declarados por essa classe ou interface    
@@ -97,7 +100,7 @@ private:
     A tabela de fields inclui apenas os campos que sao declarados por essa classe ou interface. Nao inclui itens representando campos que
     sao herdados por superclasses ou superinterfaces.
     */
-    vector<FieldInfo> fields;
+    vector<FieldInfo*> fields;
 
     /*
     O valor de methodsCount da o numero de MethodInfo structures na methods table.
@@ -113,7 +116,7 @@ private:
     metodos de inicializacao de instancia e qualquer metodo de inicializacao de classe ou interface.
     A methodsTable nao inclui itens representando metodos que sao herdados de superclasses ou superinterfaces.
     */
-    vector<MethodInfo> methods;
+    vector<MethodInfo*> methods;
 
     /*O valor de attributesCount da o numero de atributos na tabela de atributos dessa classe*/
     uint16_t attributesCount;
@@ -121,7 +124,7 @@ private:
     /*
     Cada valor na tabela de atributos deve ser uma struct AttributeInfo.
     */
-    vector<AttributeInfo> attributes;
+    vector<AttributeInfo*> attributes;
 
     void setMagic(FILE * fp);
     void setMajor(FILE * fp);
@@ -140,7 +143,7 @@ private:
     void setAttributesCount(FILE * fp);
     void setAttributes(FILE * fp);
 
-    public:
+public:
 
     ClassFile(FILE * fp);
     ~ClassFile();
@@ -157,7 +160,7 @@ private:
     uint16_t getConstCount() {
         return constantPoolCount;
     }
-    std::vector<CPInfo> getConstPool() {
+    vector<CPInfo*> getConstantPool() {
         return constantPool;
     }
 
@@ -174,27 +177,27 @@ private:
         return interfacesCount;
     }
 
-    // std::vector<InterfaceInfo> getInterfaces() {
-    //     return interfaces;
-    // }
+    vector<InterfaceInfo*> getInterfaces() {
+        return interfaces;
+    }
 
     uint16_t getFieldCount() {
         return fieldsCount;
     }
 
-    std::vector<FieldInfo> getFields();
+    std::vector<FieldInfo*> getFields();
 
     uint16_t getMethoCount() {
         return methodsCount;
     }
 
-    std::vector<MethodInfo> getMethods();
+    vector<MethodInfo*> getMethods();
 
     uint16_t getAttriCount() {
         return attributesCount;
     }
 
-    std::vector<AttributeInfo*> getAttributes();
+    vector<AttributeInfo*> getAttributes();
 
     // bool DEBUG = true;
 };

@@ -17,9 +17,10 @@
 #define CONSTANT_MethodHandle 15
 #define CONSTANT_MethodType 16
 #define CONSTANT_InvokeDynamic 18
+#define CONSTANT_Empty 0
 
 class CPInfo {
-public:
+private:
     uint8_t tag;
     union {
         struct {
@@ -152,7 +153,7 @@ public:
 
             verificar depois se nao eh melhor declarar bytes apenas como ponteiro
             */
-            uint8_t bytes[];
+            uint8_t *bytes;
         } CONSTANT_Utf8_info;
 
         struct {
@@ -188,6 +189,15 @@ public:
             uint16_t name_and_type_index;
         } CONSTANT_InvokeDynamic_info;
     };
+public:
+    CPInfo();
+    ~CPInfo();
+    void read(FILE *fp);
+    void setTag(uint8_t tag);
+
+    uint8_t getTag() {
+        return this->tag;
+    }
 };
 
 #endif

@@ -4,7 +4,7 @@ InterfaceInfo::~InterfaceInfo() {
     //Nada alocado dinamicamente
 }
 
-void InterfaceInfo::setInterfaceInfo(FILE *fp) {
+void InterfaceInfo::read(FILE *fp) {
     ByteReader<uint16_t> twoBytes;
     interfaceTable = twoBytes.byteCatch(fp);
 }
