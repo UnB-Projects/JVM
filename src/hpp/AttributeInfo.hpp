@@ -6,6 +6,10 @@
 
 using namespace std;
 
+class AttributeInfo;
+class ConstantValueAttribute;
+class CodeAttribute;
+
 class ConstantValueAttribute {
 private:
     uint16_t constantValueIndex;
@@ -27,12 +31,17 @@ private:
     uint16_t maxStack;
     uint16_t maxLocals;
     uint32_t codeLength;
-    vector<uint8_t> code;
+    // vector<uint8_t> code;
+    uint8_t *code;
     uint16_t exceptionTableLength;
-    vector<ExceptionHandler>exceptionTable;
+    // vector<ExceptionHandler>exceptionTable;
+    ExceptionHandler* exceptionTable;
     uint16_t attributesCount;
-    vector<AttributeInfo> attributes;
+    // vector<AttributeInfo> attributes;
+    AttributeInfo *attributes;
 public:
+    CodeAttribute();
+    ~CodeAttribute();
     void read(FILE*, vector<CPInfo>);
     void print(vector<CPInfo>);
 };
@@ -40,10 +49,11 @@ public:
 class ExceptionsAttribute {
 private:
     uint16_t numberOfExceptions;
-    vector<uint16_t> exceptionIndexTable;
+    // vector<uint16_t> exceptionIndexTable;
+    uint16_t *execeptionIndexTable;
 public:
     void read(FILE *);
-    void print(std::vector<CPInfo>);
+    void print(vector<CPInfo>);
 };
 
 class InnerClassesAttribute {
@@ -57,7 +67,8 @@ private:
     };
 
     uint16_t numberOfClasses;
-    vector<ClassInfo> classes;
+    // vector<ClassInfo> classes;
+    ClassInfo *classes;
 public:
     void read(FILE*);
     void print(vector<CPInfo>);
@@ -79,7 +90,8 @@ private:
     };
 
     uint16_t lineNumberTableLength;
-    vector<LineNumber> lineNumberTable;
+    // vector<LineNumber> lineNumberTable;
+    LineNumber* lineNumberTable;
 public:
     void read(FILE*);
     void print(vector<CPInfo>);
@@ -115,7 +127,8 @@ private:
         // MethodParameters methodParameters;
     };
 public:
-    ~AttributeInfo();
+    AttributeInfo(){};
+    ~AttributeInfo(){};
 };
 
 #endif

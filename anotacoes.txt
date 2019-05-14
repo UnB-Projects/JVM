@@ -1,0 +1,1 @@
+Estrutura do AttributeInfo parece ficar melhor com herança do que utilizando union

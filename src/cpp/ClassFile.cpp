@@ -4,7 +4,7 @@
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
 
-    if ((this->getMagic) == 0xCAFEBABE) {
+    if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
         this->setMinor(fp);
         this->setConstantPoolCount(fp);
@@ -32,7 +32,7 @@ ClassFile::~ClassFile() {
     }
 
     for (auto a : attributes) {
-        a.~AttributeInfo();
+        // a.~AttributeInfo();
     }
 }
 

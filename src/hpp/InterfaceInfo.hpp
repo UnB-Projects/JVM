@@ -1,8 +1,8 @@
 #ifndef __INTERFACEINFO_H__
 #define __INTERFACEINFO_H__
 
-#include<fstream>
-#include<cstdint>
+#include <fstream>
+#include <cstdint>
 
 #include "ByteReader.hpp"
 
