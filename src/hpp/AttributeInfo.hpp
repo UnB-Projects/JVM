@@ -3,6 +3,11 @@
 
 #include <cstdint>
 #include <vector>
+#include <fstream>
+#include <iostream>
+#include "ByteReader.hpp"
+#include "CPInfo.hpp"
+#include "CPAttributeInterface.hpp"
 
 using namespace std;
 
@@ -10,24 +15,31 @@ class AttributeInfo;
 class ConstantValueAttribute;
 class CodeAttribute;
 
+ByteReader<uint8_t> oneByteReader;
+ByteReader<uint16_t> twoByteReader;
+ByteReader<uint32_t> fourByteReader;
+
 class ConstantValueAttribute {
 private:
     uint16_t constantValueIndex;
 public:
     void read(FILE*);
-    void print(vector<CPInfo>);
+    void print(vector<CPInfo*>);
+};
+
+
+class ExceptionHandler {
+private:
+    uint16_t startPC;
+    uint16_t endPC;
+    uint16_t handlerPC;
+    uint16_t catchType;
+public:
+    void read(FILE * fp);
 };
 
 class CodeAttribute {
 private:
-    class ExceptionHandler {
-    private:
-        uint16_t start_pc;
-        uint16_t end_pc;
-        uint16_t handler_pc;
-        uint16_t catch_type;
-    };
-
     uint16_t maxStack;
     uint16_t maxLocals;
     uint32_t codeLength;
@@ -42,8 +54,8 @@ private:
 public:
     CodeAttribute();
     ~CodeAttribute();
-    void read(FILE*, vector<CPInfo>);
-    void print(vector<CPInfo>);
+    void read(FILE*, vector<CPInfo*>);
+    void print(vector<CPInfo*>);
 };
 
 class ExceptionsAttribute {
@@ -53,25 +65,27 @@ private:
     uint16_t *execeptionIndexTable;
 public:
     void read(FILE *);
-    void print(vector<CPInfo>);
+    void print(vector<CPInfo*>);
+};
+
+class ClassInfo {
+private:
+    uint16_t innerClassInfoIndex;
+    uint16_t outerClassInfoIndex;
+    uint16_t innerNameIndex;
+    uint16_t innerClassAccessFlags;
+public:
+    void read(FILE * fp);
 };
 
 class InnerClassesAttribute {
 private:
-    class ClassInfo {
-    private:
-        uint16_t innerClassInfoIndex;
-        uint16_t outerClassInfoIndex;
-        uint16_t innerNameIndex;
-        uint16_t innerClassAccessFlags;
-    };
-
     uint16_t numberOfClasses;
     // vector<ClassInfo> classes;
     ClassInfo *classes;
 public:
     void read(FILE*);
-    void print(vector<CPInfo>);
+    void print(vector<CPInfo*>);
 };
 
 class SourceFileAttribute {
@@ -79,22 +93,25 @@ private:
     uint16_t sourcefileIndex;
 public:
     void read(FILE*);
-    void print(vector<CPInfo>);
+    void print(vector<CPInfo*>);
+};
+
+class LineNumber {
+private:
+    uint16_t startPC;
+    uint16_t lineNumber;
+public:
+    void read(FILE *fp);
 };
 
 class LineNumberTableAttribute {
 private:
-    class LineNumber {
-        uint16_t startPC;
-        uint16_t lineNumber;
-    };
-
     uint16_t lineNumberTableLength;
     // vector<LineNumber> lineNumberTable;
     LineNumber* lineNumberTable;
 public:
     void read(FILE*);
-    void print(vector<CPInfo>);
+    void print();
 };
 
 class AttributeInfo {
@@ -125,10 +142,13 @@ private:
         // AnnotationDefault annotationDefault;
         // BootstrapMethods bootstrapMethods;
         // MethodParameters methodParameters;
+        uint8_t *info;
     };
 public:
-    AttributeInfo(){};
-    ~AttributeInfo(){};
+    AttributeInfo();
+    ~AttributeInfo();
+    void read(FILE*, vector<CPInfo*>);
+    void print(vector<CPInfo*>);
 };
 
 #endif

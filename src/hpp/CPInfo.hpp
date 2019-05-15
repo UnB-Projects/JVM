@@ -19,175 +19,89 @@
 #define CONSTANT_InvokeDynamic 18
 #define CONSTANT_Empty 0
 
+typedef struct {
+    uint16_t name_index;
+} ConstantClassInfo;
+
+typedef struct {
+    uint16_t class_index;
+    uint16_t name_and_type_index;
+} ConstantFieldrefInfo;
+
+typedef struct {
+    uint16_t class_index;
+    uint16_t name_and_type_index;
+} ConstantMethodrefInfo;
+
+typedef struct {
+    uint16_t class_index;
+    uint16_t name_and_type_index;
+} ConstantInterfaceMethodrefInfo;
+
+typedef struct {
+    uint16_t string_index;
+} ConstantStringInfo;
+
+typedef struct {
+    uint32_t bytes;
+} ConstantIntegerInfo;
+
+typedef struct {
+    uint32_t bytes;
+} ConstantFloatInfo;
+
+typedef struct {
+    uint32_t high_bytes;
+    uint32_t low_bytes;
+} ConstantLongInfo;
+
+typedef struct {
+    uint32_t high_bytes;
+    uint32_t low_bytes;
+} ConstantDoubleInfo;
+
+typedef struct {
+    uint16_t name_index;
+    uint16_t descriptor_index;
+} ConstantNameAndTypeInfo;
+
+typedef struct {
+    uint16_t length;
+    uint8_t *bytes;
+} ConstantUTF8Info;
+
+typedef struct {
+    uint8_t reference_kind;
+    uint16_t reference_index;
+} ConstantMethodHandleInfo;
+
+typedef struct {
+    uint16_t descriptor_index;
+} ConstantMethodTypeInfo;
+
+typedef struct {
+    uint16_t bootstrap_method_attr_index;
+    uint16_t name_and_type_index;
+} ConstantInvokeDynamicInfo;
+
 class CPInfo {
 private:
     uint8_t tag;
     union {
-        struct {
-            /*
-            The value of the name_index item must be a valid index into the
-            constant_pool table. The constant_pool entry at that index must be a
-            CONSTANT_Utf8_info structure (§4.4.7) representing a valid binary class or
-            interface name encoded in internal form (§4.2.1).
-            */
-            uint16_t name_index;
-        } CONSTANT_Class_info;
-
-        /*
-        The value of the class_index item must be a valid index into the
-        constant_pool table. The constant_pool entry at that index must be a
-        CONSTANT_Class_info structure (§4.4.1) representing a class or interface type
-        that has the field or method as a member.
-
-        The value of the name_and_type_index item must be a valid index into
-        the constant_pool table. The constant_pool entry at that index must be a
-        CONSTANT_NameAndType_info structure (§4.4.6). This constant_pool entry
-        indicates the name and descriptor of the field or method.
-        */
-        struct {
-            /*
-            The class_index item of a CONSTANT_Fieldref_info structure may be either
-            a class type or an interface type.
-            */
-            uint16_t class_index;
-            uint16_t name_and_type_index;
-        } CONSTANT_Fieldref_info;
-
-        struct {
-            /*
-            The class_index item of a CONSTANT_Methodref_info structure must be a
-            class type, not an interface type.
-            */
-            uint16_t class_index;
-            uint16_t name_and_type_index;
-        } CONSTANT_Methodref_info;
-
-        struct {
-            /*
-            The class_index item of a CONSTANT_InterfaceMethodref_info structure
-            must be an interface type.
-            */   
-            uint16_t class_index;
-            uint16_t name_and_type_index;
-        } CONSTANT_InterfaceMethodref_info;
-
-        struct {
-            /*
-            The value of the string_index item must be a valid index into the
-            constant_pool table. The constant_pool entry at that index must be a
-            CONSTANT_Utf8_info structure (§4.4.7) representing the sequence of Unicode
-            code points to which the String object is to be initialized.
-            */
-            uint16_t string_index;
-        } CONSTANT_String_info;
-
-        struct {
-            /*
-            The bytes item of the CONSTANT_Integer_info structure represents the value
-            of the int constant. The bytes of the value are stored in big-endian (high byte
-            first) order.
-            */
-            uint32_t bytes;
-        } CONSTANT_Integer_info;
-
-        struct {
-            /*
-            The bytes item of the CONSTANT_Float_info structure represents the value
-            of the float constant in IEEE 754 floating-point single format (§2.3.2). The
-            bytes of the single format representation are stored in big-endian (high byte
-            first) order.
-
-            Nao esquecer de olhar os valores de +inf -inf e NaN depois!!
-            */
-            uint32_t bytes;
-        } CONSTANT_Float_info;
-
-
-        /*
-        All 8-byte constants take up two entries in the constant_pool table of the class
-        file. If a CONSTANT_Long_info or CONSTANT_Double_info structure is the item
-        in the constant_pool table at index n, then the next usable item in the pool is
-        located at index n+2. The constant_pool index n+1 must be valid but is considered
-        unusable.
-
-        Nao esquecer de olhar os valores de +inf -inf e NaN depois!!
-        */
-        struct {
-            uint32_t high_bytes;
-            uint32_t low_bytes;
-        } CONSTANT_Long_info;
-
-        struct {
-            uint32_t high_bytes;
-            uint32_t low_bytes;
-        } CONSTANT_Double_info;
-
-        struct {
-            /*
-            The value of the name_index item must be a valid index into the
-            constant_pool table. The constant_pool entry at that index must be a
-            CONSTANT_Utf8_info structure (§4.4.7) representing either the special method
-            name <init> (§2.9) or a valid unqualified name denoting a field or method
-            (§4.2.2).
-            */
-            uint16_t name_index;
-            /*
-            The value of the descriptor_index item must be a valid index into the
-            constant_pool table. The constant_pool entry at that index must be a
-            CONSTANT_Utf8_info structure (§4.4.7) representing a valid field descriptor
-            or method descriptor (§4.3.2, §4.3.3).
-            */
-            uint16_t descriptor_index;
-        } CONSTANT_NameAndType_info;
-
-        struct {
-            /*
-            The value of the length item gives the number of bytes in the bytes array (not
-            the length of the resulting string).
-            */
-            uint16_t length;
-            /*
-            The bytes array contains the bytes of the string.
-            No byte may have the value (byte)0 .
-            No byte may lie in the range (byte)0xf0 to (byte)0xff .
-
-            verificar depois se nao eh melhor declarar bytes apenas como ponteiro
-            */
-            uint8_t *bytes;
-        } CONSTANT_Utf8_info;
-
-        struct {
-            /*
-            The value of the reference_kind item must be in the range 1 to 9. The
-            value denotes the kind of this method handle, which characterizes its bytecode
-            behavior (§5.4.3.5).
-            */
-            uint8_t reference_kind;
-            /*
-            Olhar documentacao, muito grande
-            */
-            uint16_t reference_index;
-        } CONSTANT_MethodHandle_info;
-
-        struct {
-            uint16_t descriptor_index;
-        } CONSTANT_MethodType_info;
-
-        struct {
-            /*
-            The value of the bootstrap_method_attr_index item must be a valid index
-            into the bootstrap_methods array of the bootstrap method table (§4.7.23) of
-            this class file.
-            */
-            uint16_t bootstrap_method_attr_index;
-            /*
-            The value of the name_and_type_index item must be a valid index into
-            the constant_pool table. The constant_pool entry at that index must be a
-            CONSTANT_NameAndType_info structure (§4.4.6) representing a method name
-            and method descriptor (§4.3.3).
-            */
-            uint16_t name_and_type_index;
-        } CONSTANT_InvokeDynamic_info;
+        ConstantClassInfo CONSTANT_Class_info;
+        ConstantFieldrefInfo CONSTANT_Fieldref_info;
+        ConstantMethodrefInfo CONSTANT_Methodref_info;
+        ConstantInterfaceMethodrefInfo CONSTANT_InterfaceMethodref_info;
+        ConstantStringInfo CONSTANT_String_info;
+        ConstantIntegerInfo CONSTANT_Integer_info;
+        ConstantFloatInfo CONSTANT_Float_info;
+        ConstantLongInfo CONSTANT_Long_info;
+        ConstantDoubleInfo CONSTANT_Double_info;
+        ConstantNameAndTypeInfo CONSTANT_NameAndType_info;
+        ConstantUTF8Info CONSTANT_Utf8_info;
+        ConstantMethodHandleInfo CONSTANT_MethodHandle_info;
+        ConstantMethodTypeInfo CONSTANT_MethodType_info;
+        ConstantInvokeDynamicInfo CONSTANT_InvokeDynamic_info;
     };
 public:
     CPInfo();
@@ -197,6 +111,62 @@ public:
 
     uint8_t getTag() {
         return this->tag;
+    }
+
+    ConstantClassInfo getClassInfo() {
+        return this->CONSTANT_Class_info;
+    }
+
+    ConstantFieldrefInfo getFieldrefInfo() {
+        return this->CONSTANT_Fieldref_info;
+    }
+    
+    ConstantMethodrefInfo getMethodrefInfo() {
+        return this->CONSTANT_Methodref_info;
+    }
+
+    ConstantInterfaceMethodrefInfo getInterfaceMethodrefInfo() {
+        return this->CONSTANT_InterfaceMethodref_info;
+    }
+
+    ConstantStringInfo getStringInfo() {
+        return this->CONSTANT_String_info;
+    }
+
+    ConstantIntegerInfo getIntegerInfo() {
+        return this->CONSTANT_Integer_info;
+    }
+
+    ConstantFloatInfo getFloatInfo() {
+        return this->CONSTANT_Float_info;
+    }
+
+    ConstantLongInfo getLongInfo() {
+        return this->CONSTANT_Long_info;
+    }
+
+    ConstantDoubleInfo getDoubleInfo() {
+        return this->CONSTANT_Double_info;
+    }
+
+    ConstantNameAndTypeInfo getNameAndTypeInfo() {
+        return this->CONSTANT_NameAndType_info;
+    }
+
+    ConstantUTF8Info getUTF8Info() {
+        return this->CONSTANT_Utf8_info;
+    }
+
+    ConstantMethodHandleInfo getMethodHandleInfo() {
+        return this->CONSTANT_MethodHandle_info;
+    }
+
+    ConstantMethodTypeInfo getMethodTypeInfo() {
+        return this->CONSTANT_MethodType_info;
+    }
+
+    ConstantInvokeDynamicInfo getInvokeDynamicInfo() {
+        return this->CONSTANT_InvokeDynamic_info;
     }
 };
 

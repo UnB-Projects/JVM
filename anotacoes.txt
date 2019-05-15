@@ -3,3 +3,5 @@ Estrutura do AttributeInfo parece ficar melhor com herança do que utilizando un
 Usar calloc ou malloc na inicializacao dos vetores?
 
 É necessario ter vector de ponteiros ao invés de vector de conteúdos no ClassFile?
+
+InnerClasses nao funciona com a implementacao anterior
