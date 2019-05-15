@@ -1,8 +1,7 @@
 #include "../hpp/AttributeInfo.hpp"
 
-
-
 void ConstantValueAttribute::read(FILE *fp) {
+    ByteReader<uint16_t> twoByteReader;
     constantValueIndex = twoByteReader.byteCatch(fp);
 }
 
@@ -12,11 +11,13 @@ void ConstantValueAttribute::print(std::vector<CPInfo*> trueCpInfo) {
 }
 
 void LineNumber::read(FILE * fp) {
+    ByteReader<uint16_t> twoByteReader;
     startPC = twoByteReader.byteCatch(fp);
     lineNumber = twoByteReader.byteCatch(fp);
 }
 
 void LineNumberTableAttribute::read(FILE *fp) {
+    ByteReader<uint16_t> twoByteReader;
     lineNumberTableLength = twoByteReader.byteCatch(fp);
     lineNumberTable = (LineNumber*)calloc(lineNumberTableLength, sizeof(LineNumber));
 
@@ -34,13 +35,20 @@ void LineNumberTableAttribute::print() {
 }
 
 void ExceptionHandler::read(FILE *fp) {
+    ByteReader<uint8_t> oneByteReader;
+
+
     startPC = oneByteReader.byteCatch(fp);
     endPC = oneByteReader.byteCatch(fp);
     handlerPC = oneByteReader.byteCatch(fp);
     catchType = oneByteReader.byteCatch(fp);
 }
 
-void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPoolTable) {
+void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPool) {
+    ByteReader<uint8_t> oneByteReader;
+    ByteReader<uint16_t> twoByteReader;
+    ByteReader<uint32_t> fourByteReader;
+
     maxStack = twoByteReader.byteCatch(fp);
     maxLocals = twoByteReader.byteCatch(fp);
     codeLength = fourByteReader.byteCatch(fp);
@@ -60,7 +68,7 @@ void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPoolTable) {
     attributesCount = twoByteReader.byteCatch(fp);
     attributes = (AttributeInfo *)calloc(attributesCount, sizeof(AttributeInfo));
     for (int i = 0; i < attributesCount; i++){
-        attributes[i].read(fp, constantPoolTable);
+        attributes[i].read(fp, constantPool);
     }
 }
 
@@ -166,6 +174,7 @@ void CodeAttribute::print(std::vector<CPInfo*> trueCpInfo) {
 }
 
 void ClassInfo::read(FILE * fp) {
+    ByteReader<uint16_t> twoByteReader;
     innerClassInfoIndex = twoByteReader.byteCatch(fp);
     outerClassInfoIndex = twoByteReader.byteCatch(fp);
     innerNameIndex = twoByteReader.byteCatch(fp);
@@ -173,6 +182,7 @@ void ClassInfo::read(FILE * fp) {
 }
 
 void InnerClassesAttribute::read(FILE *fp) {
+    ByteReader<uint16_t> twoByteReader;
     numberOfClasses = twoByteReader.byteCatch(fp);
     classes = (ClassInfo*)calloc(numberOfClasses, sizeof(ClassInfo));
 
@@ -186,6 +196,7 @@ void InnerClassesAttribute::print(std::vector<CPInfo*> trueCpInfo) {
 }
 
 void ExceptionsAttribute::read(FILE *fp) {
+    ByteReader<uint16_t> twoByteReader;
     numberOfExceptions = twoByteReader.byteCatch(fp);
     execeptionIndexTable = (uint16_t *)calloc(numberOfExceptions, sizeof(uint16_t));
     for (int i = 0; i < numberOfExceptions; i++) {
@@ -204,6 +215,7 @@ void ExceptionsAttribute::print(std::vector<CPInfo*> trueCpInfo) {
 }
 
 void SourceFileAttribute::read(FILE * fp) {
+    ByteReader<uint16_t> twoByteReader;
     sourcefileIndex = twoByteReader.byteCatch(fp);
 }
 
@@ -213,15 +225,22 @@ void SourceFileAttribute::print(std::vector<CPInfo*> trueCpInfo) {
     // cout <<"Source file name index: cp info #" << this->sourceFileIndex <<" <" << utf8Getter.getUTF8(trueCpInfo, this->sourceFileIndex - 1)<< ">" << endl;
 }
 
-void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPoolTable){
+AttributeInfo::~AttributeInfo() {
+    //TODO
+}
+
+void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
     CPAttributeInterface utf8Getter;
+    ByteReader<uint8_t> oneByteReader;
+    ByteReader<uint16_t> twoByteReader;
+    ByteReader<uint32_t> fourByteReader;
 
     attributeNameIndex = twoByteReader.byteCatch(fp);
     attributeLength = fourByteReader.byteCatch(fp);
-    string attributeName = utf8Getter.getUTF8(constantPoolTable, attributeNameIndex-1);
+    string attributeName = utf8Getter.getUTF8(constantPool, attributeNameIndex-1);
 
     if(attributeName == "Code"){
-        code.read(fp, constantPoolTable);
+        code.read(fp, constantPool);
     }
     else if(attributeName == "ConstantValue") {
         constantValue.read(fp);

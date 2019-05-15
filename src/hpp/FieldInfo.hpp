@@ -24,14 +24,15 @@ private:
     static const uint16_t ACC_STRICT = 0x0800;
     static const uint16_t ACC_SYNTHETIC = 0x1000;
 
-    uint16_t access_flags;
-    uint16_t name_index;
-    uint16_t descriptor_index;
-    uint16_t attributes_count;
+    uint16_t accessFlags;
+    uint16_t nameIndex;
+    uint16_t descriptorIndex;
+    uint16_t attributesCount;
     vector<AttributeInfo*> attributes;
 
 public:
-    void read(FILE *fp);
+    ~FieldInfo();
+    void read(FILE *fp, vector<CPInfo*> constantPool);
 };
 
 #endif

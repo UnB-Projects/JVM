@@ -15,9 +15,6 @@ class AttributeInfo;
 class ConstantValueAttribute;
 class CodeAttribute;
 
-ByteReader<uint8_t> oneByteReader;
-ByteReader<uint16_t> twoByteReader;
-ByteReader<uint32_t> fourByteReader;
 
 class ConstantValueAttribute {
 private:

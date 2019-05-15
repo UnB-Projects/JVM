@@ -2,6 +2,9 @@
 #define CPINFO_H_INCLUDED
 
 #include <cstdint>
+#include <fstream>
+#include <iostream>
+#include "ByteReader.hpp"
 
 #define CONSTANT_Class 7
 #define CONSTANT_Fieldref 9

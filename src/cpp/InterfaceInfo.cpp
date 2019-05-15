@@ -5,6 +5,6 @@ InterfaceInfo::~InterfaceInfo() {
 }
 
 void InterfaceInfo::read(FILE *fp) {
-    ByteReader<uint16_t> twoBytes;
-    interfaceTable = twoBytes.byteCatch(fp);
+    ByteReader<uint16_t> twoByteReader;
+    interfaceTable = twoByteReader.byteCatch(fp);
 }
