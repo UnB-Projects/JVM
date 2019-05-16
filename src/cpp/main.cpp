@@ -17,16 +17,16 @@ int main(int argc, char *argv[]) {
         classFile = classLoader.loadClassFile(fp);
         
         printf("Magic: %#010x\n", classFile.getMagic());
-        printf("Minor: %d\n", classFile.getMinor());
-        printf("Major: %d\n", classFile.getMajor());
+        printf("Minor: %d\n", classFile.getMinorVersion());
+        printf("Major: %d\n", classFile.getMajorVersion());
         printf("CP Count: %d\n", classFile.getConstantPoolCount());
-        printf("Access Flag: %#010x\n", classFile.getFlag());
+        printf("Access Flag: %#010x\n", classFile.getAccessFlags());
         printf("This Class: %d\n", classFile.getThisClass());
-        printf("Super Class: %d\n", classFile.getSuper());
-        printf("Interfaces Count: %d\n", classFile.getInterCounter());
-        printf("Fields Count: %d\n", classFile.getFieldCount());
-        printf("Methods Count: %d\n", classFile.getMethoCount());
-        printf("Attributes Count: %d\n", classFile.getAttriCount());
+        printf("Super Class: %d\n", classFile.getSuperClass());
+        printf("Interfaces Count: %d\n", classFile.getInterfacesCount());
+        printf("Fields Count: %d\n", classFile.getFieldsCount());
+        printf("Methods Count: %d\n", classFile.getMethodsCount());
+        printf("Attributes Count: %d\n", classFile.getAttributesCount());
     }
     return 0;
 }
