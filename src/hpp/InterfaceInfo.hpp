@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <cstdint>
-
 #include "ByteReader.hpp"
 
 class InterfaceInfo {

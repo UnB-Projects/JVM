@@ -1,12 +1,15 @@
 #include "../hpp/ClassFile.hpp"
 
+ClassFile::ClassFile() {
+
+}
 
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
 
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
-        this->setMinor(fp);
+        this->setMajor(fp);
         this->setConstantPoolCount(fp);
         this->setConstantPool(fp);
         this->setAccessFlag(fp);
@@ -22,7 +25,8 @@ ClassFile::ClassFile(FILE * fp) {
         this->setAttributes(fp);
     }
     else {
-        cout << "O magic number nao eh 0xCAFEBABE!" << endl;
+        cout << "O magic number nao eh 0xCAFEBABE! Programa terminado!" << endl;
+        exit(0);
     }
 }
 
@@ -66,7 +70,7 @@ void ClassFile::setMinor(FILE * fp) {
 
 void ClassFile::setConstantPoolCount(FILE * fp) {
     ByteReader<typeof(constantPoolCount)> cpCountReader;
-    minorVersion = cpCountReader.byteCatch(fp);
+    constantPoolCount = cpCountReader.byteCatch(fp);
 }
 
 void ClassFile::setConstantPool(FILE * fp) {
@@ -119,11 +123,11 @@ void ClassFile::setFieldsCount(FILE * fp) {
 }
 
 void ClassFile::setFields(FILE * fp) {
-    // for (int i = 0; i < this->fieldsCount; i++) {
-    //     FieldInfo* field = (FieldInfo *)calloc(1, sizeof(FieldInfo));
-        
-    // }
-    
+    for(int i = 0; i < this->fieldsCount; i++) {
+        FieldInfo* field = (FieldInfo *)calloc(1, sizeof(FieldInfo));
+        field->read(fp, this->constantPool);
+        this->fields.push_back(field);
+    }
 }
 
 void ClassFile::setMethodsCount(FILE * fp) {
@@ -132,11 +136,11 @@ void ClassFile::setMethodsCount(FILE * fp) {
 }
 
 void ClassFile::setMethods(FILE * fp) {
-    // for (int i = 0; i < this->methodsCount; i++) {
-    //     MethodInfo *methodInfo = (MethodInfo *)calloc(1, sizeof(MethodInfo));
-    //     methodInfo->read(fp,this->constantPool);
-    //     this->methods.push_back(methodInfo);
-    // }
+    for (int i = 0; i < this->methodsCount; i++) {
+        MethodInfo *methodInfo = (MethodInfo *)calloc(1, sizeof(MethodInfo));
+        methodInfo->read(fp,this->constantPool);
+        this->methods.push_back(methodInfo);
+    }
 }
 
 void ClassFile::setAttributesCount(FILE * fp) {
@@ -145,9 +149,9 @@ void ClassFile::setAttributesCount(FILE * fp) {
 }
 
 void ClassFile::setAttributes(FILE * fp) {
-    // for(int j = 0; j < this->attributesCount; j++){
-    //     AttributeInfo *attribute = (AttributeInfo *)calloc(1, sizeof(AttributeInfo));
-    //     attribute->read(fp,this->constantPool);
-    //     this->attributes.push_back(attribute);
-    // }
+    for(int i = 0; i < this->attributesCount; i++){
+        AttributeInfo *attribute = (AttributeInfo *)calloc(1, sizeof(AttributeInfo));
+        attribute->read(fp, this->constantPool);
+        this->attributes.push_back(attribute);
+    }
 }
