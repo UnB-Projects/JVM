@@ -1,11 +1,15 @@
 #include "../hpp/ClassFile.hpp"
 
+ClassFile::ClassFile() {
+
+}
+
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
 
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
-        this->setMinor(fp);
+        this->setMajor(fp);
         this->setConstantPoolCount(fp);
         this->setConstantPool(fp);
         this->setAccessFlag(fp);
@@ -66,7 +70,7 @@ void ClassFile::setMinor(FILE * fp) {
 
 void ClassFile::setConstantPoolCount(FILE * fp) {
     ByteReader<typeof(constantPoolCount)> cpCountReader;
-    minorVersion = cpCountReader.byteCatch(fp);
+    constantPoolCount = cpCountReader.byteCatch(fp);
 }
 
 void ClassFile::setConstantPool(FILE * fp) {

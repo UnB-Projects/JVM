@@ -64,6 +64,7 @@ private:
     void setAttributes(FILE * fp);
 
 public:
+    ClassFile();
     ClassFile(FILE * fp);
     ~ClassFile();
 
@@ -76,7 +77,7 @@ public:
     uint16_t getMinor() {
         return minorVersion;
     }
-    uint16_t getConstCount() {
+    uint16_t getConstantPoolCount() {
         return constantPoolCount;
     }
     vector<CPInfo*> getConstantPool() {
