@@ -64,7 +64,6 @@ private:
     void setAttributes(FILE * fp);
 
 public:
-
     ClassFile(FILE * fp);
     ~ClassFile();
 
