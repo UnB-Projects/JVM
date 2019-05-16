@@ -71,10 +71,10 @@ public:
     uint32_t getMagic() {
         return magic;
     }
-    uint16_t getMajor() {
+    uint16_t getMajorVersion() {
         return majorVersion;
     }
-    uint16_t getMinor() {
+    uint16_t getMinorVersion() {
         return minorVersion;
     }
     uint16_t getConstantPoolCount() {
@@ -84,16 +84,16 @@ public:
         return constantPool;
     }
 
-    uint16_t getFlag() {
+    uint16_t getAccessFlags() {
         return accessFlags;
     }
     uint16_t getThisClass() {
         return thisClass;
     }
-    uint16_t getSuper() {
+    uint16_t getSuperClass() {
         return superClass;
     }
-    uint16_t getInterCounter() {
+    uint16_t getInterfacesCount() {
         return interfacesCount;
     }
 
@@ -101,19 +101,19 @@ public:
         return interfaces;
     }
 
-    uint16_t getFieldCount() {
+    uint16_t getFieldsCount() {
         return fieldsCount;
     }
 
     std::vector<FieldInfo*> getFields();
 
-    uint16_t getMethoCount() {
+    uint16_t getMethodsCount() {
         return methodsCount;
     }
 
     vector<MethodInfo*> getMethods();
 
-    uint16_t getAttriCount() {
+    uint16_t getAttributesCount() {
         return attributesCount;
     }
 
