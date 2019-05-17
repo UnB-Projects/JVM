@@ -14,6 +14,8 @@ void CPInfo::read(FILE * fp) {
     ByteReader<uint32_t> fourByteReader;
 
     this->tag = oneByteReader.byteCatch(fp);
+    // printf("%d\n", this->tag);
+
 
     switch(this->tag) {
     case CONSTANT_Utf8:
@@ -62,6 +64,7 @@ void CPInfo::read(FILE * fp) {
         this->CONSTANT_NameAndType_info.descriptor_index = twoByteReader.byteCatch(fp);
         break;
     default:
-        if(true) std::cout << "An invalid tag was detected" << std::endl;
-}
+        cout << "Uma tag invalida foi detectada" << endl;
+        exit(0);
+    }
 }

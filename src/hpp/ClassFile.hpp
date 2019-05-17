@@ -47,15 +47,15 @@ private:
     vector<AttributeInfo*> attributes;
 
     void setMagic(FILE * fp);
-    void setMajor(FILE * fp);
+    void setMajorVersion(FILE * fp);
     void setMinor(FILE * fp);
     void setConstantPoolCount(FILE * fp);
     void setConstantPool(FILE * fp);
-    void setAccessFlag(FILE * fp);
+    void setAccessFlags(FILE * fp);
     void setThisClass(FILE * fp);
     void setSuperClass(FILE * fp);
-    void setInterfaceCount(FILE * fp);
-    void setInterface(FILE * fp);
+    void setInterfacesCount(FILE * fp);
+    void setInterfaces(FILE * fp);
     void setFieldsCount(FILE * fp);
     void setFields(FILE * fp);
     void setMethodsCount(FILE * fp);
@@ -64,36 +64,36 @@ private:
     void setAttributes(FILE * fp);
 
 public:
-
+    ClassFile();
     ClassFile(FILE * fp);
     ~ClassFile();
 
     uint32_t getMagic() {
         return magic;
     }
-    uint16_t getMajor() {
+    uint16_t getMajorVersion() {
         return majorVersion;
     }
-    uint16_t getMinor() {
+    uint16_t getMinorVersion() {
         return minorVersion;
     }
-    uint16_t getConstCount() {
+    uint16_t getConstantPoolCount() {
         return constantPoolCount;
     }
     vector<CPInfo*> getConstantPool() {
         return constantPool;
     }
 
-    uint16_t getFlag() {
+    uint16_t getAccessFlags() {
         return accessFlags;
     }
     uint16_t getThisClass() {
         return thisClass;
     }
-    uint16_t getSuper() {
+    uint16_t getSuperClass() {
         return superClass;
     }
-    uint16_t getInterCounter() {
+    uint16_t getInterfacesCount() {
         return interfacesCount;
     }
 
@@ -101,19 +101,19 @@ public:
         return interfaces;
     }
 
-    uint16_t getFieldCount() {
+    uint16_t getFieldsCount() {
         return fieldsCount;
     }
 
     std::vector<FieldInfo*> getFields();
 
-    uint16_t getMethoCount() {
+    uint16_t getMethodsCount() {
         return methodsCount;
     }
 
     vector<MethodInfo*> getMethods();
 
-    uint16_t getAttriCount() {
+    uint16_t getAttributesCount() {
         return attributesCount;
     }
 

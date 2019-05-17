@@ -1,18 +1,21 @@
 #include "../hpp/ClassFile.hpp"
 
+ClassFile::ClassFile() {
+    //Apenas para inicializar na main
+}
 
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
-        this->setMinor(fp);
+        this->setMajorVersion(fp);
         this->setConstantPoolCount(fp);
         this->setConstantPool(fp);
-        this->setAccessFlag(fp);
+        this->setAccessFlags(fp);
         this->setThisClass(fp);
         this->setSuperClass(fp);
-        this->setInterfaceCount(fp);
-        this->setInterface(fp);
+        this->setInterfacesCount(fp);
+        this->setInterfaces(fp);
         this->setFieldsCount(fp);
         this->setFields(fp);
         this->setMethodsCount(fp);
@@ -22,7 +25,8 @@ ClassFile::ClassFile(FILE * fp) {
 
     }
     else {
-        cout << "O magic number nao eh 0xCAFEBABE!" << endl;
+        cout << "O magic number nao eh 0xCAFEBABE! Programa terminado!" << endl;
+        exit(0);
     }
 }
 
@@ -54,7 +58,7 @@ void ClassFile::setMagic(FILE * fp) {
     magic = magicReader.byteCatch(fp);
 }
 
-void ClassFile::setMajor(FILE * fp) {
+void ClassFile::setMajorVersion(FILE * fp) {
     ByteReader<typeof(majorVersion)> majorReader;
     majorVersion = majorReader.byteCatch(fp);
 }
@@ -84,7 +88,7 @@ void ClassFile::setConstantPool(FILE * fp) {
     } 
 }
 
-void ClassFile::setAccessFlag(FILE * fp) {
+void ClassFile::setAccessFlags(FILE * fp) {
     ByteReader<typeof(accessFlags)> accessFlagsReader;
     accessFlags = accessFlagsReader.byteCatch(fp);
 }
@@ -99,12 +103,12 @@ void ClassFile::setSuperClass(FILE * fp) {
     superClass = superClassReader.byteCatch(fp);
 }
 
-void ClassFile::setInterfaceCount(FILE * fp) {
+void ClassFile::setInterfacesCount(FILE * fp) {
     ByteReader<typeof(interfacesCount)> interfacesCountReader;
     interfacesCount = interfacesCountReader.byteCatch(fp);
 }
 
-void ClassFile::setInterface(FILE * fp) {
+void ClassFile::setInterfaces(FILE * fp) {
     for (int i = 0; i < this->interfacesCount; i++) {
         InterfaceInfo *interfaceInfo = (InterfaceInfo*)calloc(1, sizeof(InterfaceInfo));
         interfaceInfo->read(fp);

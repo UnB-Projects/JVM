@@ -1,2 +1,4 @@
 # Ignorando configucaroes da minha maquina
 .vscode
+bin/
+Arquivos para teste/

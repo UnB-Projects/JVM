@@ -1,15 +1,11 @@
 #include "../hpp/ClassPrinter.hpp"
 
-
-using namespace std;
-
 /**
 * @brief Verifica qual o access_flag
 * @param flag_byte É enviado o valor da flag
 * @param parametro verificar se a flag 32 é classloader ou method
 * @return flag_name É retornado o nome para a flag setada
 */
-
 string ClassPrinter::Flag_names(int flag_byte, int parametro){
   string flag_name;
   switch(flag_byte) {
@@ -65,32 +61,32 @@ void ClassPrinter::printer(ClassFile classloader){
     vector<CPInfo*> a = classloader.getConstantPool();
 
     /* Print de infomações genericas do .class */
-    std::cout << "------------------------------General information------------------------------ \n\n\n";
-    std::cout << "MagicNumber  : " << hex << classloader.getMagic() << endl;
-    std::cout << "MinorVersion : " << dec << classloader.getMinor() << endl;
-    std::cout << "MajorVersion : " << dec << classloader.getMajor() << endl;
-    std::cout << "PoolCounter  : " << dec << classloader.getConstCount() << endl;
-    std::cout << "AcessFlag    : "<< "0x" << setw(4) << setfill('0') << hex << classloader.getFlag() << Flag_names(classloader.getFlag(), 1) << endl;
-    /*std::cout << "ThisClass    : " <<"cp info #" << dec << classloader.getThisClass() <<" <"<<x.getUTF8(classloader.getConstPool(),classloader.getThisClass()-1)<<">"<< endl;
-    std::cout << "SuperClass   : " <<"cp info #" << dec << classloader.getSuper() <<" <"<<x.getUTF8(classloader.getConstPool(),classloader.getSuper()-1)<<">"<< endl;
-    std::cout << "InterfaceCou : " << dec << classloader.getInterCounter() << endl;
-    std::cout << "FieldsCount  : " << dec << classloader.getFieldCount() << dec << endl;
-    std::cout << "MethodCount  : " << dec << classloader.getMethoCount() << dec << endl;
-    std::cout << "AtributeCoun : " << dec << classloader.getAttriCount() << endl;
+    cout << "------------------------------General Information------------------------------ \n\n\n";
+    cout << "Magic Number  : " << hex << classloader.getMagic() << endl;
+    cout << "Minor version : " << dec << classloader.getMinorVersion() << endl;
+    cout << "Major version : " << dec << classloader.getMajorVersion() << endl;
+    cout << "Constant pool count  : " << dec << classloader.getConstantPoolCount() << endl;
+    cout << "Access flags    : "<< "0x" << setw(4) << setfill('0') << hex << classloader.getAccessFlags() << Flag_names(classloader.getAccessFlags(), 1) << endl;
+    //std::cout << "ThisClass    : " <<"cp info #" << dec << classloader.getThisClass() <<"<"<<x.getUTF8(classloader.getConstantPool(),classloader.getThisClass()-1)<<">"<< endl;
+    //std::cout << "SuperClass   : " <<"cp info #" << dec << classloader.getSuperClass() <<" <"<<x.getUTF8(classloader.getConstantPool(),classloader.getSuperClass()-1)<<">"<< endl;
+    cout << "Interfaces count : " << dec << classloader.getInterfacesCount() << endl;
+    cout << "Fields count  : " << dec << classloader.getFieldsCount() << dec << endl;
+    cout << "Methods count  : " << dec << classloader.getMethodsCount() << dec << endl;
+    cout << "Atributes count : " << dec << classloader.getAttributesCount() << endl;
     /*Fim do Print de infomações genericas do .class */
     /* Print do vetor de constant pool */
 /*
     std::cout << "------------------------------ConstantPool------------------------------ \n\n\n";
     for(unsigned i = 0; i < a.size(); i++) {
-      switch (a[i]->tag){
+      switch (a[i]->getTag){
         case CONSTANT_Fieldref:
           std::cout << "["<< setw(2) << setfill('0') << i+1 << "] " << "CONSTANT_Fieldref_info" <<endl;
           std::cout << "\tClass name: cp info #"  << a[i]->Fieldref.class_index;
-          std::cout <<" <" << a[a[a[i]->Fieldref.class_index-1]->Class.name_index -1]->UTF8.bytes << ">" << endl;
-          std::cout <<"\tName and Type: cp info #"  << a[i]->Fieldref.name_and_type_index;
-          std::cout << " <" << a[a[a[i]->Fieldref.name_and_type_index-1]->NameAndType.name_index -1]->UTF8.bytes << " : " << a[a[a[i]->Fieldref.name_and_type_index-1]->NameAndType.descriptor_index -1]->UTF8.bytes << ">" << endl << endl;
+          //std::cout <<" <" << a[a[a[i]->Fieldref.class_index-1]->Class.name_index -1]->UTF8.bytes << ">" << endl;
+          //std::cout <<"\tName and Type: cp info #"  << a[i]->Fieldref.name_and_type_index;
+          //std::cout << " <" << a[a[a[i]->Fieldref.name_and_type_index-1]->NameAndType.name_index -1]->UTF8.bytes << " : " << a[a[a[i]->Fieldref.name_and_type_index-1]->NameAndType.descriptor_index -1]->UTF8.bytes << ">" << endl << endl;
           break;
-
+        
         case CONSTANT_Methodref:
           std::cout << "["<< setw(2) << setfill('0') << i+1 << "] " << "CONSTANT_Methodref_info" <<endl;
           std::cout << "\tClass name: cp info #"  << a[i]->Methodref.class_index ;
@@ -168,12 +164,13 @@ void ClassPrinter::printer(ClassFile classloader){
         case CONSTANT_Empty:
           std::cout <<"[" <<setw(2) << setfill('0') << i+1 << "] (large numeric continued)" << endl << endl;
           break;
+ 
         default :
           std::cout << "Non-type" << endl;
       }
     }
 
-    std::cout << "------------------------------Fields------------------------------" << endl << endl;
+   /* std::cout << "------------------------------Fields------------------------------" << endl << endl;
 
     vector<FieldInfo *> fieldInfo = classloader.getFields();
     int countFields = fieldInfo.size();
@@ -185,11 +182,10 @@ void ClassPrinter::printer(ClassFile classloader){
     }
     if(countFields == 0 ){
       std::cout << "EMPTY" << endl;
-    }
-*/
+    }*/
 
     /* Print do vetor de interfaces */
- /*   std::vector<InterfaceInfo*> interfaces = classloader.getInterfaces();
+/*   std::vector<InterfaceInfo*> interfaces = classloader.getInterfaces();
     std::cout << "------------------------------Interfaces------------------------------" << endl << endl;
     for (unsigned j = 0; j < interfaces.size(); j++) {
         std::cout << x.getUTF8(classloader.getConstPool(), interfaces[j]->interface_table -1);

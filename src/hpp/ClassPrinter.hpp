@@ -6,7 +6,7 @@
 #include "ClassFile.hpp"
 #include "CPAttributeInterface.hpp"
 
-
+using namespace std;
 
 class ClassPrinter {
 private:

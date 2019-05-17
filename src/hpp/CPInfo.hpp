@@ -6,6 +6,8 @@
 #include <iostream>
 #include "ByteReader.hpp"
 
+using namespace std;
+
 #define CONSTANT_Class 7
 #define CONSTANT_Fieldref 9
 #define CONSTANT_Methodref 10

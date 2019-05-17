@@ -1,5 +1,5 @@
-#ifndef _CONSTANTPOOLATTRIBUTE_H_
-#define _CONSTANTPOOLATTRIBUTE_H_
+#ifndef _CONSTANTPOOL_ATTRIBUTEINTERFACE_H_
+#define _CONSTANTPOOL_ATTRIBUTEINTERFACE_H_
 
 #include <string>
 #include <vector>
@@ -8,14 +8,9 @@
 
 using namespace std;
 
-/**
-* @class CpAttributeInterface
-* @brief Declarações da interface entre ConstantPool e AttributeInfo para traduzir as strings UTF8
-*/
-
 class CPAttributeInterface {
 public:
     string getUTF8(vector<CPInfo*>, uint16_t);
 };
 
-#endif // _CONSTANTPOOLATTRIBUTE_H_
+#endif
