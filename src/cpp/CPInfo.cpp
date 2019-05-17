@@ -64,7 +64,7 @@ void CPInfo::read(FILE * fp) {
         this->CONSTANT_NameAndType_info.descriptor_index = twoByteReader.byteCatch(fp);
         break;
     default:
-        if(true) std::cout << "An invalid tag was detected" << std::endl;
+        cout << "Uma tag invalida foi detectada" << endl;
         exit(0);
     }
 }

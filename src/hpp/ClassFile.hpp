@@ -47,15 +47,15 @@ private:
     vector<AttributeInfo*> attributes;
 
     void setMagic(FILE * fp);
-    void setMajor(FILE * fp);
+    void setMajorVersion(FILE * fp);
     void setMinor(FILE * fp);
     void setConstantPoolCount(FILE * fp);
     void setConstantPool(FILE * fp);
-    void setAccessFlag(FILE * fp);
+    void setAccessFlags(FILE * fp);
     void setThisClass(FILE * fp);
     void setSuperClass(FILE * fp);
-    void setInterfaceCount(FILE * fp);
-    void setInterface(FILE * fp);
+    void setInterfacesCount(FILE * fp);
+    void setInterfaces(FILE * fp);
     void setFieldsCount(FILE * fp);
     void setFields(FILE * fp);
     void setMethodsCount(FILE * fp);
