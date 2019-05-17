@@ -8,22 +8,6 @@
 
 using namespace std;
 
-#define CONSTANT_Class 7
-#define CONSTANT_Fieldref 9
-#define CONSTANT_Methodref 10
-#define CONSTANT_InterfaceMethodref 11
-#define CONSTANT_String 8
-#define CONSTANT_Integer 3
-#define CONSTANT_Float 4
-#define CONSTANT_Long 5
-#define CONSTANT_Double 6
-#define CONSTANT_NameAndType 12
-#define CONSTANT_Utf8 1
-#define CONSTANT_MethodHandle 15
-#define CONSTANT_MethodType 16
-#define CONSTANT_InvokeDynamic 18
-#define CONSTANT_Empty 0
-
 typedef struct {
     uint16_t name_index;
 } ConstantClassInfo;
@@ -109,6 +93,22 @@ private:
         ConstantInvokeDynamicInfo CONSTANT_InvokeDynamic_info;
     };
 public:
+    static const uint8_t CONSTANT_Class = 7;
+    static const uint8_t CONSTANT_Fieldref = 9;
+    static const uint8_t CONSTANT_Methodref = 10;
+    static const uint8_t CONSTANT_InterfaceMethodref = 11;
+    static const uint8_t CONSTANT_String = 8;
+    static const uint8_t CONSTANT_Integer = 3;
+    static const uint8_t CONSTANT_Float = 4;
+    static const uint8_t CONSTANT_Long = 5;
+    static const uint8_t CONSTANT_Double = 6;
+    static const uint8_t CONSTANT_NameAndType = 12;
+    static const uint8_t CONSTANT_Utf8 = 1;
+    static const uint8_t CONSTANT_MethodHandle = 15;
+    static const uint8_t CONSTANT_MethodType = 16;
+    static const uint8_t CONSTANT_InvokeDynamic = 18;
+    static const uint8_t CONSTANT_Empty = 0;
+
     CPInfo();
     ~CPInfo();
     void read(FILE *fp);

@@ -79,9 +79,9 @@ void ClassFile::setConstantPool(FILE * fp) {
         cpInfo->read(fp);
         this->constantPool.push_back(cpInfo);
 
-        if((cpInfo->getTag() == CONSTANT_Double) || (cpInfo->getTag() == CONSTANT_Long)) {
+        if((cpInfo->getTag() == CPInfo::CONSTANT_Double) || (cpInfo->getTag() == CPInfo::CONSTANT_Long)) {
             CPInfo *emptyCPInfo = (CPInfo *)calloc(1, sizeof(CPInfo));
-            emptyCPInfo->setTag(CONSTANT_Empty);
+            emptyCPInfo->setTag(CPInfo::CONSTANT_Empty);
             this->constantPool.push_back(emptyCPInfo);
             i++;
         }

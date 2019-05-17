@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <iomanip>
+#include <sstream>
+#include <iterator>
 #include "ClassFile.hpp"
 #include "CPAttributeInterface.hpp"
 
@@ -12,7 +14,7 @@ class ClassPrinter {
 private:
     ClassFile classFile;
     void printGeneralInformation();
-    string interpretFlags(uint16_t);
+    string interpretClassFlags(uint16_t);
 
 public:
     ClassPrinter(ClassFile classFile);

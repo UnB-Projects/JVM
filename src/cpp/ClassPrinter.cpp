@@ -1,69 +1,43 @@
 #include "../hpp/ClassPrinter.hpp"
 
-string ClassPrinter::interpretFlags(uint16_t accessFlags) {
-    // vector<string> identifiedFlags;
+string ClassPrinter::interpretClassFlags(uint16_t accessFlags) {
+    vector<string> identifiedFlags;
+    ostringstream outputFlagsStream;
 
-    // if (accessFlags|0x0001)
-}
-
-string ClassPrinter::Flag_names(int flag_byte, int parametro){
-    string flag_name;
-    switch(flag_byte) {
-    case 0: 
-        flag_name = "";
-        break;
-    case 0x0001:
-        flag_name = "[public]";
-        break;
-    case 33:
-        flag_name = "[public]";
-        break;
-    case 9:
-        flag_name = "[public static]";
-        break;
-    // case 0x0010:
-    //     flag_name = "[private]";
-    //     break;
-    case 4:
-        flag_name = "[protect]";
-        break;
-    case 8:
-        flag_name = "[static]";
-        break;
-    case 16:
-        flag_name = "[final]";
-        break;
-    case 32:
-        if(parametro == 1){
-            flag_name = "[super]";
-        }
-        else{
-            flag_name = "[synchronized]";
-        }
-        break;
-    case 512:
-        flag_name = "[interface]";
-        break;
-    case 1024:
-        flag_name = "[abstract]";
-        break;
-    case 64:
-         flag_name = "[bridge]";
-        break;
-    case 128:
-        flag_name = "[varargs]";
-        break;
-    case 256:
-        flag_name = "[native]";
-        break;
-    case 2048:
-        flag_name = "[strict]";
-        break;
-    case 4096:
-        flag_name = "[synthetic]";
-        break;      
+    if (accessFlags & ClassFile::ACC_PUBLIC) {
+       identifiedFlags.push_back("public"); 
     }
-  return flag_name;
+    if (accessFlags & ClassFile::ACC_FINAL) {
+       identifiedFlags.push_back("final"); 
+    }
+    // For ClassFile structures, 0x0020 is ACC_SUPER, which has historical significance only
+    // if (accessFlags & ClassFile::ACC_SUPER) {
+    //    identifiedFlags.push_back("super"); 
+    // }
+    if (accessFlags & ClassFile::ACC_INTERFACE) {
+       identifiedFlags.push_back("interface"); 
+    }
+    if (accessFlags & ClassFile::ACC_ABSTRACT) {
+       identifiedFlags.push_back("abstract"); 
+    }
+    if (accessFlags & ClassFile::ACC_SYNTHETIC) {
+       identifiedFlags.push_back("synthetic"); 
+    }
+    if (accessFlags & ClassFile::ACC_ANNOTATION) {
+       identifiedFlags.push_back("annotation"); 
+    }
+    if (accessFlags & ClassFile::ACC_ENUM) {
+       identifiedFlags.push_back("enum"); 
+    }
+
+    outputFlagsStream << "[";
+    if (!identifiedFlags.empty()) {
+        copy(identifiedFlags.begin(), identifiedFlags.end()-1, ostream_iterator<string>(outputFlagsStream, " "));
+        outputFlagsStream << identifiedFlags.back();
+    }
+    outputFlagsStream << "]";
+
+    return outputFlagsStream.str();
 }
 
 ClassPrinter::ClassPrinter(ClassFile classFile) {
@@ -74,13 +48,13 @@ void ClassPrinter::printGeneralInformation() {
     CPAttributeInterface attrInterface;
 
     cout << "------------------------------General Information------------------------------" << endl;
-    cout << "Magic Number:        " << hex << classFile.getMagic() << endl;
+    cout << "Magic Number:        " << "0x" << hex << classFile.getMagic() << endl;
     cout << "Minor version:       " << dec << classFile.getMinorVersion() << endl;
     cout << "Major version:       " << dec << classFile.getMajorVersion() << endl;
     cout << "Constant pool count: " << dec << classFile.getConstantPoolCount() << endl;
-    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << Flag_names(classFile.getAccessFlags(), 1) << endl;
-    cout << "ThisClass:           " <<"cp info#" << dec << classFile.getThisClass() << "<" << attrInterface.getUTF8(classFile.getConstantPool(),classFile.getThisClass()-1) << ">" << endl;
-    cout << "SuperClass:          " <<"cp info#" << dec << classFile.getSuperClass() <<" <" << attrInterface.getUTF8(classFile.getConstantPool(),classFile.getSuperClass()-1)<< ">" << endl;
+    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << interpretClassFlags(classFile.getAccessFlags()) << endl;
+    cout << "ThisClass:           " <<"cp_info# " << dec << classFile.getThisClass() << "<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getThisClass()-1) << ">" << endl;
+    cout << "SuperClass:          " <<"cp_info# " << dec << classFile.getSuperClass() <<"<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getSuperClass()-1)<< ">" << endl;
     cout << "Interfaces count :   " << dec << classFile.getInterfacesCount() << endl;
     cout << "Fields count:        " << dec << classFile.getFieldsCount() << dec << endl;
     cout << "Methods count:       " << dec << classFile.getMethodsCount() << dec << endl;
@@ -89,7 +63,6 @@ void ClassPrinter::printGeneralInformation() {
 
 void ClassPrinter::print(ClassFile classFile){
     vector<CPInfo*> a = classFile.getConstantPool();
-
     printGeneralInformation();
 
     
