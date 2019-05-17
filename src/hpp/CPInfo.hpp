@@ -88,7 +88,7 @@ typedef struct {
 } ConstantInvokeDynamicInfo;
 
 class CPInfo {
-public:
+private:
     uint8_t tag;
     union {
         ConstantClassInfo CONSTANT_Class_info;

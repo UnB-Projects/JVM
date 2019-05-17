@@ -5,7 +5,7 @@ ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
-        this->setMajor(fp);
+        this->setMinor(fp);
         this->setConstantPoolCount(fp);
         this->setConstantPool(fp);
         this->setAccessFlag(fp);
@@ -15,8 +15,6 @@ ClassFile::ClassFile(FILE * fp) {
         this->setInterface(fp);
         this->setFieldsCount(fp);
         this->setFields(fp);
-        cout << "#### "<<endl;
-
         this->setMethodsCount(fp);
         this->setMethods(fp);
         this->setAttributesCount(fp);
@@ -59,7 +57,6 @@ void ClassFile::setMagic(FILE * fp) {
 void ClassFile::setMajor(FILE * fp) {
     ByteReader<typeof(majorVersion)> majorReader;
     majorVersion = majorReader.byteCatch(fp);
-    cout  << "WHAT  = " << majorVersion << endl;
 }
 
 void ClassFile::setMinor(FILE * fp) {
@@ -69,7 +66,7 @@ void ClassFile::setMinor(FILE * fp) {
 
 void ClassFile::setConstantPoolCount(FILE * fp) {
     ByteReader<typeof(constantPoolCount)> cpCountReader;
-    minorVersion = cpCountReader.byteCatch(fp);
+    constantPoolCount = cpCountReader.byteCatch(fp);
 }
 
 void ClassFile::setConstantPool(FILE * fp) {
@@ -125,7 +122,6 @@ void ClassFile::setFields(FILE * fp) {
     for(int i = 0; i < this->fieldsCount; i++) {
         FieldInfo* field = (FieldInfo *)calloc(1, sizeof(FieldInfo));
         field->read(fp, this->constantPool);
-        cout <<"ClassFile @@@"<<endl;
         this->fields.push_back(field);
     }
 }
