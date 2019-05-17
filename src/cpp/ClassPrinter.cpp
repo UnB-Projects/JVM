@@ -10,7 +10,7 @@ using namespace std;
 * @return flag_name É retornado o nome para a flag setada
 */
 
-string Flag_names(int flag_byte, int parametro){
+string ClassPrinter::Flag_names(int flag_byte, int parametro){
   string flag_name;
   switch(flag_byte) {
     case 0: flag_name = "";
@@ -60,9 +60,9 @@ string Flag_names(int flag_byte, int parametro){
  * @param classloader Instancia da classe ClassLoader
  * @return void
  */
-void classPrinter(ClassLoader classloader){
-    CpAttributeInterface x;
-    vector<CpInfo*> a = classloader.getConstPool();
+void ClassPrinter::printer(ClassFile classloader){
+    CPAttributeInterface x;
+    vector<CPInfo*> a = classloader.getConstantPool();
 
     /* Print de infomações genericas do .class */
     std::cout << "------------------------------General information------------------------------ \n\n\n";
@@ -71,7 +71,7 @@ void classPrinter(ClassLoader classloader){
     std::cout << "MajorVersion : " << dec << classloader.getMajor() << endl;
     std::cout << "PoolCounter  : " << dec << classloader.getConstCount() << endl;
     std::cout << "AcessFlag    : "<< "0x" << setw(4) << setfill('0') << hex << classloader.getFlag() << Flag_names(classloader.getFlag(), 1) << endl;
-    std::cout << "ThisClass    : " <<"cp info #" << dec << classloader.getThisClass() <<" <"<<x.getUTF8(classloader.getConstPool(),classloader.getThisClass()-1)<<">"<< endl;
+    /*std::cout << "ThisClass    : " <<"cp info #" << dec << classloader.getThisClass() <<" <"<<x.getUTF8(classloader.getConstPool(),classloader.getThisClass()-1)<<">"<< endl;
     std::cout << "SuperClass   : " <<"cp info #" << dec << classloader.getSuper() <<" <"<<x.getUTF8(classloader.getConstPool(),classloader.getSuper()-1)<<">"<< endl;
     std::cout << "InterfaceCou : " << dec << classloader.getInterCounter() << endl;
     std::cout << "FieldsCount  : " << dec << classloader.getFieldCount() << dec << endl;
@@ -79,7 +79,7 @@ void classPrinter(ClassLoader classloader){
     std::cout << "AtributeCoun : " << dec << classloader.getAttriCount() << endl;
     /*Fim do Print de infomações genericas do .class */
     /* Print do vetor de constant pool */
-
+/*
     std::cout << "------------------------------ConstantPool------------------------------ \n\n\n";
     for(unsigned i = 0; i < a.size(); i++) {
       switch (a[i]->tag){
@@ -151,6 +151,8 @@ void classPrinter(ClassLoader classloader){
 
         case CONSTANT_Double:
           double print_double; /* Transforma os bytes para double */
+
+/*
           uint64_t aux;
           aux = ((uint64_t)a[i]->Double.high_bytes << 32) | a[i]->Double.low_bytes;
           memcpy(&print_double, &aux, sizeof(double));
@@ -184,10 +186,10 @@ void classPrinter(ClassLoader classloader){
     if(countFields == 0 ){
       std::cout << "EMPTY" << endl;
     }
-
+*/
 
     /* Print do vetor de interfaces */
-    std::vector<InterfaceInfo*> interfaces = classloader.getInterfaces();
+ /*   std::vector<InterfaceInfo*> interfaces = classloader.getInterfaces();
     std::cout << "------------------------------Interfaces------------------------------" << endl << endl;
     for (unsigned j = 0; j < interfaces.size(); j++) {
         std::cout << x.getUTF8(classloader.getConstPool(), interfaces[j]->interface_table -1);
@@ -196,7 +198,7 @@ void classPrinter(ClassLoader classloader){
     /* Fim do Print do vetor de interfaces */
 
     /* Printar o method */
-    std::cout << "------------------------------Method------------------------------" << endl << endl;
+/*    std::cout << "------------------------------Method------------------------------" << endl << endl;
     vector<MethodInfo *> methods = classloader.getMethods();
     int countMethod = methods.size();
     for(int i=0;i<countMethod;i++){
@@ -212,7 +214,7 @@ void classPrinter(ClassLoader classloader){
 
     /* Fim do print method */
     /* Print do vetor de attributes */
-    vector<AttributeInfo *> attributes = classloader.getAttributes();
+/*    vector<AttributeInfo *> attributes = classloader.getAttributes();
     std::cout << "\n------------------------------Attributes------------------------------" << endl << endl;
     for (unsigned k = 0 ; k < attributes.size(); k++) {
         std::cout << "[" << k << "]" ;

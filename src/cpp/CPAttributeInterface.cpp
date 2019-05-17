@@ -15,7 +15,12 @@
 
 string CPAttributeInterface::getUTF8(vector<CPInfo*> constantPool, uint16_t index) {
 
-    if(constantPool[index]->getTag() == 1) return (char*)constantPool[index]->getUTF8Info().bytes;
+    if(constantPool[index]->getTag() == 1) {
+        cout << "CPAttributeInterface !!!"  << endl;
+
+        return (char*)constantPool[index]->getUTF8Info().bytes;
+
+    }
 
     switch(constantPool[index]->getTag()) {
         

@@ -238,6 +238,8 @@ void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
     attributeNameIndex = twoByteReader.byteCatch(fp);
     attributeLength = fourByteReader.byteCatch(fp);
     string attributeName = utf8Getter.getUTF8(constantPool, attributeNameIndex-1);
+    cout<<"AtributeInfo***"<<endl;
+
 
     if(attributeName == "Code"){
         code.read(fp, constantPool);
