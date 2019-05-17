@@ -12,16 +12,14 @@ int main(int argc, char *argv[]) {
         cout << "Numero incorreto de argumentos especificado" << endl;
     }
     else {
+        FILE *fp;
         ClassLoader classLoader;
         ClassFile classFile;
-        ClassPrinter classPrinter;
-        FILE *fp;
-
         fp = fopen(argv[1], "rb");
-        cout<<"@@@"<<endl;
         classFile = classLoader.loadClassFile(fp);
-        classPrinter.printer(classFile);
         
+        ClassPrinter classPrinter(classFile);
+        classPrinter.print(classFile);
         /*
         printf("Magic: %#010x\n", classFile.getMagic());
         printf("Minor: %d\n", classFile.getMinorVersion());

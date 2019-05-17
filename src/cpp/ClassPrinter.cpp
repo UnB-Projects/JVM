@@ -1,79 +1,98 @@
 #include "../hpp/ClassPrinter.hpp"
 
-/**
-* @brief Verifica qual o access_flag
-* @param flag_byte É enviado o valor da flag
-* @param parametro verificar se a flag 32 é classloader ou method
-* @return flag_name É retornado o nome para a flag setada
-*/
+string ClassPrinter::interpretFlags(uint16_t accessFlags) {
+    // vector<string> identifiedFlags;
+
+    // if (accessFlags|0x0001)
+}
+
 string ClassPrinter::Flag_names(int flag_byte, int parametro){
-  string flag_name;
-  switch(flag_byte) {
-    case 0: flag_name = "";
-      break;
-    case 1: flag_name = "[public]";
-      break;
-    case 33: flag_name = "[public]";
-      break;
-    case 9: flag_name = "[public static]";
-      break;
-    case 2: flag_name = "[private]";
-      break;
-    case 4: flag_name = "[protect]";
-      break;
-    case 8: flag_name = "[static]";
-      break;
-    case 16: flag_name = "[final]";
-      break;
-    case 32: 
-      if(parametro == 1){
-        flag_name = "[super]";
-      }
-      else{
-        flag_name = "[synchronized]";
-      }
-      break;
-    case 512: flag_name = "[interface]";
-      break;
-    case 1024: flag_name = "[abstract]";
-      break;
-    case 64:  flag_name = "[bridge]";
-      break;
-    case 128: flag_name = "[varargs]";
-      break;
-    case 256: flag_name = "[native]";
-      break;
-    case 2048: flag_name = "[strict]";
-      break;
-    case 4096: flag_name = "[synthetic]";
-      break;      
-  }
+    string flag_name;
+    switch(flag_byte) {
+    case 0: 
+        flag_name = "";
+        break;
+    case 0x0001:
+        flag_name = "[public]";
+        break;
+    case 33:
+        flag_name = "[public]";
+        break;
+    case 9:
+        flag_name = "[public static]";
+        break;
+    // case 0x0010:
+    //     flag_name = "[private]";
+    //     break;
+    case 4:
+        flag_name = "[protect]";
+        break;
+    case 8:
+        flag_name = "[static]";
+        break;
+    case 16:
+        flag_name = "[final]";
+        break;
+    case 32:
+        if(parametro == 1){
+            flag_name = "[super]";
+        }
+        else{
+            flag_name = "[synchronized]";
+        }
+        break;
+    case 512:
+        flag_name = "[interface]";
+        break;
+    case 1024:
+        flag_name = "[abstract]";
+        break;
+    case 64:
+         flag_name = "[bridge]";
+        break;
+    case 128:
+        flag_name = "[varargs]";
+        break;
+    case 256:
+        flag_name = "[native]";
+        break;
+    case 2048:
+        flag_name = "[strict]";
+        break;
+    case 4096:
+        flag_name = "[synthetic]";
+        break;      
+    }
   return flag_name;
 }
 
-/** 
- * @brief Chama o exibidor de ClassLoader
- * @param classloader Instancia da classe ClassLoader
- * @return void
- */
-void ClassPrinter::printer(ClassFile classloader){
-    CPAttributeInterface x;
-    vector<CPInfo*> a = classloader.getConstantPool();
+ClassPrinter::ClassPrinter(ClassFile classFile) {
+    this->classFile = classFile;
+}
 
-    /* Print de infomações genericas do .class */
-    cout << "------------------------------General Information------------------------------ \n\n\n";
-    cout << "Magic Number  : " << hex << classloader.getMagic() << endl;
-    cout << "Minor version : " << dec << classloader.getMinorVersion() << endl;
-    cout << "Major version : " << dec << classloader.getMajorVersion() << endl;
-    cout << "Constant pool count  : " << dec << classloader.getConstantPoolCount() << endl;
-    cout << "Access flags    : "<< "0x" << setw(4) << setfill('0') << hex << classloader.getAccessFlags() << Flag_names(classloader.getAccessFlags(), 1) << endl;
-    //std::cout << "ThisClass    : " <<"cp info #" << dec << classloader.getThisClass() <<"<"<<x.getUTF8(classloader.getConstantPool(),classloader.getThisClass()-1)<<">"<< endl;
-    //std::cout << "SuperClass   : " <<"cp info #" << dec << classloader.getSuperClass() <<" <"<<x.getUTF8(classloader.getConstantPool(),classloader.getSuperClass()-1)<<">"<< endl;
-    cout << "Interfaces count : " << dec << classloader.getInterfacesCount() << endl;
-    cout << "Fields count  : " << dec << classloader.getFieldsCount() << dec << endl;
-    cout << "Methods count  : " << dec << classloader.getMethodsCount() << dec << endl;
-    cout << "Atributes count : " << dec << classloader.getAttributesCount() << endl;
-    /*Fim do Print de infomações genericas do .class */
+void ClassPrinter::printGeneralInformation() {
+    CPAttributeInterface attrInterface;
+
+    cout << "------------------------------General Information------------------------------" << endl;
+    cout << "Magic Number:        " << hex << classFile.getMagic() << endl;
+    cout << "Minor version:       " << dec << classFile.getMinorVersion() << endl;
+    cout << "Major version:       " << dec << classFile.getMajorVersion() << endl;
+    cout << "Constant pool count: " << dec << classFile.getConstantPoolCount() << endl;
+    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << Flag_names(classFile.getAccessFlags(), 1) << endl;
+    cout << "ThisClass:           " <<"cp info#" << dec << classFile.getThisClass() << "<" << attrInterface.getUTF8(classFile.getConstantPool(),classFile.getThisClass()-1) << ">" << endl;
+    cout << "SuperClass:          " <<"cp info#" << dec << classFile.getSuperClass() <<" <" << attrInterface.getUTF8(classFile.getConstantPool(),classFile.getSuperClass()-1)<< ">" << endl;
+    cout << "Interfaces count :   " << dec << classFile.getInterfacesCount() << endl;
+    cout << "Fields count:        " << dec << classFile.getFieldsCount() << dec << endl;
+    cout << "Methods count:       " << dec << classFile.getMethodsCount() << dec << endl;
+    cout << "Atributes count:     " << dec << classFile.getAttributesCount() << endl;
+}
+
+void ClassPrinter::print(ClassFile classFile){
+    vector<CPInfo*> a = classFile.getConstantPool();
+
+    printGeneralInformation();
+
+    
     /* Print do vetor de constant pool */
 /*
     std::cout << "------------------------------ConstantPool------------------------------ \n\n\n";
