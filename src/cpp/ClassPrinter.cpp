@@ -62,10 +62,58 @@ void ClassPrinter::printGeneralInformation() {
 }
 
 void ClassPrinter::printConstantPool() {
-    
+    CPAttributeInterface attrInterface;
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+
+    cout << "------------------------------ConstantPool------------------------------ \n\n\n";
+    for (int i = 0; i < classFile.getConstantPoolCount()-1; i++) {
+        CPInfo *cpInfo = constantPool[i];
+
+        cout << "[" << i+1 << "]";
+
+        switch (cpInfo->getTag()) {
+        case CPInfo::CONSTANT_Class:
+            cout << "Class name: cp_info #" << cpInfo->getClassInfo().name_index
+                 << "<" << attrInterface.getUTF8(constantPool, cpInfo->getClassInfo().name_index-1) << ">";
+            break;
+        case CPInfo::CONSTANT_Fieldref:
+            // cout << "Class name cp_info #" << cpInfo->getFieldrefInfo().class_index << "<" << attrInterface << ">" << endl;
+            break;
+        case CPInfo::CONSTANT_Methodref:
+            break;
+        case CPInfo::CONSTANT_InterfaceMethodref:
+            break;    
+        case CPInfo::CONSTANT_String:
+            break;
+        case CPInfo::CONSTANT_Integer:
+            break;
+        case CPInfo::CONSTANT_Float:
+            break;
+        case CPInfo::CONSTANT_Long:
+            break;
+        case CPInfo::CONSTANT_Double:
+            break;
+        case CPInfo::CONSTANT_NameAndType:
+            break;
+        case CPInfo::CONSTANT_Utf8:
+            break;
+        case CPInfo::CONSTANT_MethodHandle:
+            break;
+        case CPInfo::CONSTANT_MethodType:
+            break;
+        case CPInfo::CONSTANT_InvokeDynamic:
+            break;
+        case CPInfo::CONSTANT_Empty:
+            break;
+        default:
+            break;
+        }
+        cout << endl;
+    }
 }
 
 void ClassPrinter::print(ClassFile classFile){
     vector<CPInfo*> a = classFile.getConstantPool();
     printGeneralInformation();
+    printConstantPool();
 }

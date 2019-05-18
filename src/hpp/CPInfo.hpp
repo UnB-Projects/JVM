@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <utility>
 #include "ByteReader.hpp"
 
 using namespace std;
@@ -92,6 +94,9 @@ private:
         ConstantMethodTypeInfo CONSTANT_MethodType_info;
         ConstantInvokeDynamicInfo CONSTANT_InvokeDynamic_info;
     };
+    string getUTF8(vector<CPInfo*> constantPool);
+    string getClassUTF8(vector<CPInfo*> constantPool);
+    string getNameAndTypeUTF8(vector<CPInfo*> constantPool);
 public:
     static const uint8_t CONSTANT_Class = 7;
     static const uint8_t CONSTANT_Fieldref = 9;
@@ -113,6 +118,7 @@ public:
     ~CPInfo();
     void read(FILE *fp);
     void setTag(uint8_t tag);
+    pair<string,string> getInfo(vector<CPInfo*> constantPool);
 
     uint8_t getTag() {
         return this->tag;
