@@ -2,6 +2,7 @@
 #define CPINFO_H_INCLUDED
 
 #include <cstdint>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -101,6 +102,7 @@ private:
     pair<string,string> getMethodrefUTF8(vector<CPInfo*> constantPool);
     pair<string,string> getInterfaceMethodrefUTF8(vector<CPInfo*> constantPool);
     pair<string,string> getNameAndTypeUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getDoubleUTF8(vector<CPInfo*> constantPool);
 public:
     static const uint8_t CONSTANT_Class = 7;
     static const uint8_t CONSTANT_Fieldref = 9;
@@ -123,6 +125,8 @@ public:
     void read(FILE *fp);
     void setTag(uint8_t tag);
     pair<string,string> getInfo(vector<CPInfo*> constantPool);
+    int64_t getLongNumber();
+    double getDoubleNumber();
 
     uint8_t getTag() {
         return this->tag;
