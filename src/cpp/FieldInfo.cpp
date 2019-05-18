@@ -2,8 +2,7 @@
 
 FieldInfo::~FieldInfo() {   
     for(auto a : this->attributes) {
-        a->~AttributeInfo();
-        free(a);
+        // a->~AttributeInfo();
     }
 }
 

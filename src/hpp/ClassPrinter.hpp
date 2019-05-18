@@ -14,6 +14,7 @@ class ClassPrinter {
 private:
     ClassFile classFile;
     void printGeneralInformation();
+    void printConstantPool();
     string interpretClassFlags(uint16_t);
 
 public:

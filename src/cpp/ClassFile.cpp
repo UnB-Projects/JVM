@@ -43,9 +43,10 @@ ClassFile::~ClassFile() {
         f->~FieldInfo();
     }
 
-    for(auto m : methods) {
-        m->~MethodInfo();
-    }
+    //Isso causa segfault nao sei pq
+    // for(auto m : methods) {
+    //     m->~MethodInfo();
+    // }
 
     for(auto cp : constantPool) {
         cp->~CPInfo();
