@@ -62,7 +62,6 @@ void ClassPrinter::printGeneralInformation() {
 }
 
 void ClassPrinter::printConstantPool() {
-    CPAttributeInterface attrInterface;
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
     cout << "------------------------------ConstantPool------------------------------ \n\n\n";
@@ -74,7 +73,7 @@ void ClassPrinter::printConstantPool() {
         switch (cpInfo->getTag()) {
         case CPInfo::CONSTANT_Class:
             cout << "Class name: cp_info #" << cpInfo->getClassInfo().name_index
-                 << "<" << attrInterface.getUTF8(constantPool, cpInfo->getClassInfo().name_index-1) << ">";
+                 << "<" << cpInfo->getInfo(constantPool).first << ">";
             break;
         case CPInfo::CONSTANT_Fieldref:
             // cout << "Class name cp_info #" << cpInfo->getFieldrefInfo().class_index << "<" << attrInterface << ">" << endl;

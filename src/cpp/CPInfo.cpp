@@ -67,51 +67,74 @@ void CPInfo::read(FILE * fp) {
     }
 }
 
-// string CPInfo::getUTF8(vector<CPInfo*> constantPool) {
-//     return (char*)CONSTANT_Utf8_info.bytes;
-// }
+string CPInfo::getUTF8(vector<CPInfo*> constantPool) {
+    return (char*)CONSTANT_Utf8_info.bytes;
+}
 
-// string CPInfo::getClassUTF8(vector<CPInfo*> constantPool) {
-//     CPInfo* utf8 = constantPool[CONSTANT_Class_info.name_index-1];
-//     return utf8->getUTF8(constantPool);
-// }
+string CPInfo::getClassUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *nameInfo = constantPool[CONSTANT_Class_info.name_index-1];
+    return nameInfo->getUTF8(constantPool);
+}
 
-// string CPInfo::getNameAndTypeUTF8(vector<CPInfo*> constantPool) {
+string CPInfo::getStringUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *stringInfo = constantPool[CONSTANT_String_info.string_index-1];
+    return stringInfo->getClassUTF8(constantPool);
+}
 
-// }
+pair<string,string> CPInfo::getFieldrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_Fieldref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_Fieldref_info.name_and_type_index-1];
+    return make_pair(classInfo->getClassUTF8(constantPool), nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first);
+}
 
-// pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
-//     switch(tag) {
-//     case CONSTANT_Utf8:
-//         return make_pair(getUTF8(constantPool), "");
-//         break;
-//     case CONSTANT_Class:
-//         return make_pair(getClassUTF8(constantPool), "");
-//         break;
-//     case CONSTANT_Fieldref:
-//         CPInfo *classInfo = constantPool[CONSTANT_Fieldref_info.class_index-1];
-//         CPInfo *nameAndTypeInfo = constantPool[CONSTANT_Fieldref_info.name_and_type_index-1];
-//         return make_pair(classInfo->getClassUTF8)
+pair<string,string> CPInfo::getMethodrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_Methodref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_Methodref_info.name_and_type_index-1];
+    return make_pair(classInfo->getClassUTF8(constantPool), nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first);
+}
 
-//         break;
-//     case CONSTANT_Methodref:
-//         return getUTF8(constantPool, constantPool[index]->CONSTANT_Methodref_info.class_index-1);
-//         // return getUTF8(constantPool, constantPool[index]->getMethodrefInfo().name_and_type_index -1);
-//         break;
-//     case CONSTANT_NameAndType:
-//         return getUTF8(constantPool, constantPool[index]->CONSTANT_NameAndType_info.name_index -1);
-//         // return getUTF8(constantPool, constantPool[index]->getNameAndTypeInfo().descriptor_index -1);
-//         break;
-//     case CONSTANT_InterfaceMethodref:
-//         return getUTF8(constantPool, constantPool[index]->CONSTANT_InterfaceMethodref_info.class_index -1);
-//         // return getUTF8(constantPool, constantPool[index]->getInterfaceMethodrefInfo().name_and_type_index -1);
-//         break;
-//     case CONSTANT_String:
-//         return getUTF8(constantPool, constantPool[index]->CONSTANT_String_info.string_index -1);
-//         break;
-//     default:
-//         cout << "Erro! Tag nao reconhecida:" << constantPool[index]->tag << endl;
-//         exit(0);
-//         break;
-//     }
-// }
+pair<string,string> CPInfo::getInterfaceMethodrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_InterfaceMethodref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_InterfaceMethodref_info.name_and_type_index-1];
+    return make_pair(classInfo->getClassUTF8(constantPool), nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first);
+}
+
+pair<string,string> CPInfo::getNameAndTypeUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *nameInfo = constantPool[CONSTANT_NameAndType_info.name_index-1];
+    CPInfo *descriptorInfo = constantPool[CONSTANT_NameAndType_info.descriptor_index-1];
+    return make_pair(nameInfo->getClassUTF8(constantPool), descriptorInfo->getUTF8(constantPool)); 
+}
+
+
+pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
+    pair<string,string> info;
+    switch(tag) {
+    case CONSTANT_Utf8:
+        info =  make_pair(getUTF8(constantPool), "");
+        break;
+    case CONSTANT_Class:
+        info = make_pair(getClassUTF8(constantPool), "");
+        break;
+    case CONSTANT_Fieldref:
+        info = getFieldrefUTF8(constantPool);
+        break;
+    case CONSTANT_Methodref:
+        info = getMethodrefUTF8(constantPool);
+        break;
+    case CONSTANT_NameAndType:
+        info = getNameAndTypeUTF8(constantPool);
+        break;
+    case CONSTANT_InterfaceMethodref:
+        info = getInterfaceMethodrefUTF8(constantPool);
+        break;
+    case CONSTANT_String:
+        info = make_pair(getStringUTF8(constantPool), "");
+        break;
+    default:
+        cout << "Erro! Tag nao reconhecida:" << tag << endl;
+        exit(0);
+        break;
+    }
+
+    return info;
+}

@@ -96,7 +96,11 @@ private:
     };
     string getUTF8(vector<CPInfo*> constantPool);
     string getClassUTF8(vector<CPInfo*> constantPool);
-    string getNameAndTypeUTF8(vector<CPInfo*> constantPool);
+    string getStringUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getFieldrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getMethodrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getInterfaceMethodrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getNameAndTypeUTF8(vector<CPInfo*> constantPool);
 public:
     static const uint8_t CONSTANT_Class = 7;
     static const uint8_t CONSTANT_Fieldref = 9;
