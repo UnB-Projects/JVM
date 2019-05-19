@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <sstream>
 #include "ByteReader.hpp"
 
 using namespace std;
@@ -95,6 +96,7 @@ private:
         ConstantMethodTypeInfo CONSTANT_MethodType_info;
         ConstantInvokeDynamicInfo CONSTANT_InvokeDynamic_info;
     };
+    string escapeString(string input);
     string getUTF8(vector<CPInfo*> constantPool);
     string getClassUTF8(vector<CPInfo*> constantPool);
     string getStringUTF8(vector<CPInfo*> constantPool);

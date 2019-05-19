@@ -123,13 +123,13 @@ void ClassPrinter::printConstantPool() {
             info = cpInfo->getInfo(constantPool);
             cout << "CONSTANT_NameAndType_info" << endl;
             cout << "Name      :" << "cp_info #" << cpInfo->getNameAndTypeInfo().name_index << " <" << info.first << ">" << endl;
-            cout << "Descriptor:" << "cp_info #" << cpInfo->getNameAndTypeInfo().name_index << " <" << info.second << ">" << endl;
+            cout << "Descriptor:" << "cp_info #" << cpInfo->getNameAndTypeInfo().name_index << " <" << info.second << ">";
             break;
         case CPInfo::CONSTANT_Utf8:
             cout << "Constant_Utf8_info" << endl;
             cout << "Length of byte array: " << cpInfo->getUTF8Info().length << endl;
             cout << "Length of string:     " << cpInfo->getUTF8Info().length << endl;
-            cout << "String:               " << (char*)cpInfo->getUTF8Info().bytes;
+            cout << "String:               " << cpInfo->getInfo(constantPool).first;
             break;
         // case CPInfo::CONSTANT_MethodHandle:
         //     break;

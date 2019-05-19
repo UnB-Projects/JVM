@@ -70,8 +70,26 @@ void CPInfo::read(FILE * fp) {
     }
 }
 
+string CPInfo::escapeString(string input) {
+    string output;
+
+    for (auto c : input) {
+        if (isprint((unsigned char) c)) {
+            output += c;
+        }
+        else {
+            stringstream stream;
+            stream << uppercase << hex << (unsigned int)(unsigned char)(c);
+            string code = stream.str();
+            output += string("\\x") + (code.size() < 2 ? "0" : "") + code;
+        }
+    }
+    return output;
+}
+
 string CPInfo::getUTF8(vector<CPInfo*> constantPool) {
-    return (char*)CONSTANT_Utf8_info.bytes;
+    string str = (char*)CONSTANT_Utf8_info.bytes;
+    return escapeString(str);
 }
 
 string CPInfo::getClassUTF8(vector<CPInfo*> constantPool) {
