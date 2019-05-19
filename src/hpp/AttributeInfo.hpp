@@ -146,6 +146,14 @@ public:
     ~AttributeInfo();
     void read(FILE*, vector<CPInfo*>);
     void print(vector<CPInfo*>);
+
+    uint16_t getAttributeNameIndex() {
+        return attributeNameIndex;
+    }
+
+    uint16_t getAttributeLength() {
+        return attributeLength;
+    }
 };
 
 #endif

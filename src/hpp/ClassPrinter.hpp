@@ -14,9 +14,13 @@ using namespace std;
 class ClassPrinter {
 private:
     ClassFile classFile;
+    string interpretClassFlags(uint16_t);
     void printGeneralInformation();
     void printConstantPool();
-    string interpretClassFlags(uint16_t);
+    void printInterfaces();
+    void printFields();
+    void printMethods();
+    void printAttributes();
 
 public:
     ClassPrinter(ClassFile classFile);

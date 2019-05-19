@@ -64,7 +64,7 @@ void ClassPrinter::printGeneralInformation() {
 void ClassPrinter::printConstantPool() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
-    cout << "------------------------------ConstantPool------------------------------ \n\n\n";
+    cout << "------------------------------Constant Pool------------------------------" << endl << endl;
     for (int i = 0; i < classFile.getConstantPoolCount()-1; i++) {
         CPInfo *cpInfo = constantPool[i];
         cout << "[" << i+1 << "]";
@@ -147,8 +147,65 @@ void ClassPrinter::printConstantPool() {
     }
 }
 
+void ClassPrinter::printInterfaces() {
+
+}
+
+void ClassPrinter::printFields() {
+    
+}
+
+void ClassPrinter::printMethods() {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    cout << "------------------------------Methods------------------------------" << endl << endl;
+    for (int i = 0; i < classFile.getMethodsCount(); i++) {
+        
+    }
+    
+    
+}
+
+void ClassPrinter::printAttributes() {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<AttributeInfo*> attributes = classFile.getAttributes();
+    cout << "------------------------------Attributes------------------------------" << endl << endl;
+
+    for (int i = 0; i < classFile.getAttributesCount(); i++) {
+        AttributeInfo* attribute = attributes[i];
+        uint16_t nameIndex = attribute->getAttributeNameIndex();
+        string attributeName = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        uint16_t attributeLength = attribute->getAttributeLength();
+
+        cout << "[" << i << "]" << attributeName << endl;
+        cout << "Generic info ---------------------------------------------" << endl << endl;
+        cout << "Attribute name index: cp_info #" << nameIndex << " <" << attributeName << ">" << endl;
+        cout << "Attribute length:     " << attributeLength << endl << endl;
+        cout << "Specific info --------------------------------------------" << endl << endl;
+    
+        if (attributeName.compare("ConstantValue")) {
+
+        }
+        else if (attributeName.compare("Code")) {
+
+        }
+        else if (attributeName.compare("InnerClasses")) {
+            
+        }
+        else if (attributeName.compare("SourceFile")) {
+            
+        }
+        else if (attributeName.compare("LineNumberTable")) {
+            
+        }
+        else {
+
+        }
+    }
+}
+
 void ClassPrinter::print(ClassFile classFile){
     vector<CPInfo*> a = classFile.getConstantPool();
     printGeneralInformation();
     printConstantPool();
+    printAttributes();
 }

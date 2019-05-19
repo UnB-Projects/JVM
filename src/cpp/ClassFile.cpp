@@ -22,7 +22,6 @@ ClassFile::ClassFile(FILE * fp) {
         this->setMethods(fp);
         this->setAttributesCount(fp);
         this->setAttributes(fp);
-
     }
     else {
         cout << "O magic number nao eh 0xCAFEBABE! Programa terminado!" << endl;

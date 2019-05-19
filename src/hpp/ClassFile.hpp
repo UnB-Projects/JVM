@@ -115,7 +115,9 @@ public:
         return attributesCount;
     }
 
-    vector<AttributeInfo*> getAttributes();
+    vector<AttributeInfo*> getAttributes() {
+        return attributes;
+    }
 
     // bool DEBUG = true;
 };
