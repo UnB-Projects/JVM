@@ -14,8 +14,6 @@ void CPInfo::read(FILE * fp) {
     ByteReader<uint32_t> fourByteReader;
 
     this->tag = oneByteReader.byteCatch(fp);
-    // printf("%d\n", this->tag);
-
 
     switch(this->tag) {
     case CONSTANT_Utf8:
@@ -26,6 +24,9 @@ void CPInfo::read(FILE * fp) {
             this->CONSTANT_Utf8_info.bytes[j] = byte;
         }
         this->CONSTANT_Utf8_info.bytes[this->CONSTANT_Utf8_info.length] = '\0';
+        if ((char*)CONSTANT_Utf8_info.bytes == 0) {
+            printf("\n\nO valor de bytes nao pode ser zero!\n\n");
+        }
         break;
     case CONSTANT_Integer:
         this->CONSTANT_Integer_info.bytes = fourByteReader.byteCatch(fp);
@@ -67,4 +68,112 @@ void CPInfo::read(FILE * fp) {
         cout << "Uma tag invalida foi detectada" << endl;
         exit(0);
     }
+}
+
+string CPInfo::escapeString(string input) {
+    string output;
+
+    for (auto c : input) {
+        if (isprint((unsigned char) c)) {
+            output += c;
+        }
+        else {
+            stringstream stream;
+            stream << uppercase << hex << (unsigned int)(unsigned char)(c);
+            string code = stream.str();
+            output += string("\\x") + (code.size() < 2 ? "0" : "") + code;
+        }
+    }
+    return output;
+}
+
+string CPInfo::getUTF8(vector<CPInfo*> constantPool) {
+    string str = (char*)CONSTANT_Utf8_info.bytes;
+    return escapeString(str);
+}
+
+string CPInfo::getClassUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *nameInfo = constantPool[CONSTANT_Class_info.name_index-1];
+    return nameInfo->getUTF8(constantPool);
+}
+
+string CPInfo::getStringUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *stringInfo = constantPool[CONSTANT_String_info.string_index-1];
+    return stringInfo->getUTF8(constantPool);
+}
+
+pair<string,string> CPInfo::getFieldrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_Fieldref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_Fieldref_info.name_and_type_index-1];
+    string className = classInfo->getClassUTF8(constantPool);
+    string nameAndType = nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first + " : " + nameAndTypeInfo->getNameAndTypeUTF8(constantPool).second;
+    return make_pair(className, nameAndType);
+}
+
+pair<string,string> CPInfo::getMethodrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_Methodref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_Methodref_info.name_and_type_index-1];
+    string className = classInfo->getClassUTF8(constantPool);
+    string nameAndType = nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first + " : " + nameAndTypeInfo->getNameAndTypeUTF8(constantPool).second;
+    return make_pair(className, nameAndType);
+}
+
+pair<string,string> CPInfo::getInterfaceMethodrefUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *classInfo = constantPool[CONSTANT_InterfaceMethodref_info.class_index-1];
+    CPInfo *nameAndTypeInfo = constantPool[CONSTANT_InterfaceMethodref_info.name_and_type_index-1];
+    string className = classInfo->getClassUTF8(constantPool);
+    string nameAndType = nameAndTypeInfo->getNameAndTypeUTF8(constantPool).first + " : " + nameAndTypeInfo->getNameAndTypeUTF8(constantPool).second;
+    return make_pair(className, nameAndType);
+}
+
+pair<string,string> CPInfo::getNameAndTypeUTF8(vector<CPInfo*> constantPool) {
+    CPInfo *nameInfo = constantPool[CONSTANT_NameAndType_info.name_index-1];
+    CPInfo *descriptorInfo = constantPool[CONSTANT_NameAndType_info.descriptor_index-1];
+    string name = nameInfo->getUTF8(constantPool);
+    string descriptor = descriptorInfo->getUTF8(constantPool);
+    return make_pair(name, descriptor); 
+}
+
+pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
+    pair<string,string> info;
+    switch(tag) {
+    case CONSTANT_Utf8:
+        info =  make_pair(getUTF8(constantPool), "");
+        break;
+    case CONSTANT_Class:
+        info = make_pair(getClassUTF8(constantPool), "");
+        break;
+    case CONSTANT_Fieldref:
+        info = getFieldrefUTF8(constantPool);
+        break;
+    case CONSTANT_Methodref:
+        info = getMethodrefUTF8(constantPool);
+        break;
+    case CONSTANT_NameAndType:
+        info = getNameAndTypeUTF8(constantPool);
+        break;
+    case CONSTANT_InterfaceMethodref:
+        info = getInterfaceMethodrefUTF8(constantPool);
+        break;
+    case CONSTANT_String:
+        info = make_pair(getStringUTF8(constantPool), "");
+        break;
+    default:
+        cout << "Erro! Tag nao reconhecida:" << tag << endl;
+        exit(0);
+        break;
+    }
+
+    return info;
+}
+
+int64_t CPInfo::getLongNumber() {
+    return ((uint64_t)this->CONSTANT_Long_info.high_bytes << 32) | this->CONSTANT_Long_info.low_bytes;
+}
+
+double CPInfo::getDoubleNumber() {
+    uint64_t aux = ((uint64_t)this->CONSTANT_Long_info.high_bytes << 32) | this->CONSTANT_Long_info.low_bytes;
+    double num;
+    memcpy(&num, &aux, sizeof(double));
+    return num;
 }

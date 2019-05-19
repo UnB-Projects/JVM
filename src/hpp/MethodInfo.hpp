@@ -9,6 +9,12 @@ using namespace std;
 
 class MethodInfo {
 private:
+    uint16_t accessFlags;
+    uint16_t nameIndex;
+    uint16_t descriptorIndex;
+    uint16_t attributesCount;
+    vector<AttributeInfo*> attributes;
+public:
     static const uint16_t ACC_PUBLIC = 0x0001;
     static const uint16_t ACC_PRIVATE = 0x0002;
     static const uint16_t ACC_PROTECTED = 0x0004;
@@ -21,13 +27,6 @@ private:
     static const uint16_t ACC_ABSTRACT = 0x0400;
     static const uint16_t ACC_STRICT = 0x0800;
     static const uint16_t ACC_SYNTHETIC = 0x1000;
-
-    uint16_t accessFlags;
-    uint16_t nameIndex;
-    uint16_t descriptorIndex;
-    uint16_t attributesCount;
-    vector<AttributeInfo*> attributes;
-public:
     void read(FILE* fp, vector<CPInfo*> constantPool);
     ~MethodInfo();
 };

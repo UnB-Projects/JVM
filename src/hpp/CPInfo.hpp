@@ -2,27 +2,15 @@
 #define CPINFO_H_INCLUDED
 
 #include <cstdint>
+#include <cstring>
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <utility>
+#include <sstream>
 #include "ByteReader.hpp"
 
 using namespace std;
-
-#define CONSTANT_Class 7
-#define CONSTANT_Fieldref 9
-#define CONSTANT_Methodref 10
-#define CONSTANT_InterfaceMethodref 11
-#define CONSTANT_String 8
-#define CONSTANT_Integer 3
-#define CONSTANT_Float 4
-#define CONSTANT_Long 5
-#define CONSTANT_Double 6
-#define CONSTANT_NameAndType 12
-#define CONSTANT_Utf8 1
-#define CONSTANT_MethodHandle 15
-#define CONSTANT_MethodType 16
-#define CONSTANT_InvokeDynamic 18
-#define CONSTANT_Empty 0
 
 typedef struct {
     uint16_t name_index;
@@ -108,11 +96,39 @@ private:
         ConstantMethodTypeInfo CONSTANT_MethodType_info;
         ConstantInvokeDynamicInfo CONSTANT_InvokeDynamic_info;
     };
+    string escapeString(string input);
+    string getUTF8(vector<CPInfo*> constantPool);
+    string getClassUTF8(vector<CPInfo*> constantPool);
+    string getStringUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getFieldrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getMethodrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getInterfaceMethodrefUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getNameAndTypeUTF8(vector<CPInfo*> constantPool);
+    pair<string,string> getDoubleUTF8(vector<CPInfo*> constantPool);
 public:
+    static const uint8_t CONSTANT_Class = 7;
+    static const uint8_t CONSTANT_Fieldref = 9;
+    static const uint8_t CONSTANT_Methodref = 10;
+    static const uint8_t CONSTANT_InterfaceMethodref = 11;
+    static const uint8_t CONSTANT_String = 8;
+    static const uint8_t CONSTANT_Integer = 3;
+    static const uint8_t CONSTANT_Float = 4;
+    static const uint8_t CONSTANT_Long = 5;
+    static const uint8_t CONSTANT_Double = 6;
+    static const uint8_t CONSTANT_NameAndType = 12;
+    static const uint8_t CONSTANT_Utf8 = 1;
+    static const uint8_t CONSTANT_MethodHandle = 15;
+    static const uint8_t CONSTANT_MethodType = 16;
+    static const uint8_t CONSTANT_InvokeDynamic = 18;
+    static const uint8_t CONSTANT_Empty = 0;
+
     CPInfo();
     ~CPInfo();
     void read(FILE *fp);
     void setTag(uint8_t tag);
+    pair<string,string> getInfo(vector<CPInfo*> constantPool);
+    int64_t getLongNumber();
+    double getDoubleNumber();
 
     uint8_t getTag() {
         return this->tag;

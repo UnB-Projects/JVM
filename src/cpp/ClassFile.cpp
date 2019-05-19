@@ -6,7 +6,6 @@ ClassFile::ClassFile() {
 
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
-
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
         this->setMajorVersion(fp);
@@ -43,9 +42,10 @@ ClassFile::~ClassFile() {
         f->~FieldInfo();
     }
 
-    for(auto m : methods) {
-        m->~MethodInfo();
-    }
+    //Isso causa segfault nao sei pq
+    // for(auto m : methods) {
+    //     m->~MethodInfo();
+    // }
 
     for(auto cp : constantPool) {
         cp->~CPInfo();
@@ -79,9 +79,9 @@ void ClassFile::setConstantPool(FILE * fp) {
         cpInfo->read(fp);
         this->constantPool.push_back(cpInfo);
 
-        if((cpInfo->getTag() == CONSTANT_Double) || (cpInfo->getTag() == CONSTANT_Long)) {
+        if((cpInfo->getTag() == CPInfo::CONSTANT_Double) || (cpInfo->getTag() == CPInfo::CONSTANT_Long)) {
             CPInfo *emptyCPInfo = (CPInfo *)calloc(1, sizeof(CPInfo));
-            emptyCPInfo->setTag(CONSTANT_Empty);
+            emptyCPInfo->setTag(CPInfo::CONSTANT_Empty);
             this->constantPool.push_back(emptyCPInfo);
             i++;
         }
