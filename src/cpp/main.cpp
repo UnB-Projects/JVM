@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
         classFile = classLoader.loadClassFile(fp);
         
         ClassPrinter classPrinter(classFile);
-        classPrinter.print(classFile);
+        classPrinter.print();
         fclose(fp);
     }
     return 0;

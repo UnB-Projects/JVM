@@ -52,7 +52,7 @@ void ClassPrinter::printGeneralInformation() {
     cout << "Minor version:       " << dec << classFile.getMinorVersion() << endl;
     cout << "Major version:       " << dec << classFile.getMajorVersion() << endl;
     cout << "Constant pool count: " << dec << classFile.getConstantPoolCount() << endl;
-    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << interpretClassFlags(classFile.getAccessFlags()) << endl;
+    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << " " << interpretClassFlags(classFile.getAccessFlags()) << endl;
     cout << "ThisClass:           " <<"cp_info# " << dec << classFile.getThisClass() << "<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getThisClass()-1) << ">" << endl;
     cout << "SuperClass:          " <<"cp_info# " << dec << classFile.getSuperClass() <<"<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getSuperClass()-1)<< ">" << endl;
     cout << "Interfaces count :   " << dec << classFile.getInterfacesCount() << endl;
@@ -123,7 +123,7 @@ void ClassPrinter::printConstantPool() {
             info = cpInfo->getInfo(constantPool);
             cout << "CONSTANT_NameAndType_info" << endl;
             cout << "Name      :" << "cp_info #" << cpInfo->getNameAndTypeInfo().name_index << " <" << info.first << ">" << endl;
-            cout << "Descriptor:" << "cp_info #" << cpInfo->getNameAndTypeInfo().name_index << " <" << info.second << ">";
+            cout << "Descriptor:" << "cp_info #" << cpInfo->getNameAndTypeInfo().descriptor_index << " <" << info.second << ">";
             break;
         case CPInfo::CONSTANT_Utf8:
             cout << "Constant_Utf8_info" << endl;
@@ -203,8 +203,7 @@ void ClassPrinter::printAttributes() {
     }
 }
 
-void ClassPrinter::print(ClassFile classFile){
-    vector<CPInfo*> a = classFile.getConstantPool();
+void ClassPrinter::print(){
     printGeneralInformation();
     printConstantPool();
     printAttributes();

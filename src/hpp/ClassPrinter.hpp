@@ -24,7 +24,7 @@ private:
 
 public:
     ClassPrinter(ClassFile classFile);
-    void print(ClassFile classloader);
+    void print();
     //nao mudei o nome da funcao de baixo, dps nois ve como fica
     string Flag_names(int flag_byte, int parametro);
 };
