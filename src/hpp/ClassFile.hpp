@@ -103,13 +103,17 @@ public:
         return fieldsCount;
     }
 
-    std::vector<FieldInfo*> getFields();
+    std::vector<FieldInfo*> getFields() {
+        return fields;
+    }
 
     uint16_t getMethodsCount() {
         return methodsCount;
     }
 
-    vector<MethodInfo*> getMethods();
+    vector<MethodInfo*> getMethods() {
+        return methods;
+    }
 
     uint16_t getAttributesCount() {
         return attributesCount;

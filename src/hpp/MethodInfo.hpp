@@ -29,6 +29,22 @@ public:
     static const uint16_t ACC_SYNTHETIC = 0x1000;
     void read(FILE* fp, vector<CPInfo*> constantPool);
     ~MethodInfo();
+
+    uint16_t getAccessFlags() {
+        return accessFlags;
+    }
+    uint16_t getNameIndex() {
+        return nameIndex;
+    }
+    uint16_t getDescriptorIndex() {
+        return descriptorIndex;
+    }
+    uint16_t getAttributesCount() {
+        return attributesCount;
+    }
+    vector<AttributeInfo*> getAttributes() {
+        return attributes;
+    }
 };
 
 #endif

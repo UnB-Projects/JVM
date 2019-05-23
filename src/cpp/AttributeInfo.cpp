@@ -219,12 +219,6 @@ void SourceFileAttribute::read(FILE * fp) {
     sourcefileIndex = twoByteReader.byteCatch(fp);
 }
 
-void SourceFileAttribute::print(std::vector<CPInfo*> trueCpInfo) {
-    // CpAttributeInterface utf8Getter;
-
-    // cout <<"Source file name index: cp info #" << this->sourceFileIndex <<" <" << utf8Getter.getUTF8(trueCpInfo, this->sourceFileIndex - 1)<< ">" << endl;
-}
-
 AttributeInfo::~AttributeInfo() {
     //TODO
 }

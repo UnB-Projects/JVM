@@ -85,12 +85,15 @@ public:
     void print(vector<CPInfo*>);
 };
 
+
 class SourceFileAttribute {
 private:
     uint16_t sourcefileIndex;
 public:
     void read(FILE*);
-    void print(vector<CPInfo*>);
+    uint16_t getSourceFileIndex() {
+        return sourcefileIndex;
+    }
 };
 
 class LineNumber {
@@ -99,6 +102,12 @@ private:
     uint16_t lineNumber;
 public:
     void read(FILE *fp);
+    uint16_t getStartPC() {
+        return startPC;
+    }
+    uint16_t getLineNumber() {
+        return lineNumber;
+    }
 };
 
 class LineNumberTableAttribute {
@@ -153,6 +162,26 @@ public:
 
     uint16_t getAttributeLength() {
         return attributeLength;
+    }
+
+    ConstantValueAttribute getConstantValueAttribute() {
+        return constantValue;
+    }
+
+    CodeAttribute getCodeAttribute() {
+        return code;
+    }
+
+    InnerClassesAttribute getInnerClassesAttribute() {
+        return innerClasses;
+    }
+
+    SourceFileAttribute getSourceFileAttribute() {
+        return sourceFile;
+    }
+
+    LineNumberTableAttribute getLineNumberTableAttribute() {
+        return lineNumberTable;
     }
 };
 

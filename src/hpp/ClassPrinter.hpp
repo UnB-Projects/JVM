@@ -22,6 +22,8 @@ private:
     void printMethods();
     void printAttributes();
 
+    void printSourceFileInfo(SourceFileAttribute*);
+
 public:
     ClassPrinter(ClassFile classFile);
     void print();

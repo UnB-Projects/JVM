@@ -157,12 +157,33 @@ void ClassPrinter::printFields() {
 
 void ClassPrinter::printMethods() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<MethodInfo*> methods = classFile.getMethods();
+
     cout << "------------------------------Methods------------------------------" << endl << endl;
+    cout << "Displayed members---------------------------------------------" << endl << endl;
+    cout << "Member count: " << classFile.getMethodsCount() << endl << endl;
+
     for (int i = 0; i < classFile.getMethodsCount(); i++) {
+        MethodInfo* method = methods[i];
+        uint16_t nameIndex = method->getNameIndex();
+        uint16_t descriptorIndex = method->getDescriptorIndex();
+        string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
         
+        cout << "[" << i << "]" << name << endl;
+        cout << "Name      :" << "cp_info #" << nameIndex << " <" << name << ">" << endl;
+        cout << "Descriptor:" << "cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
     }
     
     
+}
+
+void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
+    uint16_t sourceFileIndex = attribute->getSourceFileIndex();
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    CPInfo* info = constantPool[sourceFileIndex-1];
+
+    cout << "Source file name index: cp_info #" << sourceFileIndex << " <" << info->getInfo(constantPool).first << ">" << endl;
 }
 
 void ClassPrinter::printAttributes() {
@@ -182,19 +203,20 @@ void ClassPrinter::printAttributes() {
         cout << "Attribute length:     " << attributeLength << endl << endl;
         cout << "Specific info --------------------------------------------" << endl << endl;
     
-        if (attributeName.compare("ConstantValue")) {
+        if (attributeName.compare("ConstantValue") == 0) {
 
         }
-        else if (attributeName.compare("Code")) {
+        else if (attributeName.compare("Code") == 0) {
 
         }
-        else if (attributeName.compare("InnerClasses")) {
+        else if (attributeName.compare("InnerClasses") == 0) {
             
         }
-        else if (attributeName.compare("SourceFile")) {
-            
+        else if (attributeName.compare("SourceFile") == 0) {
+            SourceFileAttribute sourceFileAttribute = attribute->getSourceFileAttribute();
+            printSourceFileInfo(&sourceFileAttribute);
         }
-        else if (attributeName.compare("LineNumberTable")) {
+        else if (attributeName.compare("LineNumberTable") == 0) {
             
         }
         else {
@@ -204,7 +226,8 @@ void ClassPrinter::printAttributes() {
 }
 
 void ClassPrinter::print(){
-    printGeneralInformation();
-    printConstantPool();
+    // printGeneralInformation();
+    // printConstantPool();
+    printMethods();
     printAttributes();
 }
