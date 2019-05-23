@@ -40,6 +40,57 @@ string ClassPrinter::interpretClassFlags(uint16_t accessFlags) {
     return outputFlagsStream.str();
 }
 
+string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
+    vector<string> identifiedFlags;
+    ostringstream outputFlagsStream;
+
+    if (accessFlags & MethodInfo::ACC_PUBLIC) {
+       identifiedFlags.push_back("public"); 
+    }
+    if (accessFlags & MethodInfo::ACC_PRIVATE) {
+       identifiedFlags.push_back("private"); 
+    }
+    if (accessFlags & MethodInfo::ACC_PROTECTED) {
+       identifiedFlags.push_back("protected"); 
+    }
+    if (accessFlags & MethodInfo::ACC_STATIC) {
+       identifiedFlags.push_back("static"); 
+    }
+    if (accessFlags & MethodInfo::ACC_FINAL) {
+       identifiedFlags.push_back("final"); 
+    }
+    if (accessFlags & MethodInfo::ACC_SYNCHRONIZED) {
+       identifiedFlags.push_back("synchronized"); 
+    }
+    if (accessFlags & MethodInfo::ACC_BRIDGE) {
+       identifiedFlags.push_back("bridge"); 
+    }
+    if (accessFlags & MethodInfo::ACC_VARARGS) {
+       identifiedFlags.push_back("varargs"); 
+    }
+    if (accessFlags & MethodInfo::ACC_NATIVE) {
+       identifiedFlags.push_back("native"); 
+    }
+    if (accessFlags & MethodInfo::ACC_ABSTRACT) {
+       identifiedFlags.push_back("abstract"); 
+    }
+    if (accessFlags & MethodInfo::ACC_STRICT) {
+       identifiedFlags.push_back("strict"); 
+    }
+    if (accessFlags & MethodInfo::ACC_SYNTHETIC) {
+       identifiedFlags.push_back("synthetic"); 
+    }
+
+    outputFlagsStream << "[";
+    if (!identifiedFlags.empty()) {
+        copy(identifiedFlags.begin(), identifiedFlags.end()-1, ostream_iterator<string>(outputFlagsStream, " "));
+        outputFlagsStream << identifiedFlags.back();
+    }
+    outputFlagsStream << "]";
+
+    return outputFlagsStream.str();
+}
+
 ClassPrinter::ClassPrinter(ClassFile classFile) {
     this->classFile = classFile;
 }
@@ -159,7 +210,7 @@ void ClassPrinter::printMethods() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<MethodInfo*> methods = classFile.getMethods();
 
-    cout << "------------------------------Methods------------------------------" << endl << endl;
+    cout << "******************************Methods******************************" << endl << endl;
     cout << "Displayed members---------------------------------------------" << endl << endl;
     cout << "Member count: " << classFile.getMethodsCount() << endl << endl;
 
@@ -169,10 +220,18 @@ void ClassPrinter::printMethods() {
         uint16_t descriptorIndex = method->getDescriptorIndex();
         string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
         string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+        uint16_t accessFlags = method->getAccessFlags();
         
         cout << "[" << i << "]" << name << endl;
-        cout << "Name      :" << "cp_info #" << nameIndex << " <" << name << ">" << endl;
-        cout << "Descriptor:" << "cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
+        cout << "Name      :   " << "cp_info #" << nameIndex << " <" << name << ">" << endl;
+        cout << "Descriptor:   " << "cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
+        printf("Access flags: 0x%04X <%s>\n", accessFlags, interpretMethodFlags(accessFlags).c_str());
+        cout << endl;
+
+        for (int j = 0; j < method->getAttributesCount(); j++) {
+            printAttributes(method->getAttributes());
+        }
+        
     }
     
     
@@ -186,10 +245,11 @@ void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
     cout << "Source file name index: cp_info #" << sourceFileIndex << " <" << info->getInfo(constantPool).first << ">" << endl;
 }
 
-void ClassPrinter::printAttributes() {
+void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
+}
+
+void ClassPrinter::printAttributes(vector<AttributeInfo*> attributes) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
-    vector<AttributeInfo*> attributes = classFile.getAttributes();
-    cout << "------------------------------Attributes------------------------------" << endl << endl;
 
     for (int i = 0; i < classFile.getAttributesCount(); i++) {
         AttributeInfo* attribute = attributes[i];
@@ -207,7 +267,8 @@ void ClassPrinter::printAttributes() {
 
         }
         else if (attributeName.compare("Code") == 0) {
-
+            CodeAttribute codeAttribute = attribute->getCodeAttribute();
+            printCodeInfo(&codeAttribute);
         }
         else if (attributeName.compare("InnerClasses") == 0) {
             
@@ -222,12 +283,16 @@ void ClassPrinter::printAttributes() {
         else {
 
         }
+
+        cout << endl << "----------------------------------------------------------" << endl ;
+
     }
 }
 
 void ClassPrinter::print(){
-    // printGeneralInformation();
-    // printConstantPool();
+    printGeneralInformation();
+    printConstantPool();
     printMethods();
-    printAttributes();
+    // cout << "******************************Attributes******************************" << endl << endl;
+    // printAttributes(classFile.getAttributes());
 }

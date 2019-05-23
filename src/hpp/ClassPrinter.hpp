@@ -15,14 +15,16 @@ class ClassPrinter {
 private:
     ClassFile classFile;
     string interpretClassFlags(uint16_t);
+    string interpretMethodFlags(uint16_t);
     void printGeneralInformation();
     void printConstantPool();
     void printInterfaces();
     void printFields();
     void printMethods();
-    void printAttributes();
+    void printAttributes(vector<AttributeInfo*>);
 
     void printSourceFileInfo(SourceFileAttribute*);
+    void printCodeInfo(CodeAttribute*);
 
 public:
     ClassPrinter(ClassFile classFile);

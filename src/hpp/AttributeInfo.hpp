@@ -40,19 +40,37 @@ private:
     uint16_t maxStack;
     uint16_t maxLocals;
     uint32_t codeLength;
-    // vector<uint8_t> code;
     uint8_t *code;
     uint16_t exceptionTableLength;
-    // vector<ExceptionHandler>exceptionTable;
     ExceptionHandler* exceptionTable;
     uint16_t attributesCount;
-    // vector<AttributeInfo> attributes;
     AttributeInfo *attributes;
 public:
-    CodeAttribute();
-    ~CodeAttribute();
     void read(FILE*, vector<CPInfo*>);
-    void print(vector<CPInfo*>);
+    uint16_t getMaxStack() {
+        return maxStack;
+    }
+    uint16_t getMaxLocals() {
+        return maxLocals;
+    }
+    uint32_t getCodeLength() {
+        return codeLength;
+    }
+    uint8_t* getCode() {
+        return code;
+    }
+    uint16_t getExceptionTableLength() {
+        return exceptionTableLength;
+    }
+    ExceptionHandler* getExceptionTable() {
+        return exceptionTable;
+    }
+    uint16_t getAttributesCount() {
+        return attributesCount;
+    }
+    AttributeInfo* getAttributes() {
+        return attributes;
+    }
 };
 
 class ExceptionsAttribute {
