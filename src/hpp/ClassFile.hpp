@@ -19,16 +19,6 @@ using namespace std;
 
 class ClassFile {
 private:
-    static const uint32_t MAGIC_NUMBER = 0xCAFEBABE;
-    static const uint16_t ACC_PUBLIC = 0x0001;
-    static const uint16_t ACC_FINAL = 0x0010;
-    static const uint16_t ACC_SUPER = 0x0020;
-    static const uint16_t ACC_INTERFACE = 0x0200;
-    static const uint16_t ACC_ABSTRACT = 0x0400;
-    static const uint16_t ACC_SYNTHETIC = 0x1000;
-    static const uint16_t ACC_ANNOTATION = 0x2000;
-    static const uint16_t ACC_ENUM = 0x4000;
-
     uint32_t magic;
     uint16_t minorVersion;
     uint16_t majorVersion;
@@ -47,23 +37,31 @@ private:
     vector<AttributeInfo*> attributes;
 
     void setMagic(FILE * fp);
-    void setMajor(FILE * fp);
+    void setMajorVersion(FILE * fp);
     void setMinor(FILE * fp);
     void setConstantPoolCount(FILE * fp);
     void setConstantPool(FILE * fp);
-    void setAccessFlag(FILE * fp);
+    void setAccessFlags(FILE * fp);
     void setThisClass(FILE * fp);
     void setSuperClass(FILE * fp);
-    void setInterfaceCount(FILE * fp);
-    void setInterface(FILE * fp);
+    void setInterfacesCount(FILE * fp);
+    void setInterfaces(FILE * fp);
     void setFieldsCount(FILE * fp);
     void setFields(FILE * fp);
     void setMethodsCount(FILE * fp);
     void setMethods(FILE * fp);
     void setAttributesCount(FILE * fp);
     void setAttributes(FILE * fp);
-
 public:
+    static const uint32_t MAGIC_NUMBER = 0xCAFEBABE;
+    static const uint16_t ACC_PUBLIC = 0x0001;
+    static const uint16_t ACC_FINAL = 0x0010;
+    static const uint16_t ACC_SUPER = 0x0020;
+    static const uint16_t ACC_INTERFACE = 0x0200;
+    static const uint16_t ACC_ABSTRACT = 0x0400;
+    static const uint16_t ACC_SYNTHETIC = 0x1000;
+    static const uint16_t ACC_ANNOTATION = 0x2000;
+    static const uint16_t ACC_ENUM = 0x4000;
     ClassFile();
     ClassFile(FILE * fp);
     ~ClassFile();
@@ -105,19 +103,25 @@ public:
         return fieldsCount;
     }
 
-    std::vector<FieldInfo*> getFields();
+    std::vector<FieldInfo*> getFields() {
+        return fields;
+    }
 
     uint16_t getMethodsCount() {
         return methodsCount;
     }
 
-    vector<MethodInfo*> getMethods();
+    vector<MethodInfo*> getMethods() {
+        return methods;
+    }
 
     uint16_t getAttributesCount() {
         return attributesCount;
     }
 
-    vector<AttributeInfo*> getAttributes();
+    vector<AttributeInfo*> getAttributes() {
+        return attributes;
+    }
 
     // bool DEBUG = true;
 };

@@ -1,22 +1,21 @@
 #include "../hpp/ClassFile.hpp"
 
 ClassFile::ClassFile() {
-
+    //Apenas para inicializar na main
 }
 
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
-
     if ((this->getMagic()) == 0xCAFEBABE) {
         this->setMinor(fp);
-        this->setMajor(fp);
+        this->setMajorVersion(fp);
         this->setConstantPoolCount(fp);
         this->setConstantPool(fp);
-        this->setAccessFlag(fp);
+        this->setAccessFlags(fp);
         this->setThisClass(fp);
         this->setSuperClass(fp);
-        this->setInterfaceCount(fp);
-        this->setInterface(fp);
+        this->setInterfacesCount(fp);
+        this->setInterfaces(fp);
         this->setFieldsCount(fp);
         this->setFields(fp);
         this->setMethodsCount(fp);
@@ -43,9 +42,10 @@ ClassFile::~ClassFile() {
         f->~FieldInfo();
     }
 
-    for(auto m : methods) {
-        m->~MethodInfo();
-    }
+    //Isso causa segfault nao sei pq
+    // for(auto m : methods) {
+    //     m->~MethodInfo();
+    // }
 
     for(auto cp : constantPool) {
         cp->~CPInfo();
@@ -58,7 +58,7 @@ void ClassFile::setMagic(FILE * fp) {
     magic = magicReader.byteCatch(fp);
 }
 
-void ClassFile::setMajor(FILE * fp) {
+void ClassFile::setMajorVersion(FILE * fp) {
     ByteReader<typeof(majorVersion)> majorReader;
     majorVersion = majorReader.byteCatch(fp);
 }
@@ -79,16 +79,16 @@ void ClassFile::setConstantPool(FILE * fp) {
         cpInfo->read(fp);
         this->constantPool.push_back(cpInfo);
 
-        if((cpInfo->getTag() == CONSTANT_Double) || (cpInfo->getTag() == CONSTANT_Long)) {
+        if((cpInfo->getTag() == CPInfo::CONSTANT_Double) || (cpInfo->getTag() == CPInfo::CONSTANT_Long)) {
             CPInfo *emptyCPInfo = (CPInfo *)calloc(1, sizeof(CPInfo));
-            emptyCPInfo->setTag(CONSTANT_Empty);
+            emptyCPInfo->setTag(CPInfo::CONSTANT_Empty);
             this->constantPool.push_back(emptyCPInfo);
             i++;
         }
     } 
 }
 
-void ClassFile::setAccessFlag(FILE * fp) {
+void ClassFile::setAccessFlags(FILE * fp) {
     ByteReader<typeof(accessFlags)> accessFlagsReader;
     accessFlags = accessFlagsReader.byteCatch(fp);
 }
@@ -103,12 +103,12 @@ void ClassFile::setSuperClass(FILE * fp) {
     superClass = superClassReader.byteCatch(fp);
 }
 
-void ClassFile::setInterfaceCount(FILE * fp) {
+void ClassFile::setInterfacesCount(FILE * fp) {
     ByteReader<typeof(interfacesCount)> interfacesCountReader;
     interfacesCount = interfacesCountReader.byteCatch(fp);
 }
 
-void ClassFile::setInterface(FILE * fp) {
+void ClassFile::setInterfaces(FILE * fp) {
     for (int i = 0; i < this->interfacesCount; i++) {
         InterfaceInfo *interfaceInfo = (InterfaceInfo*)calloc(1, sizeof(InterfaceInfo));
         interfaceInfo->read(fp);

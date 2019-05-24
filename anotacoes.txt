@@ -7,3 +7,5 @@ Usar calloc ou malloc na inicializacao dos vetores?
 InnerClasses nao funciona com a implementacao anterior
 
 Talvez a leitura de um attribute esteja errada!
+
+funcao recursiva UTF8 esta com dois retornos nos cases

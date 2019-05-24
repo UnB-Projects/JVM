@@ -15,40 +15,41 @@
 
 string CPAttributeInterface::getUTF8(vector<CPInfo*> constantPool, uint16_t index) {
 
-    if(constantPool[index]->getTag() == 1) return (char*)constantPool[index]->getUTF8Info().bytes;
+    if(constantPool[index]->getTag() == 1) {
+        return (char*)constantPool[index]->getUTF8Info().bytes;
+    }
 
-    switch(constantPool[index]->getTag()) {
-        
-        case CONSTANT_Class:
-            return getUTF8(constantPool, constantPool[index]->getClassInfo().name_index-1);
-            break;
+    switch(constantPool[index]->getTag()) {   
+    case CONSTANT_Class:
+        return getUTF8(constantPool, constantPool[index]->getClassInfo().name_index-1);
+        break;
 
-        case CONSTANT_Fieldref:
-            return getUTF8(constantPool, constantPool[index]->getFieldrefInfo().class_index-1);
-            return getUTF8(constantPool, constantPool[index]->getFieldrefInfo().name_and_type_index-1);
-            break;
+    case CONSTANT_Fieldref:
+        return getUTF8(constantPool, constantPool[index]->getFieldrefInfo().class_index-1);
+        // return getUTF8(constantPool, constantPool[index]->getFieldrefInfo().name_and_type_index-1);
+        break;
 
-        case CONSTANT_Methodref:
-            return getUTF8(constantPool, constantPool[index]->getMethodrefInfo().class_index-1);
-            return getUTF8(constantPool, constantPool[index]->getMethodrefInfo().name_and_type_index -1);
-            break;
+    case CONSTANT_Methodref:
+        return getUTF8(constantPool, constantPool[index]->getMethodrefInfo().class_index-1);
+        // return getUTF8(constantPool, constantPool[index]->getMethodrefInfo().name_and_type_index -1);
+        break;
 
-        case CONSTANT_NameAndType:
-            return getUTF8(constantPool, constantPool[index]->getNameAndTypeInfo().name_index -1);
-            return getUTF8(constantPool, constantPool[index]->getNameAndTypeInfo().descriptor_index -1);
-            break;
+    case CONSTANT_NameAndType:
+        return getUTF8(constantPool, constantPool[index]->getNameAndTypeInfo().name_index -1);
+        // return getUTF8(constantPool, constantPool[index]->getNameAndTypeInfo().descriptor_index -1);
+        break;
 
-        case CONSTANT_InterfaceMethodref:
-            return getUTF8(constantPool, constantPool[index]->getInterfaceMethodrefInfo().class_index -1);
-            return getUTF8(constantPool, constantPool[index]->getInterfaceMethodrefInfo().name_and_type_index -1);
-            break;
+    case CONSTANT_InterfaceMethodref:
+        return getUTF8(constantPool, constantPool[index]->getInterfaceMethodrefInfo().class_index -1);
+        // return getUTF8(constantPool, constantPool[index]->getInterfaceMethodrefInfo().name_and_type_index -1);
+        break;
 
-        case CONSTANT_String:
-            return getUTF8(constantPool, constantPool[index]->getStringInfo().string_index -1);
-            break;
-        default:
-            cout << "Tag nao reconhecida!" << endl;
-            return "";
-            break; /* Must Change default */
+    case CONSTANT_String:
+        return getUTF8(constantPool, constantPool[index]->getStringInfo().string_index -1);
+        break;
+    default:
+        cout << "Erro! Tag nao reconhecida!" << endl;
+        exit(0);
+        break;
     }
 } 

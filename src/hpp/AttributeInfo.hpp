@@ -40,19 +40,37 @@ private:
     uint16_t maxStack;
     uint16_t maxLocals;
     uint32_t codeLength;
-    // vector<uint8_t> code;
     uint8_t *code;
     uint16_t exceptionTableLength;
-    // vector<ExceptionHandler>exceptionTable;
     ExceptionHandler* exceptionTable;
     uint16_t attributesCount;
-    // vector<AttributeInfo> attributes;
     AttributeInfo *attributes;
 public:
-    CodeAttribute();
-    ~CodeAttribute();
     void read(FILE*, vector<CPInfo*>);
-    void print(vector<CPInfo*>);
+    uint16_t getMaxStack() {
+        return maxStack;
+    }
+    uint16_t getMaxLocals() {
+        return maxLocals;
+    }
+    uint32_t getCodeLength() {
+        return codeLength;
+    }
+    uint8_t* getCode() {
+        return code;
+    }
+    uint16_t getExceptionTableLength() {
+        return exceptionTableLength;
+    }
+    ExceptionHandler* getExceptionTable() {
+        return exceptionTable;
+    }
+    uint16_t getAttributesCount() {
+        return attributesCount;
+    }
+    AttributeInfo* getAttributes() {
+        return attributes;
+    }
 };
 
 class ExceptionsAttribute {
@@ -85,12 +103,15 @@ public:
     void print(vector<CPInfo*>);
 };
 
+
 class SourceFileAttribute {
 private:
     uint16_t sourcefileIndex;
 public:
     void read(FILE*);
-    void print(vector<CPInfo*>);
+    uint16_t getSourceFileIndex() {
+        return sourcefileIndex;
+    }
 };
 
 class LineNumber {
@@ -99,6 +120,12 @@ private:
     uint16_t lineNumber;
 public:
     void read(FILE *fp);
+    uint16_t getStartPC() {
+        return startPC;
+    }
+    uint16_t getLineNumber() {
+        return lineNumber;
+    }
 };
 
 class LineNumberTableAttribute {
@@ -146,6 +173,34 @@ public:
     ~AttributeInfo();
     void read(FILE*, vector<CPInfo*>);
     void print(vector<CPInfo*>);
+
+    uint16_t getAttributeNameIndex() {
+        return attributeNameIndex;
+    }
+
+    uint16_t getAttributeLength() {
+        return attributeLength;
+    }
+
+    ConstantValueAttribute getConstantValueAttribute() {
+        return constantValue;
+    }
+
+    CodeAttribute getCodeAttribute() {
+        return code;
+    }
+
+    InnerClassesAttribute getInnerClassesAttribute() {
+        return innerClasses;
+    }
+
+    SourceFileAttribute getSourceFileAttribute() {
+        return sourceFile;
+    }
+
+    LineNumberTableAttribute getLineNumberTableAttribute() {
+        return lineNumberTable;
+    }
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 MethodInfo::~MethodInfo() {
     for (auto a : attributes) {
-        a->~AttributeInfo();
+        //TODO
     }
 }
 
