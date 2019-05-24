@@ -290,11 +290,64 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 case Instruction::T_INT:     cout << "(int)";    break;
                 case Instruction::T_LONG:    cout << "(long)";   break;
                 }
+                cout << endl;
             }
         }
         else if (instruction.getBytesCount() == 2) {
-            int byte1 = bytecode[++i];
-            int byte2 = bytecode[++i];
+            uint8_t byte1 = bytecode[++i];
+            uint8_t byte2 = bytecode[++i];
+            if (opcode == Instruction::sipush) {
+                int16_t immediate = ((int16_t)byte1 << 8) | byte2;
+                cout << immediate << endl;
+            }
+            else if (opcode == Instruction::iinc) {
+                int index = byte1;
+                int constImmediate = byte2;
+                cout << index << " by " << constImmediate << endl;
+            }
+            else if ((opcode >= Instruction::ifeq && opcode <= Instruction::jsr) ||
+                     (opcode == Instruction::ifnull) ||
+                     (opcode == Instruction::ifnonnull)) {
+                int16_t offset = ((int16_t)byte1 << 8) | byte2;
+                int index = i-2 + offset;
+                string sign = offset > 0 ? "+" : "";
+
+                cout << index << " (" << sign << offset << ")" << endl;
+            }
+            else if ((opcode == Instruction::ldc_w) ||
+                     (opcode == Instruction::ldc2_w) ||
+                     (opcode >= Instruction::getstatic && opcode <= Instruction::invokestatic)) {
+                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                string methodName = constantPool[index-1]->getInfo(constantPool).first;
+                string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
+                int j = 0;
+                while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+                    j++;
+                }
+                string name = nameAndType.substr(0,j);
+
+                cout << "#" << index << " <" << methodName << "." << name << ">" << endl;
+            }
+            else if ((opcode == Instruction::newOp) ||
+                     (opcode == Instruction::anewarray) ||
+                     (opcode == Instruction::checkcast) ||
+                     (opcode == Instruction::instanceof)) {
+                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                string className = constantPool[index-1]->getInfo(constantPool).first;
+                cout << "#" << index << " <" << className << ">" << endl;
+            }
+        }
+        else if (instruction.getBytesCount() == 3) {
+            uint8_t byte1 = bytecode[++i];
+            uint8_t byte2 = bytecode[++i];
+            uint8_t byte3 = bytecode[++i];
+            cout << endl;
+        }
+        else if (instruction.getBytesCount() == 4) {
+            uint8_t byte1 = bytecode[++i];
+            uint8_t byte2 = bytecode[++i];
+            uint8_t byte3 = bytecode[++i];
+            uint8_t byte4 = bytecode[++i];
             cout << endl;
         }
     }
