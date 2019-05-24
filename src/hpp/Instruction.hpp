@@ -239,6 +239,16 @@ public:
     static const uint8_t goto_w = 0xc8;
     static const uint8_t jsr_w = 0xc9;
 
+
+    //newarray type codes
+    static const uint8_t T_BOOLEAN = 4;
+    static const uint8_t T_CHAR = 5;
+    static const uint8_t T_FLOAT = 6;
+    static const uint8_t T_DOUBLE = 7;
+    static const uint8_t T_BYTE = 8;
+    static const uint8_t T_SHORT = 9;
+    static const uint8_t T_INT = 10;
+    static const uint8_t T_LONG = 11;
 };
 
 #endif

@@ -158,6 +158,18 @@ pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
     case CONSTANT_String:
         info = make_pair(getStringUTF8(constantPool), "");
         break;
+    case CONSTANT_Integer:
+        info = make_pair(to_string(getIntegerInfo().bytes), "");
+        break;
+    case CONSTANT_Float:
+        info = make_pair(to_string(getFloatInfo().bytes), "");
+        break;
+    case CONSTANT_Long:
+        info = make_pair(to_string(getLongNumber()), "");
+        break;
+    case CONSTANT_Double:
+        info = make_pair(to_string(getDoubleNumber()), "");
+        break;
     default:
         cout << "Erro! Tag nao reconhecida:" << tag << endl;
         exit(0);

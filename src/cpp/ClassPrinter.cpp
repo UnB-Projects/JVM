@@ -152,23 +152,23 @@ void ClassPrinter::printConstantPool() {
             break;
         case CPInfo::CONSTANT_Integer:
             cout << "CONSTANT_Integer" << endl;
-            cout << "Bytes: " << cpInfo->getIntegerInfo().bytes;
+            cout << "Bytes: " << cpInfo->getInfo(constantPool).first;
             break;
         case CPInfo::CONSTANT_Float:
             cout << "CONSTANT_Float_info" << endl;
-            cout << "Bytes: " << cpInfo->getFloatInfo().bytes;
+            cout << "Bytes: " << cpInfo->getInfo(constantPool).first;
             break;
         case CPInfo::CONSTANT_Long:
             cout << "CONSTANT_Long_info" << endl;
             printf("High Bytes: 0x%08X\n", cpInfo->getLongInfo().high_bytes);
             printf("High Bytes: 0x%08X\n", cpInfo->getLongInfo().low_bytes);
-            cout << "Long:       " << cpInfo->getLongNumber();
+            cout << "Long:       " << cpInfo->getInfo(constantPool).first;
             break;
         case CPInfo::CONSTANT_Double:
             cout << "CONSTANT_Double_info" << endl;
             printf("High Bytes: 0x%08X\n", cpInfo->getDoubleInfo().high_bytes);
             printf("High Bytes: 0x%08X\n", cpInfo->getDoubleInfo().low_bytes);
-            printf("Double:     %lf", cpInfo->getDoubleNumber());
+            cout << "Double:     " << cpInfo->getInfo(constantPool).first;
             break;
         case CPInfo::CONSTANT_NameAndType:
             info = cpInfo->getInfo(constantPool);
@@ -246,21 +246,58 @@ void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
 }
 
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
     InstructionSet instructionsSet;
     uint32_t instructionsCount = instructionsSet.getInstructionsCount();
     Instruction* instructions = instructionsSet.getInstructionSet();
     
     cout << "Bytecode-----------" << endl;
-    // for (int i = 0; i < attribute->getCodeLength(); i++) {
-    //     uint8_t opcode = bytecode[i];
-    //     cout << i << ": " << instructions[opcode].getMnemonic();
+    for (int i = 0; i < attribute->getCodeLength(); i++) {
+        uint8_t opcode = bytecode[i];
+        Instruction instruction = instructions[opcode];
 
-    //     for (int j = 0; j < instructions[opcode].getBytesCount(); j++) {
-    //         uint8_t index = bytecode[++i];
-    //     }
-        
-    // }
+        cout << i << ": " << instruction.getMnemonic() << " ";
+
+        //Operacoes que nao tem bytes adicionais
+        if (instruction.getBytesCount() == 0) {
+            cout << endl;
+        }
+        else if (instruction.getBytesCount() == 1) {
+            int byte = bytecode[++i];
+
+            //Operacoes que exigem referencia a constant pool
+            if (opcode == Instruction::ldc) {
+                int index = byte;
+                cout << "#" << index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
+            }
+            else if((opcode == Instruction::bipush) ||
+                    (opcode >= Instruction::iload && opcode <= Instruction::aload) || 
+                    (opcode >= Instruction::istore && opcode <= Instruction::astore) ||
+                    (opcode == Instruction::ret) ) {
+                cout << byte << endl;
+            }
+            else if (opcode == Instruction::newarray) {
+                int atype = byte;
+                cout << atype << " ";
+                switch(atype) {
+                case Instruction::T_BOOLEAN: cout << "(bool)";   break;
+                case Instruction::T_CHAR:    cout << "(char)";   break;
+                case Instruction::T_FLOAT:   cout << "(float)";  break;
+                case Instruction::T_DOUBLE:  cout << "(double)"; break;
+                case Instruction::T_BYTE:    cout << "(byte)";   break;
+                case Instruction::T_SHORT:   cout << "(short)";  break;
+                case Instruction::T_INT:     cout << "(int)";    break;
+                case Instruction::T_LONG:    cout << "(long)";   break;
+                }
+            }
+        }
+        else if (instruction.getBytesCount() == 2) {
+            int byte1 = bytecode[++i];
+            int byte2 = bytecode[++i];
+            cout << endl;
+        }
+    }
     
 }
 
