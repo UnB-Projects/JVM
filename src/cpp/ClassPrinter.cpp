@@ -246,6 +246,22 @@ void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
 }
 
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
+    uint8_t* bytecode = attribute->getCode();
+    InstructionSet instructionsSet;
+    uint32_t instructionsCount = instructionsSet.getInstructionsCount();
+    Instruction* instructions = instructionsSet.getInstructionSet();
+    
+    cout << "Bytecode-----------" << endl;
+    // for (int i = 0; i < attribute->getCodeLength(); i++) {
+    //     uint8_t opcode = bytecode[i];
+    //     cout << i << ": " << instructions[opcode].getMnemonic();
+
+    //     for (int j = 0; j < instructions[opcode].getBytesCount(); j++) {
+    //         uint8_t index = bytecode[++i];
+    //     }
+        
+    // }
+    
 }
 
 void ClassPrinter::printAttributes(vector<AttributeInfo*> attributes) {

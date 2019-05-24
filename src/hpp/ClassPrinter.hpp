@@ -8,6 +8,7 @@
 #include <utility>
 #include "ClassFile.hpp"
 #include "CPAttributeInterface.hpp"
+#include "InstructionSet.hpp"
 
 using namespace std;
 

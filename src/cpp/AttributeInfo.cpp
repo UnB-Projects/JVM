@@ -123,14 +123,15 @@ AttributeInfo::~AttributeInfo() {
 }
 
 void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
-    CPAttributeInterface utf8Getter;
+    CPInfo* cpInfo;
     ByteReader<uint8_t> oneByteReader;
     ByteReader<uint16_t> twoByteReader;
     ByteReader<uint32_t> fourByteReader;
 
     attributeNameIndex = twoByteReader.byteCatch(fp);
     attributeLength = fourByteReader.byteCatch(fp);
-    string attributeName = utf8Getter.getUTF8(constantPool, attributeNameIndex-1);
+    cpInfo = constantPool[attributeNameIndex-1];
+    string attributeName = cpInfo->getInfo(constantPool).first;
 
     if(attributeName == "Code"){
         code.read(fp, constantPool);
