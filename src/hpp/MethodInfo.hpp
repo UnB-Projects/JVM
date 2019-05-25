@@ -13,7 +13,7 @@ private:
     uint16_t nameIndex;
     uint16_t descriptorIndex;
     uint16_t attributesCount;
-    vector<AttributeInfo*> attributes;
+    AttributeInfo* attributes;
 public:
     static const uint16_t ACC_PUBLIC = 0x0001;
     static const uint16_t ACC_PRIVATE = 0x0002;
@@ -42,7 +42,7 @@ public:
     uint16_t getAttributesCount() {
         return attributesCount;
     }
-    vector<AttributeInfo*> getAttributes() {
+    AttributeInfo* getAttributes() {
         return attributes;
     }
 };

@@ -21,7 +21,9 @@ private:
     uint16_t constantValueIndex;
 public:
     void read(FILE*);
-    void print(vector<CPInfo*>);
+    uint16_t getConstantValueIndex() {
+        return constantValueIndex;
+    }
 };
 
 
@@ -76,7 +78,6 @@ public:
 class ExceptionsAttribute {
 private:
     uint16_t numberOfExceptions;
-    // vector<uint16_t> exceptionIndexTable;
     uint16_t *execeptionIndexTable;
 public:
     void read(FILE *);
@@ -131,11 +132,55 @@ public:
 class LineNumberTableAttribute {
 private:
     uint16_t lineNumberTableLength;
-    // vector<LineNumber> lineNumberTable;
     LineNumber* lineNumberTable;
 public:
     void read(FILE*);
-    void print();
+    uint16_t getLineNumberTableLength() {
+        return lineNumberTableLength;
+    }
+    LineNumber* getLineNumberTable() {
+        return lineNumberTable;
+    }
+};
+
+class LocalVariable {
+private:
+    uint16_t startPC;
+    uint16_t length;
+    uint16_t nameIndex;
+    uint16_t descriptorIndex;
+    uint16_t index;
+public:
+    void read(FILE*);
+    uint16_t getStartPC() {
+        return startPC;
+    };
+    uint16_t getLength() {
+        return length;
+    };
+    uint16_t getNameIndex() {
+        return nameIndex; 
+    };
+    uint16_t getDescriptorIndex() {
+        return descriptorIndex;
+    };
+    uint16_t getIndex() {
+        return index;
+    };
+};
+
+class LocalVariableTableAttribute {
+private:
+    uint16_t localVariableTableLength;
+    LocalVariable *localVariableTable;
+public:
+    void read(FILE*);
+    uint16_t getLocalVariableTableLength() {
+        return localVariableTableLength;
+    };
+    LocalVariable* getLocalVariableTable() {
+        return localVariableTable;
+    };
 };
 
 class AttributeInfo {
@@ -154,7 +199,7 @@ private:
         SourceFileAttribute sourceFile;
         // SourceDebugExtension sourceDebugExtension;
         LineNumberTableAttribute lineNumberTable;
-        // LocalVariableTable localVariableTable;
+        LocalVariableTableAttribute localVariableTable;
         // LocalVariableTypeTable localVariableTypeTable;
         // Deprecated deprecated;
         // RuntimeVisibleAnnotations runtimeVisibleAnnotations;
@@ -200,6 +245,9 @@ public:
 
     LineNumberTableAttribute getLineNumberTableAttribute() {
         return lineNumberTable;
+    }
+    LocalVariableTableAttribute getLocalVariableTableAttribute() {
+        return localVariableTable;
     }
 };
 

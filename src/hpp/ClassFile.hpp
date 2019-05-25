@@ -34,7 +34,7 @@ private:
     uint16_t methodsCount;
     vector<MethodInfo*> methods;
     uint16_t attributesCount;
-    vector<AttributeInfo*> attributes;
+    AttributeInfo* attributes;
 
     void setMagic(FILE * fp);
     void setMajorVersion(FILE * fp);
@@ -119,7 +119,7 @@ public:
         return attributesCount;
     }
 
-    vector<AttributeInfo*> getAttributes() {
+    AttributeInfo* getAttributes() {
         return attributes;
     }
 

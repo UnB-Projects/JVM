@@ -91,6 +91,48 @@ string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
     return outputFlagsStream.str();
 }
 
+string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
+    vector<string> identifiedFlags;
+    ostringstream outputFlagsStream;
+
+    if (accessFlags & FieldInfo::ACC_PUBLIC) {
+        identifiedFlags.push_back("public"); 
+    }
+    if (accessFlags & FieldInfo::ACC_PRIVATE) {
+        identifiedFlags.push_back("private"); 
+    }
+    if (accessFlags & FieldInfo::ACC_PROTECTED) {
+        identifiedFlags.push_back("protected"); 
+    }
+    if (accessFlags & FieldInfo::ACC_STATIC) {
+        identifiedFlags.push_back("static"); 
+    }
+    if (accessFlags & FieldInfo::ACC_FINAL) {
+        identifiedFlags.push_back("final"); 
+    }
+    if (accessFlags & FieldInfo::ACC_VOLATILE) {
+        identifiedFlags.push_back("volatile"); 
+    }
+    if (accessFlags & FieldInfo::ACC_TRANSIENT) {
+        identifiedFlags.push_back("transient"); 
+    }
+    if (accessFlags & FieldInfo::ACC_SYNTHETIC) {
+        identifiedFlags.push_back("synthetic"); 
+    }
+    if (accessFlags & FieldInfo::ACC_ENUM) {
+        identifiedFlags.push_back("enum"); 
+    }
+
+    outputFlagsStream << "[";
+    if (!identifiedFlags.empty()) {
+        copy(identifiedFlags.begin(), identifiedFlags.end()-1, ostream_iterator<string>(outputFlagsStream, " "));
+        outputFlagsStream << identifiedFlags.back();
+    }
+    outputFlagsStream << "]";
+
+return outputFlagsStream.str();
+}
+
 ClassPrinter::ClassPrinter(ClassFile classFile) {
     this->classFile = classFile;
 }
@@ -203,7 +245,25 @@ void ClassPrinter::printInterfaces() {
 }
 
 void ClassPrinter::printFields() {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<FieldInfo*> fields = classFile.getFields();
     
+    cout << "******************************Fields******************************" << endl << endl;
+    cout << "Displayed members---------------------------------------------" << endl << endl;
+    cout << "Member count: " << classFile.getFieldsCount() << endl << endl;
+
+    for (int i = 0; i < classFile.getFieldsCount(); i++) {
+        uint16_t accessFlags = fields[i]->getAccessFlags();
+        uint16_t nameIndex = fields[i]->getNameIndex();
+        uint16_t descriptorIndex = fields[i]->getDescriptorIndex();
+        string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+
+        cout << "[" << i << "]" << name << endl;
+        cout <<"Name:       cp_info #" << nameIndex << " <" << name << ">" << endl;
+        cout <<"Descriptor: cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
+        printf("Access flags: 0x%04X %s\n", accessFlags, interpretFieldFlags(accessFlags).c_str());
+    }
 }
 
 void ClassPrinter::printMethods() {
@@ -225,13 +285,10 @@ void ClassPrinter::printMethods() {
         cout << "[" << i << "]" << name << endl;
         cout << "Name      :   " << "cp_info #" << nameIndex << " <" << name << ">" << endl;
         cout << "Descriptor:   " << "cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
-        printf("Access flags: 0x%04X <%s>\n", accessFlags, interpretMethodFlags(accessFlags).c_str());
+        printf("Access flags: 0x%04X %s\n", accessFlags, interpretMethodFlags(accessFlags).c_str());
         cout << endl;
 
-        for (int j = 0; j < method->getAttributesCount(); j++) {
-            printAttributes(method->getAttributes());
-        }
-        
+        printAttributes(method->getAttributes(), method->getAttributesCount());        
     }
     
     
@@ -243,6 +300,14 @@ void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
     CPInfo* info = constantPool[sourceFileIndex-1];
 
     cout << "Source file name index: cp_info #" << sourceFileIndex << " <" << info->getInfo(constantPool).first << ">" << endl;
+}
+
+void ClassPrinter::printConstantValueInfo(ConstantValueAttribute* attribute) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    uint16_t index = attribute->getConstantValueIndex();
+    CPInfo* constantValueInfo = constantPool[index-1];
+
+    cout << "Constante value Index: cp info #" << index << constantValueInfo->getInfo(constantPool).first << endl;
 }
 
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
@@ -319,7 +384,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 string methodName = constantPool[index-1]->getInfo(constantPool).first;
                 string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
                 int j = 0;
-                
+
                 while (j < nameAndType.size() && nameAndType[j+1] != ':') {
                     j++;
                 }
@@ -358,17 +423,51 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             cout << endl;
         }
     }
+
+
+    //Printa os atributos do Code Attribute
+    printAttributes(attribute->getAttributes(), attribute->getAttributesCount());
     
 }
 
-void ClassPrinter::printAttributes(vector<AttributeInfo*> attributes) {
+void ClassPrinter::printLineNumberTableInfo(LineNumberTableAttribute* attribute) {
+    uint16_t lineNumberTableLength = attribute->getLineNumberTableLength();
+    LineNumber* lineNumberTable = attribute->getLineNumberTable();
+
+    printf("Nr.\tStart PC\tLineNumber\n");
+    for (int i = 0; i < lineNumberTableLength; i++) {
+        printf("%d\t%d\t\t%d\n", i, lineNumberTable[i].getStartPC(), lineNumberTable[i].getLineNumber());
+    }
+}
+
+void ClassPrinter::printLocalVariableTableInfo(LocalVariableTableAttribute* attribute) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    uint16_t localVariableTableLength = attribute->getLocalVariableTableLength();
+    LocalVariable* localVariableTable = attribute->getLocalVariableTable();
+
+    printf("Nr.\tStart PC\tLength\tIndex\tName\t\t\tDescriptor\n");
+    for (int i = 0; i < localVariableTableLength; i++) {
+        uint16_t startPC = localVariableTable[i].getStartPC();
+        uint16_t length = localVariableTable[i].getLength();
+        uint16_t index = localVariableTable[i].getIndex();
+        uint16_t nameIndex = localVariableTable[i].getNameIndex();
+        uint16_t descriptorIndex = localVariableTable[i].getDescriptorIndex();
+        string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+
+        printf("%d\t%d\t\t%d\t%d\tcp_info #%d\t\tcp_info #%d\n", i, startPC, length, index, nameIndex, descriptorIndex);
+        printf("\t\t\t\t\t\t\t\t%s\r\t\t\t\t\t%s\n", descriptor.c_str(), name.c_str());
+    }
+}
+
+void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attributesCount) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
-    for (int i = 0; i < classFile.getAttributesCount(); i++) {
-        AttributeInfo* attribute = attributes[i];
-        uint16_t nameIndex = attribute->getAttributeNameIndex();
+    for (int i = 0; i < attributesCount; i++) {
+        AttributeInfo attribute = attributes[i];
+        uint16_t nameIndex = attribute.getAttributeNameIndex();
         string attributeName = constantPool[nameIndex-1]->getInfo(constantPool).first;
-        uint16_t attributeLength = attribute->getAttributeLength();
+        uint16_t attributeLength = attribute.getAttributeLength();
 
         cout << "[" << i << "]" << attributeName << endl;
         cout << "Generic info ---------------------------------------------" << endl << endl;
@@ -377,21 +476,27 @@ void ClassPrinter::printAttributes(vector<AttributeInfo*> attributes) {
         cout << "Specific info --------------------------------------------" << endl << endl;
     
         if (attributeName.compare("ConstantValue") == 0) {
-
+            ConstantValueAttribute constantValueAttribute = attribute.getConstantValueAttribute();
+            printConstantValueInfo(&constantValueAttribute);
         }
         else if (attributeName.compare("Code") == 0) {
-            CodeAttribute codeAttribute = attribute->getCodeAttribute();
+            CodeAttribute codeAttribute = attribute.getCodeAttribute();
             printCodeInfo(&codeAttribute);
         }
         else if (attributeName.compare("InnerClasses") == 0) {
             
         }
         else if (attributeName.compare("SourceFile") == 0) {
-            SourceFileAttribute sourceFileAttribute = attribute->getSourceFileAttribute();
+            SourceFileAttribute sourceFileAttribute = attribute.getSourceFileAttribute();
             printSourceFileInfo(&sourceFileAttribute);
         }
         else if (attributeName.compare("LineNumberTable") == 0) {
-            
+            LineNumberTableAttribute lineNumberTableAttribute = attribute.getLineNumberTableAttribute();
+            printLineNumberTableInfo(&lineNumberTableAttribute);
+        }
+        else if (attributeName.compare("LocalVariableTable") == 0) {
+            LocalVariableTableAttribute localVariableTable = attribute.getLocalVariableTableAttribute();
+            printLocalVariableTableInfo(&localVariableTable);
         }
         else {
 
@@ -405,7 +510,8 @@ void ClassPrinter::printAttributes(vector<AttributeInfo*> attributes) {
 void ClassPrinter::print(){
     printGeneralInformation();
     printConstantPool();
+    printFields();
     printMethods();
-    // cout << "******************************Attributes******************************" << endl << endl;
-    // printAttributes(classFile.getAttributes());
+    cout << "******************************Attributes******************************" << endl << endl;
+    printAttributes(classFile.getAttributes(), classFile.getAttributesCount());
 }

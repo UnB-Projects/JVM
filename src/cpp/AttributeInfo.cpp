@@ -5,11 +5,6 @@ void ConstantValueAttribute::read(FILE *fp) {
     constantValueIndex = twoByteReader.byteCatch(fp);
 }
 
-void ConstantValueAttribute::print(std::vector<CPInfo*> trueCpInfo) {
-    // CpAttributeInterface utf8Getter;
-    // cout << "Constante Value Index: cp info #" << this->constvalue_index << " " << utf8Getter.getUTF8(trueCpInfo, this->constvalue_index - 1) << endl;
-}
-
 void LineNumber::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
     startPC = twoByteReader.byteCatch(fp);
@@ -24,14 +19,6 @@ void LineNumberTableAttribute::read(FILE *fp) {
     for (int i = 0; i < lineNumberTableLength; i++) {
         lineNumberTable[i].read(fp);
     }
-}
-
-void LineNumberTableAttribute::print() {
-    // cout << "\nLine Number Table" << endl;
-    // for(int i=0;i < this->length ; i++ ){
-    //     cout <<"["<< i <<"] || "<< this->line_number_table[i].start_pc << " || " << this->line_number_table[i].lineNumber << endl;
-    // }
-    // cout << "\n\n";
 }
 
 void ExceptionHandler::read(FILE *fp) {
@@ -122,6 +109,27 @@ AttributeInfo::~AttributeInfo() {
     //TODO
 }
 
+void LocalVariable::read(FILE * fp) {
+    ByteReader<uint16_t> twoByteReader;
+
+    startPC = twoByteReader.byteCatch(fp);
+    length = twoByteReader.byteCatch(fp);
+    nameIndex = twoByteReader.byteCatch(fp);
+    descriptorIndex = twoByteReader.byteCatch(fp);
+    index = twoByteReader.byteCatch(fp);
+}
+
+void LocalVariableTableAttribute::read(FILE *fp) {
+    ByteReader<uint16_t> twoByteReader;
+    localVariableTableLength = twoByteReader.byteCatch(fp);
+
+    localVariableTable = (LocalVariable*)calloc(localVariableTableLength, sizeof(LocalVariable));
+
+    for (int i = 0; i < localVariableTableLength; i++) {
+        localVariableTable[i].read(fp);
+    }
+}
+
 void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
     CPInfo* cpInfo;
     ByteReader<uint8_t> oneByteReader;
@@ -150,6 +158,9 @@ void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
     }
     else if(attributeName == "LineNumberTable") {
         lineNumberTable.read(fp);
+    }
+    else if (attributeName == "LocalVariableTable") {
+        localVariableTable.read(fp);
     }
     else {
         cout << "AttributeName not recognized: " << attributeName << endl;

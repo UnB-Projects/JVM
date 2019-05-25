@@ -30,26 +30,26 @@ ClassFile::ClassFile(FILE * fp) {
 }
 
 ClassFile::~ClassFile() {
-    for (auto i : interfaces) {
-        i->~InterfaceInfo();
-    }
-
-    for (auto a : attributes) {
-        a->~AttributeInfo();
-    }
-
-    for(auto f : fields) {
-        f->~FieldInfo();
-    }
-
-    //Isso causa segfault nao sei pq
-    // for(auto m : methods) {
-    //     m->~MethodInfo();
+    // for (auto i : interfaces) {
+    //     i->~InterfaceInfo();
     // }
 
-    for(auto cp : constantPool) {
-        cp->~CPInfo();
-    }
+    // // for (auto a : attributes) {
+    // //     a->~AttributeInfo();
+    // // }
+
+    // for(auto f : fields) {
+    //     f->~FieldInfo();
+    // }
+
+    // //Isso causa segfault nao sei pq
+    // // for(auto m : methods) {
+    // //     m->~MethodInfo();
+    // // }
+
+    // for(auto cp : constantPool) {
+    //     cp->~CPInfo();
+    // }
 }
 
 
@@ -149,9 +149,11 @@ void ClassFile::setAttributesCount(FILE * fp) {
 }
 
 void ClassFile::setAttributes(FILE * fp) {
-    for(int i = 0; i < this->attributesCount; i++){
+    this->attributes = (AttributeInfo*)calloc(this->attributesCount, sizeof(AttributeInfo));
+
+    for(int i = 0; i < this->attributesCount; i++) {
         AttributeInfo *attribute = (AttributeInfo *)calloc(1, sizeof(AttributeInfo));
         attribute->read(fp, this->constantPool);
-        this->attributes.push_back(attribute);
+        attributes[i] = *attribute;
     }
 }

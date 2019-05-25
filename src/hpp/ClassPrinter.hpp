@@ -17,15 +17,19 @@ private:
     ClassFile classFile;
     string interpretClassFlags(uint16_t);
     string interpretMethodFlags(uint16_t);
+    string interpretFieldFlags(uint16_t);
     void printGeneralInformation();
     void printConstantPool();
     void printInterfaces();
     void printFields();
     void printMethods();
-    void printAttributes(vector<AttributeInfo*>);
+    void printAttributes(AttributeInfo*, uint16_t);
 
     void printSourceFileInfo(SourceFileAttribute*);
+    void printConstantValueInfo(ConstantValueAttribute*);
     void printCodeInfo(CodeAttribute*);
+    void printLineNumberTableInfo(LineNumberTableAttribute*);
+    void printLocalVariableTableInfo(LocalVariableTableAttribute*);
 
 public:
     ClassPrinter(ClassFile classFile);
