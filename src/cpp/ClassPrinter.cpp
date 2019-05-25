@@ -314,13 +314,12 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
                 cout << index << " (" << sign << offset << ")" << endl;
             }
-            else if ((opcode == Instruction::ldc_w) ||
-                     (opcode == Instruction::ldc2_w) ||
-                     (opcode >= Instruction::getstatic && opcode <= Instruction::invokestatic)) {
+            else if ((opcode >= Instruction::getstatic && opcode <= Instruction::invokestatic)) {
                 int16_t index = ((int16_t)byte1 << 8) | byte2;
                 string methodName = constantPool[index-1]->getInfo(constantPool).first;
                 string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
                 int j = 0;
+                
                 while (j < nameAndType.size() && nameAndType[j+1] != ':') {
                     j++;
                 }
@@ -328,7 +327,9 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
                 cout << "#" << index << " <" << methodName << "." << name << ">" << endl;
             }
-            else if ((opcode == Instruction::newOp) ||
+            else if ((opcode == Instruction::ldc_w) ||
+                     (opcode == Instruction::ldc2_w) ||
+                     (opcode == Instruction::newOp) ||
                      (opcode == Instruction::anewarray) ||
                      (opcode == Instruction::checkcast) ||
                      (opcode == Instruction::instanceof)) {
@@ -341,7 +342,13 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             uint8_t byte1 = bytecode[++i];
             uint8_t byte2 = bytecode[++i];
             uint8_t byte3 = bytecode[++i];
-            cout << endl;
+            if (opcode == Instruction::multianewarray) {
+                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                int dimensions = byte3;
+                CPInfo* info = constantPool[index-1];
+
+                cout << "#" << index << " <" << info->getInfo(constantPool).first << "> " << "dim " << dimensions << endl;
+            }
         }
         else if (instruction.getBytesCount() == 4) {
             uint8_t byte1 = bytecode[++i];
