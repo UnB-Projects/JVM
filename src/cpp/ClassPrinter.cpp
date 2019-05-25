@@ -91,6 +91,48 @@ string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
     return outputFlagsStream.str();
 }
 
+string ClassPrinter::interpretFieldsFlags(uint16_t accessFlags) {
+    vector<string> identifiedFlags;
+    ostringstream outputFlagsStream;
+
+    if (accessFlags & FieldInfo::ACC_PUBLIC) {
+       identifiedFlags.push_back("public"); 
+    }
+    if (accessFlags & FieldInfo::ACC_PRIVATE) {
+       identifiedFlags.push_back("private"); 
+    }
+    if (accessFlags & FieldInfo::ACC_PROTECTED) {
+       identifiedFlags.push_back("protected"); 
+    }
+    if (accessFlags & FieldInfo::ACC_STATIC) {
+       identifiedFlags.push_back("static"); 
+    }
+    if (accessFlags & FieldInfo::ACC_FINAL) {
+       identifiedFlags.push_back("final"); 
+    }
+    if (accessFlags & FieldInfo::ACC_VOLATILE) {
+       identifiedFlags.push_back("volatile"); 
+    }
+    if (accessFlags & FieldInfo::ACC_TRANSIENT) {
+       identifiedFlags.push_back("transient"); 
+    }
+    if (accessFlags & FieldInfo::ACC_SYNTHETIC) {
+       identifiedFlags.push_back("synthetic"); 
+    }
+    if (accessFlags & FieldInfo::ACC_ENUM) {
+       identifiedFlags.push_back("enum"); 
+    }
+
+    outputFlagsStream << "[";
+    if (!identifiedFlags.empty()) {
+        copy(identifiedFlags.begin(), identifiedFlags.end()-1, ostream_iterator<string>(outputFlagsStream, " "));
+        outputFlagsStream << identifiedFlags.back();
+    }
+    outputFlagsStream << "]";
+
+    return outputFlagsStream.str();
+}
+
 ClassPrinter::ClassPrinter(ClassFile classFile) {
     this->classFile = classFile;
 }
@@ -203,7 +245,29 @@ void ClassPrinter::printInterfaces() {
 }
 
 void ClassPrinter::printFields() {
-    
+/*
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<FieldInfo*> fieldInfo = classFile.getFields();
+
+    uint16_t accessFlags = classFile.getAccessFlags();
+
+    uint16_t infoNameIndex = constantPool.getNameIndex();
+    uint16_t infoDescriptor = fieldInfo.getDescriptorIndex();
+
+    cout << "******************************Fields******************************" << endl << endl;
+
+    if (classFile.getFieldsCount() == 0){
+        std::cout << "EMPTY" << endl;
+    }
+    else{
+        for (int i = 0; i< classFile.getFieldsCount();i++){
+            cout << "[" << i << "]" << endl;
+            cout <<"Name: cp_info #" << fieldInfo[i]->getNameIndex()<<" "; //<<"<"<<a[fieldInfo[i]->name_index-1]->UTF8.bytes<<">"<< endl;
+            //cout <<"Descriptor:  cp_info  #" << fieldInfo[i]->descriptor_index<<" "<< "<"<< a[fieldInfo[i]->descriptor_index-1]->UTF8.bytes<<">"<<endl;
+            printf("Access flags: 0x%04X <%s>\n", accessFlags, interpretFieldsFlags(accessFlags).c_str());
+        }
+    }
+	*/
 }
 
 void ClassPrinter::printMethods() {
@@ -233,8 +297,6 @@ void ClassPrinter::printMethods() {
         }
         
     }
-    
-    
 }
 
 void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
@@ -399,6 +461,7 @@ void ClassPrinter::print(){
     printGeneralInformation();
     printConstantPool();
     printMethods();
+    printFields();
     // cout << "******************************Attributes******************************" << endl << endl;
     // printAttributes(classFile.getAttributes());
 }

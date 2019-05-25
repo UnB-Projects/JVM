@@ -17,6 +17,7 @@ private:
     ClassFile classFile;
     string interpretClassFlags(uint16_t);
     string interpretMethodFlags(uint16_t);
+    string interpretFieldsFlags(uint16_t);
     void printGeneralInformation();
     void printConstantPool();
     void printInterfaces();
