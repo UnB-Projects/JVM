@@ -353,8 +353,53 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
         cout << i << ": " << instruction.getMnemonic() << " ";
 
+
+        if (opcode == Instruction::tableswitch) {
+
+        }
+        else if (opcode == Instruction::lookupswitch) {
+            int baseAddress = i;
+            i++;
+            while (i%4 != 0) {
+                i++;
+            }
+
+            uint8_t defaultByte1 = bytecode[i++];
+            uint8_t defaultByte2 = bytecode[i++];
+            uint8_t defaultByte3 = bytecode[i++];
+            uint8_t defaultByte4 = bytecode[i++];
+            int32_t defaultValue = (defaultByte1 << 24) | (defaultByte2 << 16) | (defaultByte3 << 8) | defaultByte4;
+
+            uint8_t npairs1 = bytecode[i++];
+            uint8_t npairs2 = bytecode[i++];
+            uint8_t npairs3 = bytecode[i++];
+            uint8_t npairs4 = bytecode[i++];
+            int32_t npairs = (npairs1 << 24) | (npairs2 << 16) | (npairs3 << 8) | npairs4;
+            cout << npairs << endl;
+
+            for (int j = 0; j < npairs; j++) {
+                uint8_t matchByte1 = bytecode[i++];
+                uint8_t matchByte2 = bytecode[i++];
+                uint8_t matchByte3 = bytecode[i++];
+                uint8_t matchByte4 = bytecode[i++];
+                int32_t match = (matchByte1 << 24) | (matchByte2 << 16) | (matchByte3 << 8) | matchByte4;
+                uint8_t offsetByte1 = bytecode[i++];
+                uint8_t offsetByte2 = bytecode[i++];
+                uint8_t offsetByte3 = bytecode[i++];
+                uint8_t offsetByte4 = bytecode[i++];
+                int32_t offset = (offsetByte1 << 24) | (offsetByte2 << 16) | (offsetByte3 << 8) | offsetByte4;
+                string sign = offset > 0 ? "+" : "";
+                printf("\t%d:    %d (%s%d)\n", match, baseAddress+offset, sign.c_str(), offset);
+            }
+            string sign = defaultValue > 0 ? "+" : "";
+            printf("\tdefault:    %d (%s%d)\n", baseAddress+defaultValue, sign.c_str(), defaultValue);
+            i--;
+        }
+        else if (opcode == Instruction::wide) {
+            
+        }
         //Operacoes que nao tem bytes adicionais
-        if (instruction.getBytesCount() == 0) {
+        else if (instruction.getBytesCount() == 0) {
             cout << endl;
         }
         else if (instruction.getBytesCount() == 1) {
@@ -418,7 +463,6 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                     j++;
                 }
                 string name = nameAndType.substr(0,j);
-
                 cout << "#" << index << " <" << methodName << "." << name << ">" << endl;
             }
             else if ((opcode == Instruction::ldc_w) ||
@@ -449,7 +493,26 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             uint8_t byte2 = bytecode[++i];
             uint8_t byte3 = bytecode[++i];
             uint8_t byte4 = bytecode[++i];
-            cout << endl;
+
+            if (opcode == Instruction::goto_w || opcode == Instruction:: jsr_w) {
+                int32_t offset = (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4;
+                int index = i-2 + offset;
+                string sign = offset > 0 ? "+" : "";
+
+                cout << index << " (" << sign << offset << ")" << endl;
+            }
+            else if ((opcode == Instruction::invokeinterface || opcode == Instruction::invokedynamic)) {
+                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                string methodName = constantPool[index-1]->getInfo(constantPool).first;
+                string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
+                int j = 0;
+
+                while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+                    j++;
+                }
+                string name = nameAndType.substr(0,j);
+                cout << "#" << index << " <" << methodName << "." << name << ">" << endl;
+            }
         }
     }
 
