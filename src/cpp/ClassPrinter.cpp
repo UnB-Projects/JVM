@@ -355,7 +355,45 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
 
         if (opcode == Instruction::tableswitch) {
+            int baseAddress = i;
+            i++;
+            while (i%4 != 0) {
+                i++;
+            }
 
+            uint8_t defaultByte1 = bytecode[i++];
+            uint8_t defaultByte2 = bytecode[i++];
+            uint8_t defaultByte3 = bytecode[i++];
+            uint8_t defaultByte4 = bytecode[i++];
+            int32_t defaultValue = (defaultByte1 << 24) | (defaultByte2 << 16) | (defaultByte3 << 8) | defaultByte4;
+
+            uint8_t lowByte1 = bytecode[i++];
+            uint8_t lowByte2 = bytecode[i++];
+            uint8_t lowByte3 = bytecode[i++];
+            uint8_t lowByte4 = bytecode[i++];
+            int32_t low = (lowByte1 << 24) | (lowByte2 << 16) | (lowByte3 << 8) | lowByte4;
+
+            uint8_t highByte1 = bytecode[i++];
+            uint8_t highByte2 = bytecode[i++];
+            uint8_t highByte3 = bytecode[i++];
+            uint8_t highByte4 = bytecode[i++];
+            int32_t high = (highByte1 << 24) | (highByte2 << 16) | (highByte3 << 8) | highByte4;
+
+            cout << low << " to " << high << endl;
+
+            for (int j = 0; j < high-low+1; j++) {
+                uint8_t jumpByte1 = bytecode[i++];
+                uint8_t jumpByte2 = bytecode[i++];
+                uint8_t jumpByte3 = bytecode[i++];
+                uint8_t jumpByte4 = bytecode[i++];
+                int32_t jump = (jumpByte1 << 24) | (jumpByte2 << 16) | (jumpByte3 << 8) | jumpByte4;
+
+                string sign = jump > 0 ? "+" : "";
+                printf("\t%d:    %d (%s%d)\n", j+1, baseAddress+jump, sign.c_str(), jump);
+            }
+            string sign = defaultValue > 0 ? "+" : "";
+            printf("\tdefault:    %d (%s%d)\n", baseAddress+defaultValue, sign.c_str(), defaultValue);
+            i--;
         }
         else if (opcode == Instruction::lookupswitch) {
             int baseAddress = i;
