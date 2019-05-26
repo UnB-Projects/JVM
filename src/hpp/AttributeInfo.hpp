@@ -109,16 +109,32 @@ private:
     uint16_t innerClassAccessFlags;
 public:
     void read(FILE * fp);
+    uint16_t getInnerClassInfoIndex() {
+        return innerClassInfoIndex;
+    };
+    uint16_t getOuterClassInfoIndex() {
+        return outerClassInfoIndex;
+    };
+    uint16_t getInnerNameIndex() {
+        return innerNameIndex;
+    };
+    uint16_t getInnerClassAccessFlags() {
+        return innerClassAccessFlags;
+    };
 };
 
 class InnerClassesAttribute {
 private:
     uint16_t numberOfClasses;
-    // vector<ClassInfo> classes;
     ClassInfo *classes;
 public:
     void read(FILE*);
-    void print(vector<CPInfo*>);
+    uint16_t getNumberOfClasses() {
+        return numberOfClasses;
+    }
+    ClassInfo* getClasses() {
+        return classes;
+    }
 };
 
 

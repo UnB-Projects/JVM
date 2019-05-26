@@ -76,10 +76,6 @@ void InnerClassesAttribute::read(FILE *fp) {
     }   
 }
 
-void InnerClassesAttribute::print(std::vector<CPInfo*> trueCpInfo) {
-    // cout << "Class length: " << this->class_length<<endl;
-}
-
 void ExceptionsAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
     numberOfExceptions = twoByteReader.byteCatch(fp);
@@ -152,7 +148,7 @@ void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
         localVariableTable.read(fp);
     }
     else {
-        cout << "AttributeName nao foi reconhecido: " << attributeName << endl;
+        // cout << "AttributeName nao foi reconhecido: " << attributeName << endl;
         info = (uint8_t*)calloc(attributeLength, sizeof(uint8_t));
         /* Ignore attribute if it doesn't exist */
         for(int i = 0; i < attributeLength; i++) {

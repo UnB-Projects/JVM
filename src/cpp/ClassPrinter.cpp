@@ -138,20 +138,60 @@ ClassPrinter::ClassPrinter(ClassFile classFile) {
 }
 
 void ClassPrinter::printGeneralInformation() {
-    CPAttributeInterface attrInterface;
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    string version = "";
 
-    cout << "------------------------------General Information------------------------------" << endl;
-    cout << "Magic Number:        " << "0x" << hex << classFile.getMagic() << endl;
-    cout << "Minor version:       " << dec << classFile.getMinorVersion() << endl;
-    cout << "Major version:       " << dec << classFile.getMajorVersion() << endl;
-    cout << "Constant pool count: " << dec << classFile.getConstantPoolCount() << endl;
-    cout << "Access flags:        " << "0x" << setw(4) << setfill('0') << hex << classFile.getAccessFlags() << " " << interpretClassFlags(classFile.getAccessFlags()) << endl;
-    cout << "ThisClass:           " <<"cp_info# " << dec << classFile.getThisClass() << "<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getThisClass()-1) << ">" << endl;
-    cout << "SuperClass:          " <<"cp_info# " << dec << classFile.getSuperClass() <<"<" << attrInterface.getUTF8(classFile.getConstantPool(), classFile.getSuperClass()-1)<< ">" << endl;
-    cout << "Interfaces count :   " << dec << classFile.getInterfacesCount() << endl;
-    cout << "Fields count:        " << dec << classFile.getFieldsCount() << dec << endl;
-    cout << "Methods count:       " << dec << classFile.getMethodsCount() << dec << endl;
-    cout << "Atributes count:     " << dec << classFile.getAttributesCount() << endl;
+    switch (classFile.getMajorVersion()) {
+    case 46:
+        version = "1.2";
+        break;
+    case 47:
+        version = "1.3";
+        break;
+    case 48:
+        version = "1.4";
+        break;
+    case 49:
+        version = "1.5";
+        break;
+    case 50:
+        version = "1.6";
+        break;
+    case 51:
+        version = "1.7";
+        break;
+    case 52:
+        version = "1.8";
+        break;
+    case 53:
+        version = "1.9";
+        break;
+    case 54:
+        version = "1.10";
+        break;
+    case 55:
+        version = "1.11";
+        break;
+    case 56:
+        version = "1.12";
+        break;
+    case 57:
+        version = "1.13";
+        break;
+    }
+
+    printf("------------------------------General Information------------------------------\n");
+    printf("Magic Number:        0x%08x\n", classFile.getMagic());
+    printf("Minor version:       %d\n", classFile.getMinorVersion());
+    printf("Major version:       %d [%s]\n", classFile.getMajorVersion(), version.c_str());
+    printf("Constant pool count: %d\n", classFile.getConstantPoolCount());
+    printf("Access flags:        0x%04x %s\n", classFile.getAccessFlags(), interpretClassFlags(classFile.getAccessFlags()).c_str());
+    printf("This class:          cp_info#%d <%s>\n", classFile.getThisClass(), constantPool[classFile.getThisClass()-1]->getInfo(constantPool).first.c_str());
+    printf("Super class:         cp_info#%d <%s>\n", classFile.getSuperClass(), constantPool[classFile.getSuperClass()-1]->getInfo(constantPool).first.c_str());
+    printf("Interfaces count:    %d\n", classFile.getInterfacesCount());
+    printf("Fields count:        %d\n", classFile.getFieldsCount());
+    printf("Methods count:       %d\n", classFile.getMethodsCount());
+    printf("Atributes count:     %d\n", classFile.getAttributesCount());
 }
 
 void ClassPrinter::printConstantPool() {
@@ -609,7 +649,11 @@ void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
         
         printf("%d\tcp_info #%d\t%s\n", i, exceptionIndex, verbose.c_str());
     }
-    
+}
+
+void ClassPrinter::printInnerClassesInfo(InnerClassesAttribute* attribute) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+
 }
 
 void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attributesCount) {
