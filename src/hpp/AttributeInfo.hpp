@@ -81,7 +81,12 @@ private:
     uint16_t *execeptionIndexTable;
 public:
     void read(FILE *);
-    void print(vector<CPInfo*>);
+    uint16_t getNumberOfExceptions() {
+        return numberOfExceptions;
+    }
+    uint16_t* getExeceptionIndexTable() {
+        return execeptionIndexTable;
+    }
 };
 
 class ClassInfo {
@@ -248,6 +253,9 @@ public:
     }
     LocalVariableTableAttribute getLocalVariableTableAttribute() {
         return localVariableTable;
+    }
+    ExceptionsAttribute getExceptionsAttribute() {
+        return exceptions;
     }
 };
 

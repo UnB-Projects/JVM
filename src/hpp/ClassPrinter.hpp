@@ -30,6 +30,7 @@ private:
     void printCodeInfo(CodeAttribute*);
     void printLineNumberTableInfo(LineNumberTableAttribute*);
     void printLocalVariableTableInfo(LocalVariableTableAttribute*);
+    void printExceptionsInfo(ExceptionsAttribute*);
 
 public:
     ClassPrinter(ClassFile classFile);

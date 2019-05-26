@@ -90,16 +90,6 @@ void ExceptionsAttribute::read(FILE *fp) {
     }
 }
 
-void ExceptionsAttribute::print(std::vector<CPInfo*> trueCpInfo) {
-    // int i;
-    // CpAttributeInterface utf8Getter;
-
-    // cout << "Number of exceptions=" << number_exceptions <<endl;
-    // for (i = 0; i < number_exceptions; i++){
-    //     cout << setw(2) << setfill('0') << "Exception Index Table: cp info #" << this->exception_index_table[i]<< " " << utf8Getter.getUTF8(trueCpInfo, exception_index_table[i]-1) << endl;
-    // }
-}
-
 void SourceFileAttribute::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
     sourcefileIndex = twoByteReader.byteCatch(fp);

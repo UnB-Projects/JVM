@@ -241,7 +241,18 @@ void ClassPrinter::printConstantPool() {
 }
 
 void ClassPrinter::printInterfaces() {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<InterfaceInfo*> interfaces = classFile.getInterfaces();
 
+    cout << "******************************Interfaces******************************" << endl << endl;
+    for (int i = 0; i < classFile.getInterfacesCount(); i++) {
+        uint16_t index = interfaces[i]->getInterfaceIndex();
+        string name = constantPool[index-1]->getInfo(constantPool).first;
+
+        cout << "Interface " << i << endl;
+        cout << "Interface: cp_info #" << index << " <" << name << ">" << endl;
+    }
+    cout << endl;
 }
 
 void ClassPrinter::printFields() {
@@ -460,6 +471,21 @@ void ClassPrinter::printLocalVariableTableInfo(LocalVariableTableAttribute* attr
     }
 }
 
+void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    uint16_t *exceptionTable = attribute->getExeceptionIndexTable();
+
+    printf("Nr.\tException\tVerbose\n");
+
+    for (int i = 0; i < attribute->getNumberOfExceptions(); i++) {
+        uint16_t exceptionIndex = exceptionTable[i];
+        string verbose = constantPool[exceptionIndex-1]->getInfo(constantPool).first;
+        
+        printf("%d\tcp_info #%d\t%s\n", i, exceptionIndex, verbose.c_str());
+    }
+    
+}
+
 void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attributesCount) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
@@ -498,6 +524,10 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
             LocalVariableTableAttribute localVariableTable = attribute.getLocalVariableTableAttribute();
             printLocalVariableTableInfo(&localVariableTable);
         }
+        else if (attributeName.compare("Exceptions") == 0) {
+            ExceptionsAttribute exceptions = attribute.getExceptionsAttribute();
+            printExceptionsInfo(&exceptions);
+        }
         else {
 
         }
@@ -510,6 +540,7 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
 void ClassPrinter::print(){
     printGeneralInformation();
     printConstantPool();
+    printInterfaces();
     printFields();
     printMethods();
     cout << "******************************Attributes******************************" << endl << endl;

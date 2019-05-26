@@ -6,10 +6,14 @@
 #include "ByteReader.hpp"
 
 class InterfaceInfo {
-    public:
-        uint16_t interfaceTable;
-        ~InterfaceInfo();
-        void read(FILE *fp);
+private:
+    uint16_t interfaceIndex;
+    ~InterfaceInfo();
+public:
+    void read(FILE *fp);
+    uint16_t getInterfaceIndex() {
+        return interfaceIndex;
+    }
 };
 
 #endif
