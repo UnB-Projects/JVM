@@ -127,6 +127,7 @@ public:
     void read(FILE *fp);
     void setTag(uint8_t tag);
     pair<string,string> getInfo(vector<CPInfo*> constantPool);
+    float getFloatNumber();
     int64_t getLongNumber();
     double getDoubleNumber();
 

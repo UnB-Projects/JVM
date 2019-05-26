@@ -311,8 +311,8 @@ void ClassPrinter::printFields() {
         string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
 
         cout << "[" << i << "]" << name << endl;
-        cout <<"Name:       cp_info #" << nameIndex << " <" << name << ">" << endl;
-        cout <<"Descriptor: cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
+        cout <<"Name:         cp_info #" << nameIndex << " <" << name << ">" << endl;
+        cout <<"Descriptor:   cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
         printf("Access flags: 0x%04X %s\n", accessFlags, interpretFieldFlags(accessFlags).c_str());
     }
 }
@@ -394,7 +394,31 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
         cout << i << ": " << instruction.getMnemonic() << " ";
 
 
-        if (opcode == Instruction::tableswitch) {
+        if (opcode == Instruction::wide) {
+            uint8_t modifiedOpcode = bytecode[++i];
+            cout << instructions[modifiedOpcode].getMnemonic() << " ";
+
+            if ((modifiedOpcode >= Instruction::iload && modifiedOpcode <= Instruction::aload) ||
+                (modifiedOpcode >= Instruction::istore && modifiedOpcode <= Instruction::astore) ||
+                (modifiedOpcode == Instruction::ret)) {
+                uint8_t indexbyte1 = bytecode[++i];
+                uint8_t indexbyte2 = bytecode[++i];
+                uint16_t index = (indexbyte1 << 8) | indexbyte2;
+
+                cout << index << endl;
+            }
+            else if (modifiedOpcode == Instruction::iinc) {
+                uint8_t indexbyte1 = bytecode[++i];
+                uint8_t indexbyte2 = bytecode[++i];
+                uint16_t index = (indexbyte1 << 8) | indexbyte2;
+
+                uint8_t constbyte1 = bytecode[++i];
+                uint8_t constbyte2 = bytecode[++i];
+                int16_t constImmediate = (constbyte1 << 8) | constbyte2;
+                cout << index << " by " << constImmediate << endl;
+            }
+        }
+        else if (opcode == Instruction::tableswitch) {
             int baseAddress = i;
             i++;
             while (i%4 != 0) {
@@ -473,26 +497,24 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             printf("\tdefault:    %d (%s%d)\n", baseAddress+defaultValue, sign.c_str(), defaultValue);
             i--;
         }
-        else if (opcode == Instruction::wide) {
-            
-        }
         //Operacoes que nao tem bytes adicionais
         else if (instruction.getBytesCount() == 0) {
             cout << endl;
         }
         else if (instruction.getBytesCount() == 1) {
-            int byte = bytecode[++i];
+            uint8_t byte = bytecode[++i];
 
             //Operacoes que exigem referencia a constant pool
             if (opcode == Instruction::ldc) {
-                int index = byte;
-                cout << "#" << index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
+                uint8_t index = byte;
+                cout << "#" << +index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
             }
             else if((opcode == Instruction::bipush) ||
                     (opcode >= Instruction::iload && opcode <= Instruction::aload) || 
                     (opcode >= Instruction::istore && opcode <= Instruction::astore) ||
                     (opcode == Instruction::ret) ) {
-                cout << byte << endl;
+                uint8_t index = byte;
+                cout << +index << endl;
             }
             else if (opcode == Instruction::newarray) {
                 int atype = byte;
@@ -518,9 +540,9 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 cout << immediate << endl;
             }
             else if (opcode == Instruction::iinc) {
-                int index = byte1;
-                int constImmediate = byte2;
-                cout << index << " by " << constImmediate << endl;
+                uint8_t index = byte1;
+                int8_t constImmediate = byte2;
+                cout << +index << " by " << +constImmediate << endl;
             }
             else if ((opcode >= Instruction::ifeq && opcode <= Instruction::jsr) ||
                      (opcode == Instruction::ifnull) ||
@@ -560,10 +582,10 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             uint8_t byte3 = bytecode[++i];
             if (opcode == Instruction::multianewarray) {
                 int16_t index = ((int16_t)byte1 << 8) | byte2;
-                int dimensions = byte3;
+                uint8_t dimensions = byte3;
                 CPInfo* info = constantPool[index-1];
 
-                cout << "#" << index << " <" << info->getInfo(constantPool).first << "> " << "dim " << dimensions << endl;
+                cout << "#" << index << " <" << info->getInfo(constantPool).first << "> " << "dim " << +dimensions << endl;
             }
         }
         else if (instruction.getBytesCount() == 4) {
@@ -716,12 +738,7 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
             ExceptionsAttribute exceptions = attribute.getExceptionsAttribute();
             printExceptionsInfo(&exceptions);
         }
-        else {
-
-        }
-
         cout << endl << "----------------------------------------------------------" << endl ;
-
     }
 }
 

@@ -162,7 +162,7 @@ pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
         info = make_pair(to_string(getIntegerInfo().bytes), "");
         break;
     case CONSTANT_Float:
-        info = make_pair(to_string(getFloatInfo().bytes), "");
+        info = make_pair(to_string(getFloatNumber()), "");
         break;
     case CONSTANT_Long:
         info = make_pair(to_string(getLongNumber()), "");
@@ -177,6 +177,13 @@ pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
     }
 
     return info;
+}
+
+float CPInfo::getFloatNumber() {
+    uint32_t bytes = CONSTANT_Float_info.bytes;
+    float num;
+    memcpy(&num, &bytes, sizeof(float));
+    return num;
 }
 
 int64_t CPInfo::getLongNumber() {
