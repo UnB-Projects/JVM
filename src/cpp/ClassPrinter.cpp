@@ -653,7 +653,24 @@ void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
 
 void ClassPrinter::printInnerClassesInfo(InnerClassesAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
+    ClassInfo* classes = attribute->getClasses();
 
+    printf("Nr.\tInner Class\t\tOuter Class\tInner Name\tAccess Flags\n");
+
+    for (int i = 0; i < attribute->getNumberOfClasses(); i++) {
+        uint16_t innerClassInfoIndex = classes[i].getInnerClassInfoIndex();
+        uint16_t outerClassInfoIndex = classes[i].getOuterClassInfoIndex();
+        uint16_t innerNameIndex = classes[i].getInnerNameIndex();
+        uint16_t innerClassAccessFlags = classes[i].getInnerClassAccessFlags();
+        string innerClassName = constantPool[innerClassInfoIndex-1]->getInfo(constantPool).first;
+        string outerClassName = constantPool[outerClassInfoIndex-1]->getInfo(constantPool).first;
+        string innerName = constantPool[innerNameIndex-1]->getInfo(constantPool).first;
+
+        printf("%d\tcp_info #%d\t\tcp_info #%d\tcp_info#%d\t0x%04x %s\n",
+               i, innerClassInfoIndex, outerClassInfoIndex, innerNameIndex, innerClassAccessFlags,
+               interpretClassFlags(innerClassAccessFlags).c_str());
+        printf("\t%s\t%s\t%s\n", innerClassName.c_str(), outerClassName.c_str(), innerName.c_str());
+    }
 }
 
 void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attributesCount) {
@@ -680,7 +697,8 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
             printCodeInfo(&codeAttribute);
         }
         else if (attributeName.compare("InnerClasses") == 0) {
-            
+            InnerClassesAttribute innerClassesAttribute = attribute.getInnerClassesAttribute();
+            printInnerClassesInfo(&innerClassesAttribute);
         }
         else if (attributeName.compare("SourceFile") == 0) {
             SourceFileAttribute sourceFileAttribute = attribute.getSourceFileAttribute();

@@ -7,7 +7,6 @@
 #include <iostream>
 #include "ByteReader.hpp"
 #include "CPInfo.hpp"
-#include "CPAttributeInterface.hpp"
 
 using namespace std;
 
