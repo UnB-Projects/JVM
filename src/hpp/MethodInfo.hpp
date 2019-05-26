@@ -13,7 +13,7 @@ private:
     uint16_t nameIndex;
     uint16_t descriptorIndex;
     uint16_t attributesCount;
-    vector<AttributeInfo*> attributes;
+    AttributeInfo* attributes;
 public:
     static const uint16_t ACC_PUBLIC = 0x0001;
     static const uint16_t ACC_PRIVATE = 0x0002;
@@ -29,6 +29,22 @@ public:
     static const uint16_t ACC_SYNTHETIC = 0x1000;
     void read(FILE* fp, vector<CPInfo*> constantPool);
     ~MethodInfo();
+
+    uint16_t getAccessFlags() {
+        return accessFlags;
+    }
+    uint16_t getNameIndex() {
+        return nameIndex;
+    }
+    uint16_t getDescriptorIndex() {
+        return descriptorIndex;
+    }
+    uint16_t getAttributesCount() {
+        return attributesCount;
+    }
+    AttributeInfo* getAttributes() {
+        return attributes;
+    }
 };
 
 #endif

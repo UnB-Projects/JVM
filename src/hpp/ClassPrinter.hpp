@@ -8,6 +8,7 @@
 #include <utility>
 #include "ClassFile.hpp"
 #include "CPAttributeInterface.hpp"
+#include "InstructionSet.hpp"
 
 using namespace std;
 
@@ -15,16 +16,25 @@ class ClassPrinter {
 private:
     ClassFile classFile;
     string interpretClassFlags(uint16_t);
+    string interpretMethodFlags(uint16_t);
+    string interpretFieldFlags(uint16_t);
     void printGeneralInformation();
     void printConstantPool();
     void printInterfaces();
     void printFields();
     void printMethods();
-    void printAttributes();
+    void printAttributes(AttributeInfo*, uint16_t);
+
+    void printSourceFileInfo(SourceFileAttribute*);
+    void printConstantValueInfo(ConstantValueAttribute*);
+    void printCodeInfo(CodeAttribute*);
+    void printLineNumberTableInfo(LineNumberTableAttribute*);
+    void printLocalVariableTableInfo(LocalVariableTableAttribute*);
+    void printExceptionsInfo(ExceptionsAttribute*);
 
 public:
     ClassPrinter(ClassFile classFile);
-    void print(ClassFile classloader);
+    void print();
     //nao mudei o nome da funcao de baixo, dps nois ve como fica
     string Flag_names(int flag_byte, int parametro);
 };

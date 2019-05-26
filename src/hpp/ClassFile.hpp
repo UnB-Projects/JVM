@@ -34,7 +34,7 @@ private:
     uint16_t methodsCount;
     vector<MethodInfo*> methods;
     uint16_t attributesCount;
-    vector<AttributeInfo*> attributes;
+    AttributeInfo* attributes;
 
     void setMagic(FILE * fp);
     void setMajorVersion(FILE * fp);
@@ -103,19 +103,23 @@ public:
         return fieldsCount;
     }
 
-    std::vector<FieldInfo*> getFields();
+    std::vector<FieldInfo*> getFields() {
+        return fields;
+    }
 
     uint16_t getMethodsCount() {
         return methodsCount;
     }
 
-    vector<MethodInfo*> getMethods();
+    vector<MethodInfo*> getMethods() {
+        return methods;
+    }
 
     uint16_t getAttributesCount() {
         return attributesCount;
     }
 
-    vector<AttributeInfo*> getAttributes() {
+    AttributeInfo* getAttributes() {
         return attributes;
     }
 

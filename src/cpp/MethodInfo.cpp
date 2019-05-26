@@ -1,9 +1,9 @@
 #include "../hpp/MethodInfo.hpp"
 
 MethodInfo::~MethodInfo() {
-    for (auto a : attributes) {
-        //TODO
-    }
+    // for (auto a : attributes) {
+    //     //TODO
+    // }
 }
 
 void MethodInfo::read(FILE *fp, vector<CPInfo*> constantPool) {
@@ -14,9 +14,10 @@ void MethodInfo::read(FILE *fp, vector<CPInfo*> constantPool) {
     descriptorIndex = reader.byteCatch(fp);
     attributesCount = reader.byteCatch(fp);
 
+    attributes = (AttributeInfo*)calloc(attributesCount, sizeof(AttributeInfo));
     for(int i = 0; i < attributesCount; i++){
         AttributeInfo *attributeInfo = (AttributeInfo *)calloc(1, sizeof(AttributeInfo));
         attributeInfo->read(fp, constantPool);
-        attributes.push_back(attributeInfo);
+        attributes[i] = *attributeInfo;
     }
 }
