@@ -103,7 +103,7 @@ public:
         return fieldsCount;
     }
 
-    std::vector<FieldInfo*> getFields() {
+    vector<FieldInfo*> getFields() {
         return fields;
     }
 

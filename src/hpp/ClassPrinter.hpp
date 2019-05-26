@@ -1,6 +1,12 @@
 #ifndef ___CLASSPRINTER_H___
 #define ___CLASSPRINTER_H___
 
+#if defined(_WIN32)										/*definicoes para limpar a tela e promover ilusao de movimento*/
+	#define CLEAR system("cls");						
+#else
+	#define CLEAR system("clear");
+#endif
+
 #include <stdio.h>
 #include <iomanip>
 #include <sstream>
@@ -23,6 +29,7 @@ private:
     void printFields();
     void printMethods();
     void printAttributes(AttributeInfo*, uint16_t);
+    void printClassFileAttributes();
 
     void printSourceFileInfo(SourceFileAttribute*);
     void printConstantValueInfo(ConstantValueAttribute*);

@@ -180,7 +180,7 @@ void ClassPrinter::printGeneralInformation() {
         break;
     }
 
-    printf("------------------------------General Information------------------------------\n");
+    printf("********************General Information********************\n");
     printf("Magic Number:        0x%08x\n", classFile.getMagic());
     printf("Minor version:       %d\n", classFile.getMinorVersion());
     printf("Major version:       %d [%s]\n", classFile.getMajorVersion(), version.c_str());
@@ -197,7 +197,7 @@ void ClassPrinter::printGeneralInformation() {
 void ClassPrinter::printConstantPool() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
-    cout << "------------------------------Constant Pool------------------------------" << endl << endl;
+    cout << "********************Constant Pool********************" << endl << endl;
     for (int i = 0; i < classFile.getConstantPoolCount()-1; i++) {
         CPInfo *cpInfo = constantPool[i];
         cout << "[" << i+1 << "]";
@@ -619,13 +619,14 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     //Printa a aba Exception Table
     printCodeExceptionTableInfo(attribute->getExceptionTable(), attribute->getExceptionTableLength());
 
-    //Printa os atributos do Code Attribute
-    printAttributes(attribute->getAttributes(), attribute->getAttributesCount());
-
     cout << "Misc----------------" << endl << endl;
     cout << "Max Stack:               " << attribute->getMaxStack() << endl;
     cout << "Maximum local variables: " << attribute->getMaxLocals() << endl;
     cout << "Code Length:             " << attribute->getCodeLength() << endl;
+    
+    //Printa os atributos do Code Attribute
+    printAttributes(attribute->getAttributes(), attribute->getAttributesCount());
+
     
 }
 
@@ -738,8 +739,13 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
             ExceptionsAttribute exceptions = attribute.getExceptionsAttribute();
             printExceptionsInfo(&exceptions);
         }
-        cout << endl << "----------------------------------------------------------" << endl ;
+        cout << endl << "----------------------------------------------------------" << endl << endl;
     }
+}
+
+void ClassPrinter::printClassFileAttributes() {
+    cout << "******************************Attributes******************************" << endl << endl;
+    printAttributes(classFile.getAttributes(), classFile.getAttributesCount());    
 }
 
 void ClassPrinter::print(){
@@ -748,6 +754,5 @@ void ClassPrinter::print(){
     printInterfaces();
     printFields();
     printMethods();
-    cout << "******************************Attributes******************************" << endl << endl;
-    printAttributes(classFile.getAttributes(), classFile.getAttributesCount());
+    printClassFileAttributes();
 }

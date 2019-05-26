@@ -7,7 +7,7 @@ using namespace std;
 
 class Instruction {
 private:
-    std::string mnemonic;
+    string mnemonic;
     uint32_t bytesCount;
 public:
     Instruction(string, uint32_t);
