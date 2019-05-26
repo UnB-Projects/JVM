@@ -321,6 +321,24 @@ void ClassPrinter::printConstantValueInfo(ConstantValueAttribute* attribute) {
     cout << "Constante value Index: cp info #" << index << constantValueInfo->getInfo(constantPool).first << endl;
 }
 
+void ClassPrinter::printCodeExceptionTableInfo(ExceptionHandler* exceptionTable, uint16_t exceptionTableLength) {
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+
+    cout << "ExceptionTable-----------" << endl;
+    printf("Nr.\tStart PC\tEnd PC\tHandlerPC\tCatch Type\n");
+
+    for (int i = 0; i < exceptionTableLength; i++) {
+        uint16_t startPC = exceptionTable[i].getStartPC();
+        uint16_t endPC = exceptionTable[i].getEndPC();
+        uint16_t handlerPC = exceptionTable[i].getHandlerPC();
+        uint16_t catchTypeIndex = exceptionTable[i].getCatchType();
+        string catchType = constantPool[catchTypeIndex-1]->getInfo(constantPool).first;
+
+        printf("%d\t%d\t\t%d\t%d\t\tcp_info#%d\n", i, startPC, endPC, handlerPC, catchTypeIndex);
+        printf("\t\t\t\t\t\t%s\n", catchType.c_str());
+    }
+}
+
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
@@ -435,9 +453,16 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
         }
     }
 
+    //Printa a aba Exception Table
+    printCodeExceptionTableInfo(attribute->getExceptionTable(), attribute->getExceptionTableLength());
 
     //Printa os atributos do Code Attribute
     printAttributes(attribute->getAttributes(), attribute->getAttributesCount());
+
+    cout << "Misc----------------" << endl << endl;
+    cout << "Max Stack:               " << attribute->getMaxStack() << endl;
+    cout << "Maximum local variables: " << attribute->getMaxLocals() << endl;
+    cout << "Code Length:             " << attribute->getCodeLength() << endl;
     
 }
 

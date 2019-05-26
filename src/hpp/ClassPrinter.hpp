@@ -28,6 +28,7 @@ private:
     void printSourceFileInfo(SourceFileAttribute*);
     void printConstantValueInfo(ConstantValueAttribute*);
     void printCodeInfo(CodeAttribute*);
+    void printCodeExceptionTableInfo(ExceptionHandler*, uint16_t);
     void printLineNumberTableInfo(LineNumberTableAttribute*);
     void printLocalVariableTableInfo(LocalVariableTableAttribute*);
     void printExceptionsInfo(ExceptionsAttribute*);

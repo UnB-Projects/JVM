@@ -35,6 +35,18 @@ private:
     uint16_t catchType;
 public:
     void read(FILE * fp);
+    uint16_t getStartPC() {
+        return startPC;
+    };
+    uint16_t getEndPC() {
+        return endPC;
+    };
+    uint16_t getHandlerPC() {
+        return handlerPC;
+    };
+    uint16_t getCatchType() {
+        return catchType;
+    };
 };
 
 class CodeAttribute {

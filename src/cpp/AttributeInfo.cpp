@@ -22,13 +22,12 @@ void LineNumberTableAttribute::read(FILE *fp) {
 }
 
 void ExceptionHandler::read(FILE *fp) {
-    ByteReader<uint8_t> oneByteReader;
+    ByteReader<uint16_t> twoByteReader;
 
-
-    startPC = oneByteReader.byteCatch(fp);
-    endPC = oneByteReader.byteCatch(fp);
-    handlerPC = oneByteReader.byteCatch(fp);
-    catchType = oneByteReader.byteCatch(fp);
+    startPC = twoByteReader.byteCatch(fp);
+    endPC = twoByteReader.byteCatch(fp);
+    handlerPC = twoByteReader.byteCatch(fp);
+    catchType = twoByteReader.byteCatch(fp);
 }
 
 void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPool) {
@@ -153,40 +152,11 @@ void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
         localVariableTable.read(fp);
     }
     else {
-        cout << "AttributeName not recognized: " << attributeName << endl;
+        cout << "AttributeName nao foi reconhecido: " << attributeName << endl;
         info = (uint8_t*)calloc(attributeLength, sizeof(uint8_t));
         /* Ignore attribute if it doesn't exist */
-        for(int i = 0; i < attributeLength ; i++) {
+        for(int i = 0; i < attributeLength; i++) {
             info[i] = oneByteReader.byteCatch(fp);
         }
     }
-}
-
-void AttributeInfo::print(std::vector<CPInfo *> trueCpInfo) {
-    // CpAttributeInterface utf8Getter;
-    // std::string attribute_name = utf8Getter.getUTF8(trueCpInfo, this->name_index-1);
-
-    // cout << setw(2) << setfill('0') << "Attribute Name Index: cp info #" << this->name_index<< " <"<< attribute_name << ">" <<endl;
-    // cout << setw(2) << setfill('0') << "Attribute Length: " << this->length<< endl;
-
-    // if(attribute_name == "Code"){
-    //     code.print(trueCpInfo);
-    // }
-
-    // else if(attribute_name == "ConstantValue"){
-    //     constant_value.print(trueCpInfo);
-    // }
-
-    // else if(attribute_name == "Exceptions"){
-    //     exception.print(trueCpInfo);
-    // }
-    // else if(attribute_name == "InnerClass"){
-    //     inner_class.print(trueCpInfo);
-    // }
-    // else if(attribute_name == "SourceFile"){
-    //     sourceFile.print(trueCpInfo);
-    // }
-    // else if(attribute_name == "LineNumberTable"){
-    //     lineNumber.print();
-    // }
 }
