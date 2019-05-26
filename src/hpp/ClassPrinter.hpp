@@ -23,6 +23,7 @@ private:
     string interpretClassFlags(uint16_t);
     string interpretMethodFlags(uint16_t);
     string interpretFieldFlags(uint16_t);
+    string classFileName;
     void printGeneralInformation();
     void printConstantPool();
     void printInterfaces();
@@ -41,7 +42,7 @@ private:
     void printInnerClassesInfo(InnerClassesAttribute*);
 
 public:
-    ClassPrinter(ClassFile classFile);
+    ClassPrinter(ClassFile classFile, string classFileName);
     void print();
     //nao mudei o nome da funcao de baixo, dps nois ve como fica
     string Flag_names(int flag_byte, int parametro);

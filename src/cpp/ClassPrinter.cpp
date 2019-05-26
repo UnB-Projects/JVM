@@ -133,8 +133,9 @@ string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
 return outputFlagsStream.str();
 }
 
-ClassPrinter::ClassPrinter(ClassFile classFile) {
+ClassPrinter::ClassPrinter(ClassFile classFile, string classFileName) {
     this->classFile = classFile;
+    this->classFileName = classFileName;
 }
 
 void ClassPrinter::printGeneralInformation() {
@@ -180,7 +181,7 @@ void ClassPrinter::printGeneralInformation() {
         break;
     }
 
-    printf("********************General Information********************\n");
+    printf("******************** General Information ********************\n");
     printf("Magic Number:        0x%08x\n", classFile.getMagic());
     printf("Minor version:       %d\n", classFile.getMinorVersion());
     printf("Major version:       %d [%s]\n", classFile.getMajorVersion(), version.c_str());
@@ -197,7 +198,7 @@ void ClassPrinter::printGeneralInformation() {
 void ClassPrinter::printConstantPool() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
-    cout << "********************Constant Pool********************" << endl << endl;
+    cout << "******************** Constant Pool ********************" << endl << endl;
     for (int i = 0; i < classFile.getConstantPoolCount()-1; i++) {
         CPInfo *cpInfo = constantPool[i];
         cout << "[" << i+1 << "]";
@@ -284,7 +285,7 @@ void ClassPrinter::printInterfaces() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<InterfaceInfo*> interfaces = classFile.getInterfaces();
 
-    cout << "******************************Interfaces******************************" << endl << endl;
+    cout << "******************** Interfaces ********************" << endl << endl;
     for (int i = 0; i < classFile.getInterfacesCount(); i++) {
         uint16_t index = interfaces[i]->getInterfaceIndex();
         string name = constantPool[index-1]->getInfo(constantPool).first;
@@ -299,7 +300,7 @@ void ClassPrinter::printFields() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<FieldInfo*> fields = classFile.getFields();
     
-    cout << "******************************Fields******************************" << endl << endl;
+    cout << "******************** Fields ********************" << endl << endl;
     cout << "Displayed members---------------------------------------------" << endl << endl;
     cout << "Member count: " << classFile.getFieldsCount() << endl << endl;
 
@@ -321,7 +322,7 @@ void ClassPrinter::printMethods() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<MethodInfo*> methods = classFile.getMethods();
 
-    cout << "******************************Methods******************************" << endl << endl;
+    cout << "******************** Methods ********************" << endl << endl;
     cout << "Displayed members---------------------------------------------" << endl << endl;
     cout << "Member count: " << classFile.getMethodsCount() << endl << endl;
 
@@ -744,15 +745,60 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
 }
 
 void ClassPrinter::printClassFileAttributes() {
-    cout << "******************************Attributes******************************" << endl << endl;
+    cout << "******************** Attributes ********************" << endl << endl;
     printAttributes(classFile.getAttributes(), classFile.getAttributesCount());    
 }
 
 void ClassPrinter::print(){
-    printGeneralInformation();
-    printConstantPool();
-    printInterfaces();
-    printFields();
-    printMethods();
-    printClassFileAttributes();
+    int i = 1;
+
+    while (i != 0){
+        CLEAR
+        cout << endl << "**** Welcome to JVM-8-SB ****" << endl;
+        cout << "\n .class opened: " << classFileName << endl;
+        cout << endl << "1 - General Information";
+        cout << endl << "2 - Constant Pool";
+        cout << endl << "3 - Interfaces";
+        cout << endl << "4 - Fields";
+        cout << endl << "5 - Methods";
+        cout << endl << "6 - ClassFileAttributes";
+        cout << endl << "0 - Exit";
+        cout << endl << endl << "Choose an option: ";
+        scanf("%d", &i);
+
+        CLEAR
+
+        switch (i){
+
+            case 1:
+                printGeneralInformation();
+                break;
+            case 2:
+                printConstantPool();
+                break; 
+            case 3:
+                printInterfaces();
+                break;
+            case 4:
+                printFields();
+                break;
+            case 5:
+                printMethods();
+                break;
+            case 6:
+                printClassFileAttributes();
+                break;
+            case 0:
+                printf("\n Press enter to Finish the program!");                
+                break;
+            default:
+                printf("\n Press a valid option!");
+                break;
+        }
+        printf("\n < Press Enter >");   
+        getchar();
+        getchar();
+
+    }
+
 }
