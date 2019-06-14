@@ -2,12 +2,15 @@
 
 InstructionSet::InstructionSet() {
     this->instructionsCount = 256;
-    instructionSet = (Instruction*)calloc(instructionsCount, sizeof(Instruction));
 
-    instructionSet[Instruction::nop] = Instruction("nop", 0);    
+    instructionSet[Instruction::nop] = Instruction("nop", 0);
+    printf("chegou\n\n\n");
+    printf("chegou\n\n\n");
+    getchar();
+    getchar();
     instructionSet[Instruction::aconst_null] = Instruction("aconst_null", 0);
     instructionSet[Instruction::iconst_m1] = Instruction("iconst_m1", 0);
-    instructionSet[Instruction::iconst_0] = Instruction("iconst_0", 0); 
+    instructionSet[Instruction::iconst_0] = Instruction("iconst_0", 0);
     instructionSet[Instruction::iconst_1] = Instruction("iconst_1", 0);
     instructionSet[Instruction::iconst_2] = Instruction("iconst_2", 0);
     instructionSet[Instruction::iconst_3] = Instruction("iconst_3", 0);
@@ -224,5 +227,5 @@ InstructionSet::InstructionSet() {
     instructionSet[Instruction::ifnull] = Instruction("ifnull", 2);
     instructionSet[Instruction::ifnonnull] = Instruction("ifnonnull", 2);
     instructionSet[Instruction::goto_w] = Instruction("goto_w", 4);
-    instructionSet[Instruction::jsr_w] = Instruction("jsr_w", 4);    
+    instructionSet[Instruction::jsr_w] = Instruction("jsr_w", 4);
 }

@@ -17,7 +17,6 @@ int main(int argc, char *argv[]) {
         ClassFile classFile;
         fp = fopen(argv[1], "rb");
         classFile = classLoader.loadClassFile(fp);
-        
         ClassPrinter classPrinter(classFile);
         classPrinter.print();
         fclose(fp);

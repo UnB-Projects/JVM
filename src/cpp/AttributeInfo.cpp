@@ -90,9 +90,9 @@ void SourceFileAttribute::read(FILE * fp) {
     sourcefileIndex = twoByteReader.byteCatch(fp);
 }
 
-AttributeInfo::~AttributeInfo() {
-    //TODO
-}
+// AttributeInfo::~AttributeInfo() {
+//     //TODO
+// }
 
 void LocalVariable::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;

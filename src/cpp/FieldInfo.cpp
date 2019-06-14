@@ -1,10 +1,10 @@
 #include "../hpp/FieldInfo.hpp"
 
-FieldInfo::~FieldInfo() {   
-    for(auto a : this->attributes) {
-        // a->~AttributeInfo();
-    }
-}
+// FieldInfo::~FieldInfo() {   
+//     for(auto a : this->attributes) {
+//         // a->~AttributeInfo();
+//     }
+// }
 
 void FieldInfo::read(FILE *fp, std::vector<CPInfo*> trueCpInfo){
     ByteReader<uint16_t> twoByteReader;

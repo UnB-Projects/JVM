@@ -10,6 +10,7 @@ private:
     string mnemonic;
     uint32_t bytesCount;
 public:
+    Instruction(){};
     Instruction(string, uint32_t);
     void setMnemonic(string);
     void setBytesCount(uint32_t);
@@ -20,7 +21,7 @@ public:
     static const uint8_t nop = 0x00;
     static const uint8_t aconst_null = 0x01;
     static const uint8_t iconst_m1 = 0x02;
-    static const uint8_t iconst_0 = 0x03; 
+    static const uint8_t iconst_0 = 0x03;
     static const uint8_t iconst_1 = 0x04;
     static const uint8_t iconst_2 = 0x05;
     static const uint8_t iconst_3 = 0x06;

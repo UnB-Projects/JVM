@@ -383,9 +383,10 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
     InstructionSet instructionsSet;
+    printf("chegou\n\n\n");
+
     uint32_t instructionsCount = instructionsSet.getInstructionsCount();
     Instruction* instructions = instructionsSet.getInstructionSet();
-    
     cout << "Bytecode-----------" << endl;
     for (int i = 0; i < attribute->getCodeLength(); i++) {
         uint8_t opcode = bytecode[i];
@@ -710,7 +711,6 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
         cout << "Attribute name index: cp_info #" << nameIndex << " <" << attributeName << ">" << endl;
         cout << "Attribute length:     " << attributeLength << endl << endl;
         cout << "Specific info --------------------------------------------" << endl << endl;
-    
         if (attributeName.compare("ConstantValue") == 0) {
             ConstantValueAttribute constantValueAttribute = attribute.getConstantValueAttribute();
             printConstantValueInfo(&constantValueAttribute);
@@ -745,7 +745,7 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
 
 void ClassPrinter::printClassFileAttributes() {
     cout << "******************************Attributes******************************" << endl << endl;
-    printAttributes(classFile.getAttributes(), classFile.getAttributesCount());    
+    printAttributes(classFile.getAttributes(), classFile.getAttributesCount());
 }
 
 void ClassPrinter::print(){

@@ -247,7 +247,7 @@ private:
     };
 public:
     AttributeInfo();
-    ~AttributeInfo();
+    // ~AttributeInfo();
     void read(FILE*, vector<CPInfo*>);
     void print(vector<CPInfo*>);
 

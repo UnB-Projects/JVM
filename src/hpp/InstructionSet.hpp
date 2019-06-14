@@ -8,7 +8,7 @@ using namespace std;
 
 class InstructionSet {
 private:
-    Instruction * instructionSet;
+    Instruction instructionSet[256];
     uint32_t instructionsCount;
 public:
     InstructionSet();
