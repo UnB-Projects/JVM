@@ -4,10 +4,6 @@ InstructionSet::InstructionSet() {
     this->instructionsCount = 256;
 
     instructionSet[Instruction::nop] = Instruction("nop", 0);
-    printf("chegou\n\n\n");
-    printf("chegou\n\n\n");
-    getchar();
-    getchar();
     instructionSet[Instruction::aconst_null] = Instruction("aconst_null", 0);
     instructionSet[Instruction::iconst_m1] = Instruction("iconst_m1", 0);
     instructionSet[Instruction::iconst_0] = Instruction("iconst_0", 0);
