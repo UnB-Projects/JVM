@@ -10,7 +10,7 @@ private:
     string mnemonic;
     uint32_t bytesCount;
 public:
-    Instruction(){};
+    Instruction();
     Instruction(string, uint32_t);
     void setMnemonic(string);
     void setBytesCount(uint32_t);

@@ -1,5 +1,10 @@
 #include "../hpp/Instruction.hpp"
 
+Instruction::Instruction() {
+    //Para declarar sem argumentos
+}
+
+
 Instruction::Instruction(string mnemonic, uint32_t bytesCount) {
     this->mnemonic = mnemonic;
     this->bytesCount = bytesCount;
