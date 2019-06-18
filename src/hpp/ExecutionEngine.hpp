@@ -9,14 +9,13 @@
 
 class ExecutionEngine {
 private:
-    ClassLoader boostrapClassLoader;
     string mainClassFileName;
     MethodInfo* mainMethod;
-    MethodArea methodArea;
+    MethodArea* methodArea;
     Heap heap;
     void findMainMethod();
 public:
-    ExecutionEngine(ClassFile*);
+    ExecutionEngine(ClassFile*, MethodArea*);
 };
 
 #endif

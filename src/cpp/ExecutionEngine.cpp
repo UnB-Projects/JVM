@@ -1,33 +1,17 @@
 #include "../hpp/ExecutionEngine.hpp"
 
-ExecutionEngine::ExecutionEngine(ClassFile* classFile) {
-    FILE * fp;
+ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea) {
     ClassFile objectClass;
-    string path;
     vector<CPInfo*>constantPool = classFile->getConstantPool();
-    string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first.c_str();
+    string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first;
 
-    this->methodArea.insertClass(*classFile);
+    this->methodArea = methodArea;
     this->mainClassFileName = name;
     findMainMethod();
-
-    #if defined(_WIN32)
-    //Definir depois
-    printf("Falta implementar!\n");
-    exit(0);
-    #else
-    path = "java/lang/Object.class";
-    #endif
-
-    //Carregando classe object
-    fp = fopen(path.c_str(), "rb");
-    objectClass = boostrapClassLoader.loadClassFile(fp);
-    fclose(fp);
-    this->methodArea.insertClass(objectClass);
 }
 
 void ExecutionEngine::findMainMethod() {
-    ClassFile* mainClassFile = methodArea.getClassFile(mainClassFileName);
+    ClassFile* mainClassFile = methodArea->getClassFile(mainClassFileName);
     vector<CPInfo*> constantPool = mainClassFile->getConstantPool();
     vector<MethodInfo*> methods = mainClassFile->getMethods();
     int i;
