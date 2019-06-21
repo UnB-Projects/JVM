@@ -33,5 +33,8 @@ void ExecutionEngine::findMainMethod() {
         printf("A main nao foi encontrada no arquivo especificado!\n");
         exit(0);
     }
+}
+
+void ExecutionEngine::execute() {
 
 }

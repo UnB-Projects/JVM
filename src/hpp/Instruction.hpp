@@ -2,6 +2,7 @@
 #define INSTRUCTION_H
 
 #include <string>
+#include "Frame.hpp"
 
 using namespace std;
 
@@ -9,13 +10,236 @@ class Instruction {
 private:
     string mnemonic;
     uint32_t bytesCount;
+    void (*func)(Frame*);
 public:
     Instruction();
-    Instruction(string, uint32_t);
+    Instruction(string, uint32_t, void (*)(Frame*));
     void setMnemonic(string);
     void setBytesCount(uint32_t);
     string getMnemonic();
     uint32_t getBytesCount();
+
+    static void nopFunction(Frame*);
+    static void aconst_nullFunction(Frame*);
+    static void iconst_m1Function(Frame*);
+    static void iconst_0Function(Frame*);
+    static void iconst_1Function(Frame*);
+    static void iconst_2Function(Frame*);
+    static void iconst_3Function(Frame*);
+    static void iconst_4Function(Frame*);
+    static void iconst_5Function(Frame*);
+    static void lconst_0Function(Frame*);
+    static void lconst_1Function(Frame*);
+    static void fconst_0Function(Frame*);
+    static void fconst_1Function(Frame*);
+    static void fconst_2Function(Frame*);
+    static void dconst_0Function(Frame*);
+    static void dconst_1Function(Frame*);
+    static void bipushFunction(Frame*);
+    static void sipushFunction(Frame*);
+    static void ldcFunction(Frame*);
+    static void ldc_wFunction(Frame*);
+    static void ldc2_wFunction(Frame*);
+
+    //Loads
+    static void iloadFunction(Frame*);
+    static void lloadFunction(Frame*);
+    static void floadFunction(Frame*);
+    static void dloadFunction(Frame*);
+    static void aloadFunction(Frame*);
+    static void iload_0Function(Frame*);
+    static void iload_1Function(Frame*);
+    static void iload_2Function(Frame*);
+    static void iload_3Function(Frame*);
+    static void lload_0Function(Frame*);
+    static void lload_1Function(Frame*);
+    static void lload_2Function(Frame*);
+    static void lload_3Function(Frame*);
+    static void fload_0Function(Frame*);
+    static void fload_1Function(Frame*);
+    static void fload_2Function(Frame*);
+    static void fload_3Function(Frame*);
+    static void dload_0Function(Frame*);
+    static void dload_1Function(Frame*);
+    static void dload_2Function(Frame*);
+    static void dload_3Function(Frame*);
+    static void aload_0Function(Frame*);
+    static void aload_1Function(Frame*);
+    static void aload_2Function(Frame*);
+    static void aload_3Function(Frame*);
+    static void ialoadFunction(Frame*);
+    static void laloadFunction(Frame*);
+    static void faloadFunction(Frame*);
+    static void daloadFunction(Frame*);
+    static void aaloadFunction(Frame*);
+    static void baloadFunction(Frame*);
+    static void caloadFunction(Frame*);
+    static void saloadFunction(Frame*);
+
+    //Stores
+    static void istoreFunction(Frame*);
+    static void lstoreFunction(Frame*);
+    static void fstoreFunction(Frame*);
+    static void dstoreFunction(Frame*);
+    static void astoreFunction(Frame*);
+    static void istore_0Function(Frame*);
+    static void istore_1Function(Frame*);
+    static void istore_2Function(Frame*);
+    static void istore_3Function(Frame*);
+    static void lstore_0Function(Frame*);
+    static void lstore_1Function(Frame*);
+    static void lstore_2Function(Frame*);
+    static void lstore_3Function(Frame*);
+    static void fstore_0Function(Frame*);
+    static void fstore_1Function(Frame*);
+    static void fstore_2Function(Frame*);
+    static void fstore_3Function(Frame*);
+    static void dstore_0Function(Frame*);
+    static void dstore_1Function(Frame*);
+    static void dstore_2Function(Frame*);
+    static void dstore_3Function(Frame*);
+    static void astore_0Function(Frame*);
+    static void astore_1Function(Frame*);
+    static void astore_2Function(Frame*);
+    static void astore_3Function(Frame*);
+    static void iastoreFunction(Frame*);
+    static void lastoreFunction(Frame*);
+    static void fastoreFunction(Frame*);
+    static void dastoreFunction(Frame*);
+    static void aastoreFunction(Frame*);
+    static void bastoreFunction(Frame*);
+    static void castoreFunction(Frame*);
+    static void sastoreFunction(Frame*);
+
+    //Stack
+    static void popFunction(Frame*);
+    static void pop2Function(Frame*);
+    static void dupFunction(Frame*);
+    static void dup_x1Function(Frame*);
+    static void dup_x2Function(Frame*);
+    static void dup2Function(Frame*);
+    static void dup2_x1Function(Frame*);
+    static void dup2_x2Function(Frame*);
+    static void swapFunction(Frame*);
+
+    //Math
+    static void iaddFunction(Frame*);
+    static void laddFunction(Frame*);
+    static void faddFunction(Frame*);
+    static void daddFunction(Frame*);
+    static void isubFunction(Frame*);
+    static void lsubFunction(Frame*);
+    static void fsubFunction(Frame*);
+    static void dsubFunction(Frame*);
+    static void imulFunction(Frame*);
+    static void lmulFunction(Frame*);
+    static void fmulFunction(Frame*);
+    static void dmulFunction(Frame*);
+    static void idivFunction(Frame*);
+    static void ldivOpFunction(Frame*);
+    static void fdivFunction(Frame*);
+    static void ddivFunction(Frame*);
+    static void iremFunction(Frame*);
+    static void lremFunction(Frame*);
+    static void fremFunction(Frame*);
+    static void dremFunction(Frame*);
+    static void inegFunction(Frame*);
+    static void lnegFunction(Frame*);
+    static void fnegFunction(Frame*);
+    static void dnegFunction(Frame*);
+    static void ishlFunction(Frame*);
+    static void lshlFunction(Frame*);
+    static void ishrFunction(Frame*);
+    static void lshrFunction(Frame*);
+    static void iushrFunction(Frame*);
+    static void lushrFunction(Frame*);
+    static void iandFunction(Frame*);
+    static void landFunction(Frame*);
+    static void iorFunction(Frame*);
+    static void lorFunction(Frame*);
+    static void ixorFunction(Frame*);
+    static void lxorFunction(Frame*);
+    static void iincFunction(Frame*);
+
+    //Conversions
+    static void i2lFunction(Frame*);
+    static void i2fFunction(Frame*);
+    static void i2dFunction(Frame*);
+    static void l2iFunction(Frame*);
+    static void l2fFunction(Frame*);
+    static void l2dFunction(Frame*);
+    static void f2iFunction(Frame*);
+    static void f2lFunction(Frame*);
+    static void f2dFunction(Frame*);
+    static void d2iFunction(Frame*);
+    static void d2lFunction(Frame*);
+    static void d2fFunction(Frame*);
+    static void i2bFunction(Frame*);
+    static void i2cFunction(Frame*);
+    static void i2sFunction(Frame*);
+
+    //Comparisons
+    static void lcmpFunction(Frame*);
+    static void fcmplFunction(Frame*);
+    static void fcmpgFunction(Frame*);
+    static void dcmplFunction(Frame*);
+    static void dcmpgFunction(Frame*);
+    static void ifeqFunction(Frame*);
+    static void ifneFunction(Frame*);
+    static void ifltFunction(Frame*);
+    static void ifgeFunction(Frame*);
+    static void ifgtFunction(Frame*);
+    static void ifleFunction(Frame*);
+    static void if_icmpeqFunction(Frame*);
+    static void if_icmpneFunction(Frame*);
+    static void if_icmpltFunction(Frame*);
+    static void if_icmpgeFunction(Frame*);
+    static void if_icmpgtFunction(Frame*);
+    static void if_icmpleFunction(Frame*);
+    static void if_acmpeqFunction(Frame*);
+    static void if_acmpneFunction(Frame*);
+
+    //Control
+    static void gotoOpFunction(Frame*);
+    static void jsrFunction(Frame*);
+    static void retFunction(Frame*);
+    static void tableswitchFunction(Frame*);
+    static void lookupswitchFunction(Frame*);
+    static void ireturnFunction(Frame*);
+    static void lreturnFunction(Frame*);
+    static void freturnFunction(Frame*);
+    static void dreturnFunction(Frame*);
+    static void areturnFunction(Frame*);;
+    static void returnOpFunction(Frame*);
+
+    //References
+    static void getstaticFunction(Frame*);
+    static void putstaticFunction(Frame*);
+    static void getfieldFunction(Frame*);
+    static void putfieldFunction(Frame*);
+    static void invokevirtualFunction(Frame*);
+    static void invokespecialFunction(Frame*);
+    static void invokestaticFunction(Frame*);
+    static void invokeinterfaceFunction(Frame*);
+    static void invokedynamicFunction(Frame*);
+    static void newOpFunction(Frame*);
+    static void newarrayFunction(Frame*);
+    static void anewarrayFunction(Frame*);
+    static void arraylengthFunction(Frame*);
+    static void athrowFunction(Frame*);
+    // As quatro instrucoes seguintes nao precisam ser implementadas
+    static void checkcastFunction(Frame*);
+    static void instanceofFunction(Frame*);
+    static void monitorenterFunction(Frame*);
+    static void monitorexitFunction(Frame*);
+
+    //Extended
+    static void wideFunction(Frame*);
+    static void multianewarrayFunction(Frame*);
+    static void ifnullFunction(Frame*);
+    static void ifnonnullFunction(Frame*);
+    static void goto_wFunction(Frame*);
+    static void jsr_wFunction(Frame*);
 
     //Constants
     static const uint8_t nop = 0x00;

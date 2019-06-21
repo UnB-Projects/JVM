@@ -6,9 +6,11 @@
 #include "ClassLoader.hpp"
 #include "MethodArea.hpp"
 #include "Heap.hpp"
+#include "InstructionSet.hpp"
 
 class ExecutionEngine {
 private:
+    static InstructionSet instructionSet;
     string mainClassFileName;
     MethodInfo* mainMethod;
     MethodArea* methodArea;
@@ -16,6 +18,7 @@ private:
     void findMainMethod();
 public:
     ExecutionEngine(ClassFile*, MethodArea*);
+    void execute();
 };
 
 #endif
