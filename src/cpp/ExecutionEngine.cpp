@@ -36,5 +36,10 @@ void ExecutionEngine::findMainMethod() {
 }
 
 void ExecutionEngine::execute() {
+    ClassFile* mainClassFile = methodArea->getClassFile(mainClassFileName);
+    vector<CPInfo*> constantPool = mainClassFile->getConstantPool();
+    Frame mainFrame(constantPool, this->mainMethod);
+    JavaVirtualMachineThread jvmThread;
 
+    jvmThread.pushToJVMStack(mainFrame);
 }

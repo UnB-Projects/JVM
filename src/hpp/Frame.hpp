@@ -5,6 +5,7 @@
 #include <vector>
 #include <stack>
 #include "CPInfo.hpp"
+#include "MethodInfo.hpp"
 
 class JavaType {
     union {
@@ -24,10 +25,13 @@ class JavaType {
 
 class Frame {
 private:
-    vector<JavaType*> localVariables;
+    vector<JavaType> localVariables;
     stack<JavaType*> operandStack;
     vector<CPInfo*> constantPool;
+    MethodInfo* method;
 public:
+    Frame(vector<JavaType>, stack<JavaType*>, vector<CPInfo*>);
+    Frame(vector<CPInfo*>, MethodInfo*);
 };
 
 #endif

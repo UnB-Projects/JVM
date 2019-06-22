@@ -7,6 +7,7 @@
 #include "MethodArea.hpp"
 #include "Heap.hpp"
 #include "InstructionSet.hpp"
+#include "JavaVirtualMachineThread.hpp"
 
 class ExecutionEngine {
 private:
