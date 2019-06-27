@@ -398,7 +398,6 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
         cout << i << ": " << instruction.getMnemonic() << " ";
 
-
         if (opcode == Instruction::wide) {
             uint8_t modifiedOpcode = bytecode[++i];
             cout << instructions[modifiedOpcode].getMnemonic() << " ";

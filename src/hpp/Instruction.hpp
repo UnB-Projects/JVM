@@ -10,8 +10,8 @@ class Instruction {
 private:
     string mnemonic;
     uint32_t bytesCount;
-    void (*func)(Frame*);
 public:
+    uint32_t (*func)(Frame*);
     Instruction();
     Instruction(string, uint32_t, void (*)(Frame*));
     void setMnemonic(string);

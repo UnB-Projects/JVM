@@ -737,8 +737,7 @@ void Instruction::returnOpFunction(Frame*) {
     exit(0);
 }
 void Instruction::getstaticFunction(Frame*) {
-    printf("Instrucao getstaticFunction nao implementada ainda!\n");
-    exit(0);
+
 }
 void Instruction::putstaticFunction(Frame*) {
     printf("Instrucao putstaticFunction nao implementada ainda!\n");

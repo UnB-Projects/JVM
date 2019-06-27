@@ -29,9 +29,17 @@ private:
     stack<JavaType*> operandStack;
     vector<CPInfo*> constantPool;
     MethodInfo* method;
+    CodeAttribute codeAttribute;
 public:
+    uint32_t localPC;
     Frame(vector<JavaType>, stack<JavaType*>, vector<CPInfo*>);
     Frame(vector<CPInfo*>, MethodInfo*);
+    uint8_t* getCode() {
+        return this->codeAttribute.getCode();
+    }
+    uint32_t getCodeLength() {
+        return this->codeAttribute.getCodeLength();
+    }
 };
 
 #endif

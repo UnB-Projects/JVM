@@ -1,12 +1,13 @@
 #include "../hpp/ExecutionEngine.hpp"
 
 ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea) {
-    ClassFile objectClass;
     vector<CPInfo*>constantPool = classFile->getConstantPool();
     string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first;
+    InstructionSet instructionSet;
 
     this->methodArea = methodArea;
     this->mainClassFileName = name;
+    this->instructions = instructionSet.getInstructionSet();
     findMainMethod();
 }
 
@@ -42,4 +43,14 @@ void ExecutionEngine::execute() {
     JavaVirtualMachineThread jvmThread;
 
     jvmThread.pushToJVMStack(mainFrame);
+
+    do {
+        Frame* currentFrame = jvmThread.getCurrentFrame();
+        uint8_t* bytecode = currentFrame->getCode();
+        uint32_t bytecodeLength = currentFrame->getCodeLength();
+        uint8_t opcode = bytecode[jvmThread.pc];
+        Instruction instruction = instructions[opcode];
+
+        instruction.func(currentFrame);
+    } while (!jvmThread.isJVMStackEmpty());
 }

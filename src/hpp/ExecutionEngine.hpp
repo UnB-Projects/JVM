@@ -11,12 +11,13 @@
 
 class ExecutionEngine {
 private:
-    static InstructionSet instructionSet;
+    Instruction* instructions;
     string mainClassFileName;
     MethodInfo* mainMethod;
     MethodArea* methodArea;
     Heap heap;
     void findMainMethod();
+    void executeInstruction(uint8_t*, uint32_t, Frame*);
 public:
     ExecutionEngine(ClassFile*, MethodArea*);
     void execute();

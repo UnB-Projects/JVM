@@ -8,17 +8,25 @@ using namespace std;
 
 class JavaVirtualMachineThread {
 private:
-    uint32_t pc;
     stack<Frame> javaVirtualMachineStack;
 public:
+    uint32_t pc;
     JavaVirtualMachineThread();
-    uint32_t getPc() {
-        return pc;
-    }
-    stack<Frame> getJavaVirtualMachineStack() {
-        return javaVirtualMachineStack;
-    }
     void pushToJVMStack(Frame);
+    void incrementPcBy(uint32_t);
+
+    Frame* getCurrentFrame() {
+        return &(this->javaVirtualMachineStack.top());
+    }
+    bool isJVMStackEmpty() {
+        return this->javaVirtualMachineStack.empty();
+    }
+    // uint32_t getPc() {
+    //     return pc;
+    // }
+    // stack<Frame> getJavaVirtualMachineStack() {
+    //     return javaVirtualMachineStack;
+    // }
 };
 
 #endif
