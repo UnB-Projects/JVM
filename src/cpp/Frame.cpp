@@ -1,11 +1,11 @@
 #include "../hpp/Frame.hpp"
 
-Frame::Frame(vector<JavaType> localVariables, stack<JavaType*> operandStack, vector<CPInfo*> constantPool) {
-    this->localVariables = localVariables;
-    this->operandStack = operandStack;
-    this->constantPool = constantPool;
-    this->localPC = 0;
-}
+// Frame::Frame(vector<JavaType> localVariables, stack<JavaType> operandStack, vector<CPInfo*> constantPool) {
+//     this->localVariables = localVariables;
+//     this->operandStack = operandStack;
+//     this->constantPool = constantPool;
+//     this->localPC = 0;
+// }
 
 Frame::Frame(vector<CPInfo*> constantPool, MethodInfo* method) {
     uint16_t attributesCount = method->getAttributesCount();
@@ -31,8 +31,10 @@ Frame::Frame(vector<CPInfo*> constantPool, MethodInfo* method) {
         uint16_t maxLocals = attributes[i].getCodeAttribute().getMaxLocals();
         this->codeAttribute = attributes[i].getCodeAttribute();
         this->localVariables = vector<JavaType>(maxLocals);
+        this->localPC = 0;
     }
     else {
         printf("Atributo Code nao encontrado no metodo [%d]\n", method->getNameIndex());
+        exit(0);
     }
 }

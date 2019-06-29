@@ -558,7 +558,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 cout << index << " (" << sign << offset << ")" << endl;
             }
             else if ((opcode >= Instruction::getstatic && opcode <= Instruction::invokestatic)) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 string methodName = constantPool[index-1]->getInfo(constantPool).first;
                 string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
                 int j = 0;

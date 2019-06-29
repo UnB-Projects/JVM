@@ -51,6 +51,15 @@ void ExecutionEngine::execute() {
         uint8_t opcode = bytecode[jvmThread.pc];
         Instruction instruction = instructions[opcode];
 
-        instruction.func(currentFrame);
+        //Para debug
+        // cout << "Executando: " << jvmThread.pc << " " << instruction.getMnemonic() << endl;
+        jvmThread.pc = instruction.func(currentFrame);
+
+        if (instruction.getMnemonic().compare("return") == 0) {
+            jvmThread.popFromJVMStack();
+            if (!jvmThread.isJVMStackEmpty()) {
+                jvmThread.pc = jvmThread.getCurrentFrame()->localPC;
+            }
+        }
     } while (!jvmThread.isJVMStackEmpty());
 }

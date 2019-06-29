@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 
             //Inicio da execucao do programa
             ExecutionEngine executionEngine(&classFile, &methodArea);
+            executionEngine.execute();
         }
         else {
             cout << "O segundo argumento deve ser -e para exibidor ou -i para interpredaor" << endl;

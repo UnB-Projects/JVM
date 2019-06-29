@@ -7,7 +7,7 @@
 #include "CPInfo.hpp"
 #include "MethodInfo.hpp"
 
-class JavaType {
+struct JavaType {
     union {
         uint32_t type_empty;
         uint32_t type_boolean;
@@ -16,7 +16,7 @@ class JavaType {
         uint32_t type_short;
         uint32_t type_int;
         uint32_t type_float;
-        uint32_t type_reference;
+        uint64_t type_reference;
         uint32_t type_returnAddress;
         uint64_t type_long;
         uint64_t type_double;
@@ -26,13 +26,13 @@ class JavaType {
 class Frame {
 private:
     vector<JavaType> localVariables;
-    stack<JavaType*> operandStack;
-    vector<CPInfo*> constantPool;
     MethodInfo* method;
     CodeAttribute codeAttribute;
 public:
+    vector<CPInfo*> constantPool;
+    stack<JavaType> operandStack;
     uint32_t localPC;
-    Frame(vector<JavaType>, stack<JavaType*>, vector<CPInfo*>);
+    // Frame(vector<JavaType>, stack<JavaType>, vector<CPInfo*>);
     Frame(vector<CPInfo*>, MethodInfo*);
     uint8_t* getCode() {
         return this->codeAttribute.getCode();

@@ -13,6 +13,7 @@ public:
     uint32_t pc;
     JavaVirtualMachineThread();
     void pushToJVMStack(Frame);
+    void popFromJVMStack();
     void incrementPcBy(uint32_t);
 
     Frame* getCurrentFrame() {
