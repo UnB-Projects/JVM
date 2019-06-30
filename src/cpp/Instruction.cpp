@@ -293,14 +293,20 @@ uint32_t Instruction::aload_0Function(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::aload_1Function(Frame* frame) {
-    printf("Instrucao aload_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->localVariables[1].type_reference;
+    frame->operandStack.push(objectref);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::aload_2Function(Frame* frame) {
-    printf("Instrucao aload_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->localVariables[2].type_reference;
+    frame->operandStack.push(objectref);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::aload_3Function(Frame* frame) {
     printf("Instrucao aload_3Function nao implementada ainda!\n");
@@ -458,14 +464,22 @@ uint32_t Instruction::astore_0Function(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::astore_1Function(Frame* frame) {
-    printf("Instrucao astore_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->operandStack.top().type_reference;
+    frame->operandStack.pop();
+    frame->localVariables[1] = objectref;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::astore_2Function(Frame* frame) {
-    printf("Instrucao astore_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->operandStack.top().type_reference;
+    frame->operandStack.pop();
+    frame->localVariables[2] = objectref;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::astore_3Function(Frame* frame) {
     printf("Instrucao astore_3Function nao implementada ainda!\n");
@@ -523,9 +537,12 @@ uint32_t Instruction::pop2Function(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::dupFunction(Frame* frame) {
-    printf("Instrucao dupFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType duplicated = frame->operandStack.top();
+    frame->operandStack.pop();
+    frame->operandStack.push(duplicated);
+    frame->operandStack.push(duplicated);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dup_x1Function(Frame* frame) {
     printf("Instrucao dup_x1Function nao implementada ainda!\n");
@@ -1041,14 +1058,25 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 frame->operandStack.pop();
                 cout << integer << endl;
             }
+            else if (descriptor.compare("(F)V") == 0) {
+                float floatNumber;
+                memcpy(&floatNumber, &(frame->operandStack.top().type_float), sizeof(float));
+                frame->operandStack.pop();
+                cout << floatNumber << endl;
+            }
             else if (descriptor.compare("(D)V") == 0) {
                 double doubleNumber;
                 memcpy(&doubleNumber, &(frame->operandStack.top().type_double), sizeof(double));
                 frame->operandStack.pop();
                 cout << doubleNumber << endl;
             }
+            else if (descriptor.compare("(J)V") == 0) {
+                int64_t longNumber = (int64_t)frame->operandStack.top().type_long;
+                frame->operandStack.pop();
+                cout << longNumber << endl;
+            }
             else {
-                printf("invokevirtualFunction: falta implementar\n");
+                printf("invokevirtualFunction: tipo do descritor nao reconhecido: %s\n", descriptor.c_str());
                 exit(0);
             }
         }
@@ -1067,9 +1095,38 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
 }
 uint32_t Instruction::invokespecialFunction(Frame* frame) {
-    printf("Instrucao invokespecialFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+    string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
+    int j = 0;
+
+    while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+        j++;
+    }
+    string methodName = nameAndType.substr(0,j);
+    string descriptor = nameAndType.substr(j+3,nameAndType.size());
+
+    if (className.compare("java/lang/String") == 0) {
+        if (methodName.compare("<init>") == 0) {
+            string* stringReference = (string*)(frame->operandStack.top().type_reference);
+            frame->operandStack.pop();
+            string* initStringReference = (string*)(frame->operandStack.top().type_reference);
+            frame->operandStack.pop();
+            *initStringReference = *stringReference;
+        }
+        else {
+            printf("invokespecial: metodo da classe string desconhecido: %s\n", methodName.c_str());
+        }
+    }
+    else {
+        printf("invokespecial: ainda nao esta funcionando caso nao seja string\n");
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::invokestaticFunction(Frame* frame) {
     printf("Instrucao invokestaticFunction nao implementada ainda!\n");
@@ -1087,9 +1144,22 @@ uint32_t Instruction::invokedynamicFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::newOpFunction(Frame* frame) {
-    printf("Instrucao newOpFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+
+    if (className.compare("java/lang/String") == 0) {
+        JavaType objectref;
+        objectref.type_reference = (uint64_t)new string("");
+        frame->operandStack.push(objectref);
+    }
+    else {
+        printf("newOp: ainda nao esta funcionando para casos alem de string do java\n");
+    }
+    return ++frame->localPC;
 }
 uint32_t Instruction::newarrayFunction(Frame* frame) {
     printf("Instrucao newarrayFunction nao implementada ainda!\n");

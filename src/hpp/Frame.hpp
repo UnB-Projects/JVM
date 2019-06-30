@@ -25,12 +25,12 @@ struct JavaType {
 
 class Frame {
 private:
-    vector<JavaType> localVariables;
     MethodInfo* method;
     CodeAttribute codeAttribute;
 public:
     vector<CPInfo*> constantPool;
     stack<JavaType> operandStack;
+    vector<JavaType> localVariables;
     uint32_t localPC;
     // Frame(vector<JavaType>, stack<JavaType>, vector<CPInfo*>);
     Frame(vector<CPInfo*>, MethodInfo*);
