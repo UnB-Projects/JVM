@@ -513,8 +513,11 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 uint8_t index = byte;
                 cout << "#" << +index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
             }
-            else if((opcode == Instruction::bipush) ||
-                    (opcode >= Instruction::iload && opcode <= Instruction::aload) ||
+            else if ((opcode == Instruction::bipush)) {
+                int32_t value = byte;
+                cout << value << endl;
+            }
+            else if((opcode >= Instruction::iload && opcode <= Instruction::aload) ||
                     (opcode >= Instruction::istore && opcode <= Instruction::astore) ||
                     (opcode == Instruction::ret) ) {
                 uint8_t index = byte;
@@ -575,7 +578,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                      (opcode == Instruction::anewarray) ||
                      (opcode == Instruction::checkcast) ||
                      (opcode == Instruction::instanceof)) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 string className = constantPool[index-1]->getInfo(constantPool).first;
                 cout << "#" << index << " <" << className << ">" << endl;
             }
@@ -585,7 +588,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             uint8_t byte2 = bytecode[++i];
             uint8_t byte3 = bytecode[++i];
             if (opcode == Instruction::multianewarray) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 uint8_t dimensions = byte3;
                 CPInfo* info = constantPool[index-1];
 

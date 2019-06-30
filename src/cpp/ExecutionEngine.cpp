@@ -3,11 +3,9 @@
 ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea) {
     vector<CPInfo*>constantPool = classFile->getConstantPool();
     string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first;
-    InstructionSet instructionSet;
 
     this->methodArea = methodArea;
     this->mainClassFileName = name;
-    this->instructions = instructionSet.getInstructionSet();
     findMainMethod();
 }
 
@@ -41,6 +39,8 @@ void ExecutionEngine::execute() {
     vector<CPInfo*> constantPool = mainClassFile->getConstantPool();
     Frame mainFrame(constantPool, this->mainMethod);
     JavaVirtualMachineThread jvmThread;
+    InstructionSet instructionSet;
+    Instruction* instructions = instructionSet.getInstructionSet();
 
     jvmThread.pushToJVMStack(mainFrame);
 
@@ -52,7 +52,7 @@ void ExecutionEngine::execute() {
         Instruction instruction = instructions[opcode];
 
         //Para debug
-        // cout << "Executando: " << jvmThread.pc << " " << instruction.getMnemonic() << endl;
+        // cout << "Executando: " << jvmThread.pc << " " << instruction.getMnemonic() << " " << currentFrame << " " << instruction.func << endl;
         jvmThread.pc = instruction.func(currentFrame);
 
         if (instruction.getMnemonic().compare("return") == 0) {

@@ -11,7 +11,6 @@
 
 class ExecutionEngine {
 private:
-    Instruction* instructions;
     string mainClassFileName;
     MethodInfo* mainMethod;
     MethodArea* methodArea;

@@ -105,9 +105,14 @@ uint32_t Instruction::dconst_1Function(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::bipushFunction(Frame* frame) {
-    printf("Instrucao bipushFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte = bytecode[++frame->localPC];
+    JavaType value;
+
+    value.type_int = (int32_t)byte;
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::sipushFunction(Frame* frame) {
     printf("Instrucao sipushFunction nao implementada ainda!\n");
@@ -137,7 +142,7 @@ uint32_t Instruction::ldcFunction(Frame* frame) {
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Float:
-        value.type_float = cpInfo->getFloatInfo().bytes;
+        value.type_float = cpInfo->getFloatNumber();
         frame->operandStack.push(value);
         break;
     default:
@@ -154,9 +159,28 @@ uint32_t Instruction::ldc_wFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ldc2_wFunction(Frame* frame) {
-    printf("Instrucao ldc2_wFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t * bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    JavaType value;
+
+    CPInfo * cpInfo = frame->constantPool[index-1];
+    switch(cpInfo->getTag()) {
+    case CPInfo::CONSTANT_Long:
+        value.type_long = ((uint64_t)cpInfo->getLongInfo().high_bytes << 32) | cpInfo->getLongInfo().low_bytes;
+        frame->operandStack.push(value);
+        break;
+    case CPInfo::CONSTANT_Double:
+        value.type_double = ((uint64_t)cpInfo->getDoubleInfo().high_bytes << 32) | cpInfo->getDoubleInfo().low_bytes;
+        frame->operandStack.push(value);
+        break;
+    default:
+        printf("A funcao ldc2_w encontrou um tipo indefinido: %d\n", cpInfo->getTag());
+        exit(0);
+        break;
+    }
+    return ++frame->localPC;
 }
 uint32_t Instruction::iloadFunction(Frame* frame) {
     printf("Instrucao iloadFunction nao implementada ainda!\n");
@@ -1011,6 +1035,17 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 string* stringReference = (string*)(frame->operandStack.top().type_reference);
                 frame->operandStack.pop();
                 cout << *stringReference << endl;
+            }
+            else if (descriptor.compare("(I)V") == 0) {
+                int32_t integer = (int32_t)(frame->operandStack.top().type_int);
+                frame->operandStack.pop();
+                cout << integer << endl;
+            }
+            else if (descriptor.compare("(D)V") == 0) {
+                double doubleNumber;
+                memcpy(&doubleNumber, &(frame->operandStack.top().type_double), sizeof(double));
+                frame->operandStack.pop();
+                cout << doubleNumber << endl;
             }
             else {
                 printf("invokevirtualFunction: falta implementar\n");
