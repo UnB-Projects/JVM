@@ -1142,6 +1142,21 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 frame->operandStack.pop();
                 cout << longNumber << endl;
             }
+            else if (descriptor.compare("(Z)V") == 0) {
+                uint32_t integer = (uint32_t)(frame->operandStack.top().type_int);
+                frame->operandStack.pop();
+
+                if (integer == 1) {
+                    cout << "true" << endl;
+                }
+                else if (integer == 0) {
+                    cout << "false" << endl;
+                }
+                else {
+                    cout << "Erro no tipo booleano!\\n" << endl;
+                    exit(0);
+                }
+            }
             else if (descriptor.compare("()V") == 0) {
                 cout << endl;
             }
@@ -1177,6 +1192,21 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 int64_t longNumber = (int64_t)frame->operandStack.top().type_long;
                 frame->operandStack.pop();
                 cout << longNumber;
+            }
+            else if (descriptor.compare("(Z)V") == 0) {
+                uint32_t integer = (uint32_t)(frame->operandStack.top().type_int);
+                frame->operandStack.pop();
+
+                if (integer == 1) {
+                    cout << "true";
+                }
+                else if (integer == 0) {
+                    cout << "false";
+                }
+                else {
+                    cout << "Erro no tipo booleano!";
+                    exit(0);
+                }
             }
             else if (descriptor.compare("()V") == 0) {
                 //Nao faz nada
@@ -1247,6 +1277,25 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str + to_string(doubleNumber));
+                frame->operandStack.push(objectref);
+            }
+            else if (descriptor.compare("(Z)Ljava/lang/StringBuilder;") == 0) {
+                uint32_t integer = (uint32_t)(frame->operandStack.top().type_int);
+                frame->operandStack.pop();
+                string* str = (string*)(frame->operandStack.top().type_reference);
+                frame->operandStack.pop();
+
+                JavaType objectref;
+                if (integer == 1) {
+                    objectref.type_reference = (uint64_t)new string(*str + "true");
+                }
+                else if (integer == 0) {
+                    objectref.type_reference = (uint64_t)new string(*str + "false");
+                }
+                else {
+                    cout << "Erro no tipo booleano durante a concatenacao!";
+                    exit(0);
+                }
                 frame->operandStack.push(objectref);
             }
             else {
