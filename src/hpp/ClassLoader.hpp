@@ -7,9 +7,11 @@
 class ClassLoader {
 private:
     MethodArea * methodArea;
+    string projectPath;
 public:
-    ClassFile loadClassFile(FILE * fp);
-    void loadSuperClasses(ClassFile*, string);
+    ClassLoader(string);
+    ClassFile loadClassFile(string);
+    void loadSuperClasses(ClassFile*);
     void setMethodArea(MethodArea* methodArea) {
         this->methodArea = methodArea;
     }

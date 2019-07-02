@@ -1,7 +1,10 @@
 #include "../hpp/InstructionSet.hpp"
 
-InstructionSet::InstructionSet() {
+ClassLoader* Instruction::classLoader;
+
+InstructionSet::InstructionSet(ClassLoader * classLoader) {
     this->instructionsCount = 256;
+    Instruction::setClassLoader(classLoader);
 
     instructionSet[Instruction::nop] = Instruction("nop", 0, Instruction::nopFunction);
     instructionSet[Instruction::aconst_null] = Instruction("aconst_null", 0, Instruction::aconst_nullFunction);

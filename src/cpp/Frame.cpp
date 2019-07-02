@@ -7,13 +7,14 @@
 //     this->localPC = 0;
 // }
 
-Frame::Frame(vector<CPInfo*> constantPool, MethodInfo* method) {
+Frame::Frame(vector<CPInfo*> constantPool, MethodInfo* method, stack<Frame>* jvmStack) {
     uint16_t attributesCount = method->getAttributesCount();
     AttributeInfo* attributes = method->getAttributes();
     int i;
 
     this->constantPool = constantPool;
     this->method = method;
+    this->jvmStack = jvmStack;
 
     bool foundCode = false;
     for (i = 0; i < attributesCount && !foundCode; i++) {

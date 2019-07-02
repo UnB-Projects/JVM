@@ -31,9 +31,10 @@ public:
     vector<CPInfo*> constantPool;
     stack<JavaType> operandStack;
     vector<JavaType> localVariables;
+    stack<Frame>* jvmStack;
     uint32_t localPC;
     // Frame(vector<JavaType>, stack<JavaType>, vector<CPInfo*>);
-    Frame(vector<CPInfo*>, MethodInfo*);
+    Frame(vector<CPInfo*>, MethodInfo*, stack<Frame>*);
     uint8_t* getCode() {
         return this->codeAttribute.getCode();
     }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Frame.hpp"
+#include "ClassLoader.hpp"
 
 using namespace std;
 
@@ -11,6 +12,8 @@ private:
     string mnemonic;
     uint32_t bytesCount;
 public:
+    static ClassLoader * classLoader;
+    static void setClassLoader(ClassLoader*);
     uint32_t (*func)(Frame*);
     Instruction();
     Instruction(string, uint32_t, uint32_t (*)(Frame*));
@@ -18,6 +21,7 @@ public:
     void setBytesCount(uint32_t);
     string getMnemonic();
     uint32_t getBytesCount();
+
 
     static uint32_t nopFunction(Frame*);
     static uint32_t aconst_nullFunction(Frame*);

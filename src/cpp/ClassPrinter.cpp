@@ -133,8 +133,9 @@ string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
 return outputFlagsStream.str();
 }
 
-ClassPrinter::ClassPrinter(ClassFile classFile) {
+ClassPrinter::ClassPrinter(ClassFile classFile, InstructionSet * instructionSet) {
     this->classFile = classFile;
+    this->instructionSet = instructionSet;
 }
 
 void ClassPrinter::printGeneralInformation() {
@@ -387,10 +388,9 @@ void ClassPrinter::printCodeExceptionTableInfo(ExceptionHandler* exceptionTable,
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
-    InstructionSet instructionsSet;
 
-    uint32_t instructionsCount = instructionsSet.getInstructionsCount();
-    Instruction* instructions = instructionsSet.getInstructionSet();
+    uint32_t instructionsCount = instructionSet->getInstructionsCount();
+    Instruction* instructions = instructionSet->getInstructionSet();
     cout << "Bytecode-----------" << endl;
     for (int i = 0; i < attribute->getCodeLength(); i++) {
         uint8_t opcode = bytecode[i];
@@ -514,7 +514,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 cout << "#" << +index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
             }
             else if ((opcode == Instruction::bipush)) {
-                int32_t value = byte;
+                int32_t value = (int8_t)byte;
                 cout << value << endl;
             }
             else if((opcode >= Instruction::iload && opcode <= Instruction::aload) ||

@@ -1,5 +1,9 @@
 #include "../hpp/Instruction.hpp"
 
+void Instruction::setClassLoader(ClassLoader* classLoader) {
+    Instruction::classLoader = classLoader;
+}
+
 Instruction::Instruction() {
     //Para declarar sem argumentos
 }
@@ -125,7 +129,7 @@ uint32_t Instruction::bipushFunction(Frame* frame) {
     uint8_t byte = bytecode[++frame->localPC];
     JavaType value;
 
-    value.type_int = (int32_t)byte;
+    value.type_int = (int32_t)((int8_t)byte);
     frame->operandStack.push(value);
 
     return ++frame->localPC;
@@ -244,24 +248,28 @@ uint32_t Instruction::aloadFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iload_0Function(Frame* frame) {
-    printf("Instrucao iload_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_int = frame->localVariables[0].type_int;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::iload_1Function(Frame* frame) {
-    printf("Instrucao iload_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_int = frame->localVariables[1].type_int;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::iload_2Function(Frame* frame) {
-    printf("Instrucao iload_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_int = frame->localVariables[2].type_int;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::iload_3Function(Frame* frame) {
-    printf("Instrucao iload_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_int = frame->localVariables[3].type_int;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lload_0Function(Frame* frame) {
     printf("Instrucao lload_0Function nao implementada ainda!\n");
@@ -594,9 +602,8 @@ uint32_t Instruction::sastoreFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::popFunction(Frame* frame) {
-    printf("Instrucao popFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::pop2Function(Frame* frame) {
     printf("Instrucao pop2Function nao implementada ainda!\n");
@@ -642,9 +649,18 @@ uint32_t Instruction::swapFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iaddFunction(Frame* frame) {
-    printf("Instrucao iaddFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_int = (int32_t)value1.type_int + (int32_t)value2.type_int;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::laddFunction(Frame* frame) {
     printf("Instrucao laddFunction nao implementada ainda!\n");
@@ -662,9 +678,19 @@ uint32_t Instruction::daddFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::isubFunction(Frame* frame) {
-    printf("Instrucao isubFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int - (int32_t)value2.type_int);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lsubFunction(Frame* frame) {
     printf("Instrucao lsubFunction nao implementada ainda!\n");
@@ -682,9 +708,19 @@ uint32_t Instruction::dsubFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::imulFunction(Frame* frame) {
-    printf("Instrucao imulFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int * (int32_t)value2.type_int);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lmulFunction(Frame* frame) {
     printf("Instrucao lmulFunction nao implementada ainda!\n");
@@ -702,9 +738,19 @@ uint32_t Instruction::dmulFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::idivFunction(Frame* frame) {
-    printf("Instrucao idivFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int / (int32_t)value2.type_int);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ldivOpFunction(Frame* frame) {
     printf("Instrucao ldivOpFunction nao implementada ainda!\n");
@@ -722,9 +768,19 @@ uint32_t Instruction::ddivFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iremFunction(Frame* frame) {
-    printf("Instrucao iremFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int - (int32_t)((int32_t)value1.type_int / (int32_t)value2.type_int) * (int32_t)value2.type_int);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lremFunction(Frame* frame) {
     printf("Instrucao lremFunction nao implementada ainda!\n");
@@ -742,9 +798,16 @@ uint32_t Instruction::dremFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::inegFunction(Frame* frame) {
-    printf("Instrucao inegFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)(-(int32_t)value.type_int);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lnegFunction(Frame* frame) {
     printf("Instrucao lnegFunction nao implementada ainda!\n");
@@ -1022,9 +1085,15 @@ uint32_t Instruction::lookupswitchFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ireturnFunction(Frame* frame) {
-    printf("Instrucao ireturnFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    frame->jvmStack->pop();
+
+    Frame* invoker = &(frame->jvmStack->top());
+    invoker->operandStack.push(value);
+    return invoker->localPC;
 }
 uint32_t Instruction::lreturnFunction(Frame* frame) {
     printf("Instrucao lreturnFunction nao implementada ainda!\n");
@@ -1362,9 +1431,68 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::invokestaticFunction(Frame* frame) {
-    printf("Instrucao invokestaticFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+
+    string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+    string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
+    int j = 0;
+
+    while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+        j++;
+    }
+    string methodName = nameAndType.substr(0,j);
+    string descriptor = nameAndType.substr(j+3,nameAndType.size());
+
+    ClassFile classFile = classLoader->loadClassFile(className + ".class");
+    classLoader->loadSuperClasses(&classFile);
+
+    bool foundMethod = false;
+    vector<CPInfo*> constantPool = classFile.getConstantPool();
+    vector<MethodInfo*> methods = classFile.getMethods();
+    MethodInfo* method;
+
+    for (int i = 0; i < classFile.getMethodsCount() && !foundMethod; i++) {
+        method = methods[i];
+        uint16_t nameIndex = method->getNameIndex();
+        uint16_t descriptorIndex = method->getDescriptorIndex();
+        string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        string classDescriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+        if (name.compare(methodName) == 0 && classDescriptor.compare(descriptor) == 0) {
+            foundMethod = true;
+        }
+    }
+
+    if (!foundMethod) {
+        printf("Invokestatic: o método especificado nao foi encontrado!\n");
+        exit(0);
+    }
+
+    Frame staticMethodFrame(constantPool, method, frame->jvmStack);
+
+    int argCnt = -1;
+    for (int i = 0; descriptor[i] != ')'; i++) {
+        if (descriptor[i] == 'I') {
+            argCnt++;
+        }
+    }
+    for (int i = 1; descriptor[i] != ')'; i++) {
+        if (descriptor[i] == 'I') {
+            JavaType arg = frame->operandStack.top();
+            frame->operandStack.pop();
+            staticMethodFrame.localVariables[argCnt] = arg;
+            argCnt--;
+        }
+        else {
+            cout << "Tipo de descritor nao reconhecido: " << descriptor[i] << endl;
+            exit(0);
+        }
+    }
+    frame->jvmStack->push(staticMethodFrame);
+    frame->localPC++;
+    return staticMethodFrame.localPC;
 }
 uint32_t Instruction::invokeinterfaceFunction(Frame* frame) {
     printf("Instrucao invokeinterfaceFunction nao implementada ainda!\n");

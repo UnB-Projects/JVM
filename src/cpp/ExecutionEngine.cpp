@@ -1,10 +1,11 @@
 #include "../hpp/ExecutionEngine.hpp"
 
-ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea) {
+ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea, InstructionSet* instructionSet) {
     vector<CPInfo*>constantPool = classFile->getConstantPool();
     string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first;
 
     this->methodArea = methodArea;
+    this->instructionSet = instructionSet;
     this->mainClassFileName = name;
     findMainMethod();
 }
@@ -37,10 +38,9 @@ void ExecutionEngine::findMainMethod() {
 void ExecutionEngine::execute() {
     ClassFile* mainClassFile = methodArea->getClassFile(mainClassFileName);
     vector<CPInfo*> constantPool = mainClassFile->getConstantPool();
-    Frame mainFrame(constantPool, this->mainMethod);
     JavaVirtualMachineThread jvmThread;
-    InstructionSet instructionSet;
-    Instruction* instructions = instructionSet.getInstructionSet();
+    Frame mainFrame(constantPool, this->mainMethod, jvmThread.getJVMStack());
+    Instruction* instructions = instructionSet->getInstructionSet();
 
     jvmThread.pushToJVMStack(mainFrame);
 

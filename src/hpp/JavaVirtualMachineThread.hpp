@@ -22,6 +22,9 @@ public:
     bool isJVMStackEmpty() {
         return this->javaVirtualMachineStack.empty();
     }
+    stack<Frame>* getJVMStack() {
+        return &javaVirtualMachineStack;
+    }
     // uint32_t getPc() {
     //     return pc;
     // }
