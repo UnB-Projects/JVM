@@ -825,9 +825,19 @@ uint32_t Instruction::dnegFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ishlFunction(Frame* frame) {
-    printf("Instrucao ishlFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int << ((int32_t)value2.type_int & 0x00000001F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lshlFunction(Frame* frame) {
     printf("Instrucao lshlFunction nao implementada ainda!\n");
@@ -835,9 +845,19 @@ uint32_t Instruction::lshlFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ishrFunction(Frame* frame) {
-    printf("Instrucao ishrFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (int32_t)((int32_t)value1.type_int >> ((int32_t)value2.type_int & 0x00000001F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lshrFunction(Frame* frame) {
     printf("Instrucao lshrFunction nao implementada ainda!\n");
@@ -845,9 +865,19 @@ uint32_t Instruction::lshrFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iushrFunction(Frame* frame) {
-    printf("Instrucao iushrFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    result.type_int = (uint32_t)((uint32_t)value1.type_int >> ((int32_t)value2.type_int & 0x00000001F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lushrFunction(Frame* frame) {
     printf("Instrucao lushrFunction nao implementada ainda!\n");
@@ -855,9 +885,18 @@ uint32_t Instruction::lushrFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iandFunction(Frame* frame) {
-    printf("Instrucao iandFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_int = (int32_t)value1.type_int & (int32_t)value2.type_int;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::landFunction(Frame* frame) {
     printf("Instrucao landFunction nao implementada ainda!\n");
@@ -865,9 +904,18 @@ uint32_t Instruction::landFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::iorFunction(Frame* frame) {
-    printf("Instrucao iorFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_int = (int32_t)value1.type_int | (int32_t)value2.type_int;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lorFunction(Frame* frame) {
     printf("Instrucao lorFunction nao implementada ainda!\n");
@@ -875,9 +923,18 @@ uint32_t Instruction::lorFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ixorFunction(Frame* frame) {
-    printf("Instrucao ixorFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_int = (int32_t)value1.type_int ^ (int32_t)value2.type_int;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lxorFunction(Frame* frame) {
     printf("Instrucao lxorFunction nao implementada ainda!\n");
