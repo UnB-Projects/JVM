@@ -86,6 +86,27 @@ class Invokestatic {
         System.out.println(i2s(-10));
         System.out.println(i2c(90));
         System.out.println(i2c(70));
+
+        System.out.println(l2i(20l));
+        System.out.println(l2i(-20l));
+        System.out.println(l2f(20l));
+        System.out.println(l2f(-20l));
+        System.out.println(l2d(20l));
+        System.out.println(l2d(-20l));
+
+        System.out.println(f2d(1.45f));
+        System.out.println(f2d(-1.55f));
+        System.out.println(f2i(1.45f));
+        System.out.println(f2i(-1.55f));
+        System.out.println(f2l(1.45f));
+        System.out.println(f2l(-1.55f));
+
+        System.out.println(d2i(2.455555555));
+        System.out.println(d2i(-2.555555555));
+        System.out.println(d2l(2.455555555));
+        System.out.println(d2l(-2.555555555));
+        System.out.println(d2f(2.455555555));
+        System.out.println(d2f(-2.555555555));
     };
 
     static void retornoVazio() {
@@ -234,5 +255,35 @@ class Invokestatic {
     }
     static char i2c(int a) {
         return (char)a;
+    }
+
+    static int l2i(long a) {
+        return (int)a;
+    }
+    static float l2f(long a) {
+        return (float)a;
+    }
+    static double l2d(long a) {
+        return (double)a;
+    }
+
+    static double f2d(float a) {
+        return (double)a;
+    }
+    static int f2i(float a) {
+        return (int)a;
+    }
+    static long f2l(float a) {
+        return (long)a;
+    }
+
+    static int d2i(double a) {
+        return (int)a;
+    }
+    static long d2l(double a) {
+        return (long)a;
+    }
+    static float d2f(double a) {
+        return (float)a;
     }
 }

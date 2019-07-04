@@ -1340,44 +1340,118 @@ uint32_t Instruction::l2iFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::l2fFunction(Frame* frame) {
-    printf("Instrucao l2fFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fresult;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    fresult = (float)((int64_t)value.type_long);
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::l2dFunction(Frame* frame) {
-    printf("Instrucao l2dFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dresult;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    dresult = (double)((int64_t)value.type_long);
+    memcpy(&(result.type_float), &dresult, sizeof(double));
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::f2iFunction(Frame* frame) {
-    printf("Instrucao f2iFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fvalue;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue, &(value.type_int), sizeof(float));
+    result.type_int = (int32_t)fvalue;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::f2lFunction(Frame* frame) {
-    printf("Instrucao f2lFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fvalue;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue, &(value.type_int), sizeof(float));
+    result.type_long = (int64_t)fvalue;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::f2dFunction(Frame* frame) {
-    printf("Instrucao f2dFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fvalue;
+    double dresult;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue, &(value.type_int), sizeof(float));
+    dresult = (double)fvalue;
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::d2iFunction(Frame* frame) {
-    printf("Instrucao d2iFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dvalue;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue, &(value.type_long), sizeof(double));
+    result.type_int = (int32_t)dvalue;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::d2lFunction(Frame* frame) {
-    printf("Instrucao d2lFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dvalue;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue, &(value.type_long), sizeof(double));
+    result.type_long = (int64_t)dvalue;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::d2fFunction(Frame* frame) {
-    printf("Instrucao d2fFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dvalue;
+    float fresult;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue, &(value.type_long), sizeof(double));
+    fresult = (float)dvalue;
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2bFunction(Frame* frame) {
     JavaType value;
