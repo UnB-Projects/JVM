@@ -7,6 +7,7 @@
 #include "CPInfo.hpp"
 #include "MethodInfo.hpp"
 
+const uint8_t CAT_NULL = 0;
 const uint8_t CAT1 = 1;
 const uint8_t CAT2 = 2;
 struct JavaType {

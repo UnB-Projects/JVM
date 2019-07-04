@@ -29,61 +29,61 @@ uint32_t Instruction::getBytesCount() {
 }
 
 uint32_t Instruction::nopFunction(Frame* frame) {
-    printf("Instrucao nopFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    return ++frame->localPC;
 }
 uint32_t Instruction::aconst_nullFunction(Frame* frame) {
-    printf("Instrucao aconst_nullFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType null;
+    null.tag = CAT_NULL;
+    null.type_reference = 0;
+    frame->operandStack.push(null);
+    return ++frame->localPC;
 }
 uint32_t Instruction::iconst_m1Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)-1;
+    constant.type_int = (int32_t)(-1);
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_0Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)0;
+    constant.type_int = (int32_t)0;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_1Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)1;
+    constant.type_int = (int32_t)1;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_2Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)2;
+    constant.type_int = (int32_t)2;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_3Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)3;
+    constant.type_int = (int32_t)3;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_4Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)4;
+    constant.type_int = (int32_t)4;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_5Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
-    constant.type_int = (uint32_t)5;
+    constant.type_int = (int32_t)5;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
@@ -379,9 +379,12 @@ uint32_t Instruction::dload_3Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::aload_0Function(Frame* frame) {
-    printf("Instrucao aload_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->localVariables[0].type_reference;
+    frame->operandStack.push(objectref);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::aload_1Function(Frame* frame) {
     JavaType objectref;
@@ -497,89 +500,93 @@ uint32_t Instruction::astoreFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::istore_0Function(Frame* frame) {
-    printf("Instrucao istore_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[0] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::istore_1Function(Frame* frame) {
-    printf("Instrucao istore_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[1] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::istore_2Function(Frame* frame) {
-    printf("Instrucao istore_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[2] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::istore_3Function(Frame* frame) {
-    printf("Instrucao istore_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[3] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::lstore_0Function(Frame* frame) {
-    printf("Instrucao lstore_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[0] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::lstore_1Function(Frame* frame) {
-    printf("Instrucao lstore_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[1] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::lstore_2Function(Frame* frame) {
-    printf("Instrucao lstore_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[2] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::lstore_3Function(Frame* frame) {
-    printf("Instrucao lstore_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[3] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::fstore_0Function(Frame* frame) {
-    printf("Instrucao fstore_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[0] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::fstore_1Function(Frame* frame) {
-    printf("Instrucao fstore_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[1] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::fstore_2Function(Frame* frame) {
-    printf("Instrucao fstore_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[2] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::fstore_3Function(Frame* frame) {
-    printf("Instrucao fstore_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[3] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::dstore_0Function(Frame* frame) {
-    printf("Instrucao dstore_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[0] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::dstore_1Function(Frame* frame) {
-    printf("Instrucao dstore_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[1] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::dstore_2Function(Frame* frame) {
-    printf("Instrucao dstore_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[2] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::dstore_3Function(Frame* frame) {
-    printf("Instrucao dstore_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    frame->localVariables[3] = frame->operandStack.top();
+    frame->operandStack.pop();
+    return ++frame->localPC;
 }
 uint32_t Instruction::astore_0Function(Frame* frame) {
-    printf("Instrucao astore_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType objectref;
+
+    objectref.type_reference = frame->operandStack.top().type_reference;
+    frame->operandStack.pop();
+    frame->localVariables[0] = objectref;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::astore_1Function(Frame* frame) {
     JavaType objectref;
@@ -1597,64 +1604,220 @@ uint32_t Instruction::dcmpgFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ifeqFunction(Frame* frame) {
-    printf("Instrucao ifeqFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int == 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifneFunction(Frame* frame) {
-    printf("Instrucao ifneFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int != 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifltFunction(Frame* frame) {
-    printf("Instrucao ifltFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int < 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifgeFunction(Frame* frame) {
-    printf("Instrucao ifgeFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int >= 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifgtFunction(Frame* frame) {
-    printf("Instrucao ifgtFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int > 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifleFunction(Frame* frame) {
-    printf("Instrucao ifleFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value.type_int <= 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpeqFunction(Frame* frame) {
-    printf("Instrucao if_icmpeqFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int == (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpneFunction(Frame* frame) {
-    printf("Instrucao if_icmpneFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int != (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpltFunction(Frame* frame) {
-    printf("Instrucao if_icmpltFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int < (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpgeFunction(Frame* frame) {
-    printf("Instrucao if_icmpgeFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int >= (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpgtFunction(Frame* frame) {
-    printf("Instrucao if_icmpgtFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int > (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_icmpleFunction(Frame* frame) {
-    printf("Instrucao if_icmpleFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value2 = frame->operandStack.top();
+    frame->operandStack.pop();
+    JavaType value1 = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if ((int32_t)value1.type_int <= (int32_t)value2.type_int) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::if_acmpeqFunction(Frame* frame) {
     printf("Instrucao if_acmpeqFunction nao implementada ainda!\n");
@@ -1667,9 +1830,14 @@ uint32_t Instruction::if_acmpneFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::gotoOpFunction(Frame* frame) {
-    printf("Instrucao gotoOpFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    frame->localPC = baseAddress + branchOffset;
+    return frame->localPC;
 }
 uint32_t Instruction::jsrFunction(Frame* frame) {
     printf("Instrucao jsrFunction nao implementada ainda!\n");
@@ -2431,14 +2599,38 @@ uint32_t Instruction::multianewarrayFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::ifnullFunction(Frame* frame) {
-    printf("Instrucao ifnullFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if (value.type_reference == 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifnonnullFunction(Frame* frame) {
-    printf("Instrucao ifnonnullFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    int16_t branchOffset = ((int16_t)byte1 << 8) | byte2;
+
+    JavaType value = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    if (value.type_reference != 0) {
+        frame->localPC = baseAddress + branchOffset;
+        return frame->localPC;
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::goto_wFunction(Frame* frame) {
     printf("Instrucao goto_wFunction nao implementada ainda!\n");
