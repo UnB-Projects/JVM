@@ -7,7 +7,10 @@
 #include "CPInfo.hpp"
 #include "MethodInfo.hpp"
 
+const uint8_t CAT1 = 1;
+const uint8_t CAT2 = 2;
 struct JavaType {
+    uint8_t tag;
     union {
         uint32_t type_empty;
         uint32_t type_boolean;

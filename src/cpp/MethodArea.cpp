@@ -9,3 +9,14 @@ void MethodArea::insertClass(ClassFile classFile) {
 ClassFile* MethodArea::getClassFile(string name) {
     return &(classes[name]);
 }
+
+bool MethodArea::isClassInitialized(string name) {
+    if (clinitWasExecuted.count(name)) {
+        return true;
+    }
+    return false;
+}
+
+void MethodArea::setClassAsInitialized(string name) {
+    this->clinitWasExecuted.insert(make_pair(name, true));
+}

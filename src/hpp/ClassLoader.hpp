@@ -15,6 +15,12 @@ public:
     void setMethodArea(MethodArea* methodArea) {
         this->methodArea = methodArea;
     }
+    ClassFile * getClassFromMethodArea(string className) {
+        return this->methodArea->getClassFile(className);
+    }
+    MethodArea * getMethodArea() {
+        return this->methodArea;
+    }
 };
 
 #endif

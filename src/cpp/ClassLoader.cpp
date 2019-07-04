@@ -7,8 +7,6 @@ ClassLoader::ClassLoader(string projectPath) {
 ClassFile ClassLoader::loadClassFile(string className) {
     FILE *fp;
 
-
-
     if (className.compare("java/lang/Object") == 0) {
         fp = fopen("java/lang/Object.class", "rb");
     }

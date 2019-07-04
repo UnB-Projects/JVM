@@ -40,54 +40,63 @@ uint32_t Instruction::aconst_nullFunction(Frame* frame) {
 }
 uint32_t Instruction::iconst_m1Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)-1;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_0Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)0;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_1Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)1;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_2Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)2;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_3Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)3;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_4Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)4;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::iconst_5Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT1;
     constant.type_int = (uint32_t)5;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::lconst_0Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT2;
     constant.type_long = (int64_t)0;
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
 uint32_t Instruction::lconst_1Function(Frame* frame) {
     JavaType constant;
+    constant.tag = CAT2;
     constant.type_long = (int64_t)1;
     frame->operandStack.push(constant);
     return ++frame->localPC;
@@ -97,6 +106,7 @@ uint32_t Instruction::fconst_0Function(Frame* frame) {
     float fconst = 0.0f;
 
     memcpy(&value.type_float, &fconst, sizeof(uint32_t));
+    value.tag = CAT1;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
@@ -105,6 +115,7 @@ uint32_t Instruction::fconst_1Function(Frame* frame) {
     float fconst = 1.0f;
 
     memcpy(&value.type_float, &fconst, sizeof(uint32_t));
+    value.tag = CAT1;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
@@ -113,6 +124,7 @@ uint32_t Instruction::fconst_2Function(Frame* frame) {
     float fconst = 2.0f;
 
     memcpy(&value.type_float, &fconst, sizeof(uint32_t));
+    value.tag = CAT1;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
@@ -121,6 +133,7 @@ uint32_t Instruction::dconst_0Function(Frame* frame) {
     double dconst = 0.0;
 
     memcpy(&value.type_double, &dconst, sizeof(uint64_t));
+    value.tag = CAT2;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
@@ -129,6 +142,7 @@ uint32_t Instruction::dconst_1Function(Frame* frame) {
     double dconst = 1.0;
 
     memcpy(&value.type_double, &dconst, sizeof(uint64_t));
+    value.tag = CAT2;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
@@ -138,6 +152,7 @@ uint32_t Instruction::bipushFunction(Frame* frame) {
     JavaType value;
 
     value.type_int = (int32_t)((int8_t)byte);
+    value.tag = CAT1;
     frame->operandStack.push(value);
 
     return ++frame->localPC;
@@ -149,6 +164,7 @@ uint32_t Instruction::sipushFunction(Frame* frame) {
     JavaType value;
 
     value.type_short = (int32_t)(((uint16_t)byte1 << 8) | byte2);
+    value.tag = CAT1;
     frame->operandStack.push(value);
 
     return ++frame->localPC;
@@ -169,14 +185,17 @@ uint32_t Instruction::ldcFunction(Frame* frame) {
     //     break;
     case CPInfo::CONSTANT_String:
         value.type_reference = (uint64_t)new string(cpInfo->getInfo(frame->constantPool).second);
+        value.tag = CAT1;
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Integer:
         value.type_int = cpInfo->getIntegerInfo().bytes;
+        value.tag = CAT1;
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Float:
         value.type_float = cpInfo->getFloatInfo().bytes;
+        value.tag = CAT1;
         frame->operandStack.push(value);
         break;
     default:
@@ -203,10 +222,12 @@ uint32_t Instruction::ldc2_wFunction(Frame* frame) {
     switch(cpInfo->getTag()) {
     case CPInfo::CONSTANT_Long:
         value.type_long = ((uint64_t)cpInfo->getLongInfo().high_bytes << 32) | cpInfo->getLongInfo().low_bytes;
+        value.tag = CAT2;
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Double:
         value.type_double = ((uint64_t)cpInfo->getDoubleInfo().high_bytes << 32) | cpInfo->getDoubleInfo().low_bytes;
+        value.tag = CAT2;
         frame->operandStack.push(value);
         break;
     default:
@@ -655,9 +676,27 @@ uint32_t Instruction::dup_x2Function(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::dup2Function(Frame* frame) {
-    printf("Instrucao dup2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    if (frame->operandStack.top().tag == CAT1) {
+        JavaType value1 = frame->operandStack.top();
+        frame->operandStack.pop();
+        JavaType value2 = frame->operandStack.top();
+        frame->operandStack.pop();
+
+        frame->operandStack.push(value2);
+        frame->operandStack.push(value1);
+        frame->operandStack.push(value2);
+        frame->operandStack.push(value1);
+    }
+    else if(frame->operandStack.top().tag == CAT2) {
+        JavaType value = frame->operandStack.top();
+        frame->operandStack.pop();
+        frame->operandStack.push(value);
+        frame->operandStack.push(value);
+    }
+    else {
+        cout << "Erro no dup2: categoria indefinida!: " << frame->operandStack.top().tag << endl;
+    }
+    return ++frame->localPC;
 }
 uint32_t Instruction::dup2_x1Function(Frame* frame) {
     printf("Instrucao dup2_x1Function nao implementada ainda!\n");
@@ -684,6 +723,8 @@ uint32_t Instruction::iaddFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_int = (int32_t)value1.type_int + (int32_t)value2.type_int;
+
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -698,6 +739,7 @@ uint32_t Instruction::laddFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long + (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -721,6 +763,7 @@ uint32_t Instruction::faddFunction(Frame* frame) {
     fresult = fvalue1 + fvalue2;
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -744,6 +787,7 @@ uint32_t Instruction::daddFunction(Frame* frame) {
     dresult = dvalue1 + dvalue2;
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -759,6 +803,7 @@ uint32_t Instruction::isubFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int - (int32_t)value2.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -773,6 +818,7 @@ uint32_t Instruction::lsubFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long - (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -796,6 +842,7 @@ uint32_t Instruction::fsubFunction(Frame* frame) {
     fresult = fvalue1 - fvalue2;
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -819,6 +866,7 @@ uint32_t Instruction::dsubFunction(Frame* frame) {
     dresult = dvalue1 - dvalue2;
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -834,6 +882,7 @@ uint32_t Instruction::imulFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int * (int32_t)value2.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -848,6 +897,7 @@ uint32_t Instruction::lmulFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long * (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -871,6 +921,7 @@ uint32_t Instruction::fmulFunction(Frame* frame) {
     fresult = fvalue1 * fvalue2;
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -894,6 +945,7 @@ uint32_t Instruction::dmulFunction(Frame* frame) {
     dresult = dvalue1 * dvalue2;
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -909,6 +961,7 @@ uint32_t Instruction::idivFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int / (int32_t)value2.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -923,6 +976,7 @@ uint32_t Instruction::ldivOpFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long / (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -946,6 +1000,7 @@ uint32_t Instruction::fdivFunction(Frame* frame) {
     fresult = fvalue1 / fvalue2;
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -969,6 +1024,7 @@ uint32_t Instruction::ddivFunction(Frame* frame) {
     dresult = dvalue1 / dvalue2;
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -984,6 +1040,7 @@ uint32_t Instruction::iremFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int - (int32_t)((int32_t)value1.type_int / (int32_t)value2.type_int) * (int32_t)value2.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -999,6 +1056,7 @@ uint32_t Instruction::lremFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_long = (int64_t)((int64_t)value1.type_long - (int64_t)((int64_t)value1.type_long / (int64_t)value2.type_long) * (int64_t)value2.type_long);
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1022,6 +1080,7 @@ uint32_t Instruction::fremFunction(Frame* frame) {
     fresult = fmod(fvalue1, fvalue2);
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1045,6 +1104,7 @@ uint32_t Instruction::dremFunction(Frame* frame) {
     dresult = fmod(dvalue1, dvalue2);
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1057,6 +1117,7 @@ uint32_t Instruction::inegFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)(-(int32_t)value.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1069,6 +1130,7 @@ uint32_t Instruction::lnegFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_long = (int64_t)(-(int64_t)value.type_long);
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1086,6 +1148,7 @@ uint32_t Instruction::fnegFunction(Frame* frame) {
     fresult = -fvalue;
 
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1103,6 +1166,7 @@ uint32_t Instruction::dnegFunction(Frame* frame) {
     dresult = -dvalue;
 
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1118,6 +1182,7 @@ uint32_t Instruction::ishlFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int << ((int32_t)value2.type_int & 0x0000001F));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1133,6 +1198,7 @@ uint32_t Instruction::lshlFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_long = (int64_t)((int64_t)value1.type_long << ((int32_t)value2.type_int & 0x0000003F));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1148,6 +1214,7 @@ uint32_t Instruction::ishrFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (int32_t)((int32_t)value1.type_int >> ((int32_t)value2.type_int & 0x0000001F));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1163,6 +1230,7 @@ uint32_t Instruction::lshrFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_long = (int64_t)((int64_t)value1.type_long >> ((int32_t)value2.type_int & 0x0000003F));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1178,6 +1246,7 @@ uint32_t Instruction::iushrFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_int = (uint32_t)((uint32_t)value1.type_int >> ((int32_t)value2.type_int & 0x0000001F));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1193,6 +1262,7 @@ uint32_t Instruction::lushrFunction(Frame* frame) {
     frame->operandStack.pop();
 
     result.type_long = (uint64_t)((uint64_t)value1.type_long >> ((int32_t)value2.type_int & 0x0000003F));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1207,6 +1277,7 @@ uint32_t Instruction::iandFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_int = (int32_t)value1.type_int & (int32_t)value2.type_int;
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1221,6 +1292,7 @@ uint32_t Instruction::landFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long & (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1235,6 +1307,7 @@ uint32_t Instruction::iorFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_int = (int32_t)value1.type_int | (int32_t)value2.type_int;
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1249,6 +1322,7 @@ uint32_t Instruction::lorFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long | (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1263,6 +1337,7 @@ uint32_t Instruction::ixorFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_int = (int32_t)value1.type_int ^ (int32_t)value2.type_int;
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1277,6 +1352,7 @@ uint32_t Instruction::lxorFunction(Frame* frame) {
     value1.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_long = (int64_t)value1.type_long ^ (int64_t)value2.type_long;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1299,6 +1375,7 @@ uint32_t Instruction::i2lFunction(Frame* frame) {
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_long = (int64_t)((int32_t)value.type_int);
+    result.tag = CAT2;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1312,6 +1389,7 @@ uint32_t Instruction::i2fFunction(Frame* frame) {
     fresult = (float)((int32_t)value.type_int);
     memcpy(&(result.type_float), &fresult, sizeof(float));
 
+    result.tag = CAT1;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1325,6 +1403,7 @@ uint32_t Instruction::i2dFunction(Frame* frame) {
     dresult = (double)((int32_t)value.type_int);
     memcpy(&(result.type_float), &dresult, sizeof(double));
 
+    result.tag = CAT2;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1335,8 +1414,8 @@ uint32_t Instruction::l2iFunction(Frame* frame) {
     value.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     result.type_int = int32_t((int64_t)value.type_long);
+    result.tag = CAT1;
     frame->operandStack.push(result);
-
     return ++frame->localPC;
 }
 uint32_t Instruction::l2fFunction(Frame* frame) {
@@ -1348,7 +1427,7 @@ uint32_t Instruction::l2fFunction(Frame* frame) {
     frame->operandStack.pop();
     fresult = (float)((int64_t)value.type_long);
     memcpy(&(result.type_float), &fresult, sizeof(float));
-
+    result.tag = CAT1;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1361,7 +1440,7 @@ uint32_t Instruction::l2dFunction(Frame* frame) {
     frame->operandStack.pop();
     dresult = (double)((int64_t)value.type_long);
     memcpy(&(result.type_float), &dresult, sizeof(double));
-
+    result.tag = CAT2;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1375,6 +1454,7 @@ uint32_t Instruction::f2iFunction(Frame* frame) {
 
     memcpy(&fvalue, &(value.type_int), sizeof(float));
     result.type_int = (int32_t)fvalue;
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1389,6 +1469,7 @@ uint32_t Instruction::f2lFunction(Frame* frame) {
 
     memcpy(&fvalue, &(value.type_int), sizeof(float));
     result.type_long = (int64_t)fvalue;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1405,6 +1486,7 @@ uint32_t Instruction::f2dFunction(Frame* frame) {
     memcpy(&fvalue, &(value.type_int), sizeof(float));
     dresult = (double)fvalue;
     memcpy(&(result.type_double), &dresult, sizeof(double));
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1419,6 +1501,7 @@ uint32_t Instruction::d2iFunction(Frame* frame) {
 
     memcpy(&dvalue, &(value.type_long), sizeof(double));
     result.type_int = (int32_t)dvalue;
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1433,6 +1516,7 @@ uint32_t Instruction::d2lFunction(Frame* frame) {
 
     memcpy(&dvalue, &(value.type_long), sizeof(double));
     result.type_long = (int64_t)dvalue;
+    result.tag = CAT2;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1449,6 +1533,7 @@ uint32_t Instruction::d2fFunction(Frame* frame) {
     memcpy(&dvalue, &(value.type_long), sizeof(double));
     fresult = (float)dvalue;
     memcpy(&(result.type_float), &fresult, sizeof(float));
+    result.tag = CAT1;
     frame->operandStack.push(result);
 
     return ++frame->localPC;
@@ -1460,6 +1545,7 @@ uint32_t Instruction::i2bFunction(Frame* frame) {
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_byte = (int8_t)((int32_t)value.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1470,6 +1556,7 @@ uint32_t Instruction::i2cFunction(Frame* frame) {
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_char = (uint8_t)((int32_t)value.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1480,6 +1567,7 @@ uint32_t Instruction::i2sFunction(Frame* frame) {
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     result.type_short = (int16_t)((int32_t)value.type_int);
+    result.tag = CAT1;
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
@@ -1606,6 +1694,7 @@ uint32_t Instruction::lookupswitchFunction(Frame* frame) {
 uint32_t Instruction::ireturnFunction(Frame* frame) {
     JavaType value;
 
+    value.tag = CAT1;
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     frame->jvmStack->pop();
@@ -1617,6 +1706,7 @@ uint32_t Instruction::ireturnFunction(Frame* frame) {
 uint32_t Instruction::lreturnFunction(Frame* frame) {
     JavaType value;
 
+    value.tag = CAT2;
     value.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     frame->jvmStack->pop();
@@ -1628,6 +1718,7 @@ uint32_t Instruction::lreturnFunction(Frame* frame) {
 uint32_t Instruction::freturnFunction(Frame* frame) {
     JavaType value;
 
+    value.tag = CAT1;
     value.type_float = frame->operandStack.top().type_float;
     frame->operandStack.pop();
     frame->jvmStack->pop();
@@ -1639,6 +1730,7 @@ uint32_t Instruction::freturnFunction(Frame* frame) {
 uint32_t Instruction::dreturnFunction(Frame* frame) {
    JavaType value;
 
+    value.tag = CAT2;
     value.type_double = frame->operandStack.top().type_double;
     frame->operandStack.pop();
     frame->jvmStack->pop();
@@ -1662,33 +1754,206 @@ uint32_t Instruction::getstaticFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
     uint8_t byte2 = bytecode[++frame->localPC];
-
+    MethodArea * methodArea = classLoader->getMethodArea();
     uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+
     string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+    string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
+    int j = 0;
+
+    while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+        j++;
+    }
+    string fieldName = nameAndType.substr(0,j);
+    string fieldDescriptor = nameAndType.substr(j+3,nameAndType.size());
 
     if (className.compare("java/lang/System") == 0) {
-        // JavaType javaType;
-        // javaType.type_empty = 0xF0CAF0FA;
-        // frame->operandStack.push(javaType);
         return ++frame->localPC;
     }
+    else {
+        if (!methodArea->isClassInitialized(className)) {
+            methodArea->setClassAsInitialized(className);
 
-    printf("GetStatic ainda nao foi testada para outros casos alem do helloworld!\n");
-    exit(0);
+            ClassFile aux = classLoader->loadClassFile(className + ".class");
+            classLoader->loadSuperClasses(&aux);
+            ClassFile * classFile = classLoader->getClassFromMethodArea(className);
+            vector<CPInfo*> constantPool = classFile->getConstantPool();
+            vector<MethodInfo*> methods = classFile->getMethods();
+            MethodInfo* method;
 
+            bool foundClinit = false;
+            for (int i = 0; i < classFile->getMethodsCount() && !foundClinit; i++) {
+                method = methods[i];
+                uint16_t nameIndex = method->getNameIndex();
+                uint16_t descriptorIndex = method->getDescriptorIndex();
+                string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+                string classDescriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+                if (name.compare("<clinit>") == 0 && classDescriptor.compare("()V") == 0) {
+                    foundClinit = true;
+                }
+            }
 
-    // string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
-    // int j = 0;
+            if (foundClinit) {
+                Frame clinitMethodFrame(constantPool, method, frame->jvmStack);
+                frame->jvmStack->push(clinitMethodFrame);
+                frame->localPC-=2;
+                return clinitMethodFrame.localPC;
+            }
+        }
 
-    // while (j < nameAndType.size() && nameAndType[j+1] != ':') {
-    //     j++;
-    // }
-    // string name = nameAndType.substr(0,j);
+        ClassFile * classFile = methodArea->getClassFile(className);
+        vector<CPInfo*> constantPool = classFile->getConstantPool();
+        vector<FieldInfo*> fields = classFile->getFields();
+        FieldInfo* field;
+        bool foundField = false;
+
+        for (int i = 0; i < classFile->getFieldsCount() && !foundField; i++) {
+            field = fields[i];
+            uint16_t nameIndex = field->getNameIndex();
+            uint16_t descriptorIndex = field->getDescriptorIndex();
+            string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+            string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+            if (name.compare(fieldName) == 0 && descriptor.compare(fieldDescriptor) == 0) {
+                foundField = true;
+            }
+        }
+
+        if (!foundField) {
+            printf("getstatic: o field especificado nao pode ser resolvido! Deve estar em uma superclasse ou superinterface! Falta implementar!\n");
+            exit(0);
+        }
+
+        if (fieldDescriptor.compare("C") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else if (fieldDescriptor.compare("I") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else if (fieldDescriptor.compare("F") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else if (fieldDescriptor.compare("D") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else if (fieldDescriptor.compare("J") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else if (fieldDescriptor.compare("Z") == 0) {
+            frame->operandStack.push(field->staticValue);
+        }
+        else {
+            printf("getstatic: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
+            exit(0);
+        }
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::putstaticFunction(Frame* frame) {
-    printf("Instrucao putstaticFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    MethodArea * methodArea = classLoader->getMethodArea();
+
+    string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+    string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
+    int j = 0;
+
+    while (j < nameAndType.size() && nameAndType[j+1] != ':') {
+        j++;
+    }
+    string fieldName = nameAndType.substr(0,j);
+    string fieldDescriptor = nameAndType.substr(j+3,nameAndType.size());
+
+    if (!methodArea->isClassInitialized(className)) {
+        methodArea->setClassAsInitialized(className);
+
+        ClassFile aux = classLoader->loadClassFile(className + ".class");
+        classLoader->loadSuperClasses(&aux);
+        ClassFile * classFile = classLoader->getClassFromMethodArea(className);
+        vector<CPInfo*> constantPool = classFile->getConstantPool();
+        vector<MethodInfo*> methods = classFile->getMethods();
+        MethodInfo* method;
+
+        bool foundClinit = false;
+        for (int i = 0; i < classFile->getMethodsCount() && !foundClinit; i++) {
+            method = methods[i];
+            uint16_t nameIndex = method->getNameIndex();
+            uint16_t descriptorIndex = method->getDescriptorIndex();
+            string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+            string classDescriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+            if (name.compare("<clinit>") == 0 && classDescriptor.compare("()V") == 0) {
+                foundClinit = true;
+            }
+        }
+
+        if (foundClinit) {
+            Frame clinitMethodFrame(constantPool, method, frame->jvmStack);
+            frame->jvmStack->push(clinitMethodFrame);
+            frame->localPC-=2;
+            return clinitMethodFrame.localPC;
+        }
+    }
+
+    ClassFile * classFile = methodArea->getClassFile(className);
+    vector<CPInfo*> constantPool = classFile->getConstantPool();
+    vector<FieldInfo*> fields = classFile->getFields();
+    FieldInfo* field;
+    bool foundField = false;
+
+    for (int i = 0; i < classFile->getFieldsCount() && !foundField; i++) {
+        field = fields[i];
+        uint16_t nameIndex = field->getNameIndex();
+        uint16_t descriptorIndex = field->getDescriptorIndex();
+        string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+        string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+        if (name.compare(fieldName) == 0 && descriptor.compare(fieldDescriptor) == 0) {
+            foundField = true;
+        }
+    }
+
+    if (!foundField) {
+        printf("putstatic: o field especificado nao pode ser resolvido! Deve estar em uma superclasse ou superinterface! Falta implementar!\n");
+        exit(0);
+    }
+
+    if (fieldDescriptor.compare("C") == 0) {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_char = frame->operandStack.top().type_char;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor.compare("I") == 0) {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_int = frame->operandStack.top().type_int;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor.compare("F") == 0) {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_float = frame->operandStack.top().type_float;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor.compare("D") == 0) {
+        field->staticValue.tag = CAT2;
+        field->staticValue.type_double = frame->operandStack.top().type_double;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor.compare("J") == 0) {
+        field->staticValue.tag = CAT2;
+        field->staticValue.type_long = frame->operandStack.top().type_long;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor.compare("Z") == 0) {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_boolean = frame->operandStack.top().type_boolean;
+        frame->operandStack.pop();
+    }
+    else {
+        printf("putstatic: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
+        exit(0);
+    }
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::getfieldFunction(Frame* frame) {
     printf("Instrucao getfieldFunction nao implementada ainda!\n");
@@ -1842,6 +2107,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str2 + *str1);
+                objectref.tag = CAT1;
                 frame->operandStack.push(objectref);
             }
             else if (descriptor.compare("(I)Ljava/lang/StringBuilder;") == 0) {
@@ -1852,6 +2118,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str + to_string(integer));
+                objectref.tag = CAT1;
                 frame->operandStack.push(objectref);
             }
             else if (descriptor.compare("(J)Ljava/lang/StringBuilder;") == 0) {
@@ -1862,6 +2129,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str + to_string(longNumber));
+                objectref.tag = CAT1;
                 frame->operandStack.push(objectref);
             }
             else if (descriptor.compare("(F)Ljava/lang/StringBuilder;") == 0) {
@@ -1875,6 +2143,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str + to_string(floatNumber));
+                objectref.tag = CAT1;
                 frame->operandStack.push(objectref);
             }
             else if (descriptor.compare("(D)Ljava/lang/StringBuilder;") == 0) {
@@ -1888,6 +2157,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 
                 JavaType objectref;
                 objectref.type_reference = (uint64_t)new string(*str + to_string(doubleNumber));
+                objectref.tag = CAT1;
                 frame->operandStack.push(objectref);
             }
             else if (descriptor.compare("(Z)Ljava/lang/StringBuilder;") == 0) {
@@ -1908,6 +2178,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                     exit(0);
                 }
                 frame->operandStack.push(objectref);
+                objectref.tag = CAT1;
             }
             else {
                 printf("invokevirtual: StringBuilder: descritor nao reconhecido: %s\n", descriptor.c_str());
@@ -1928,8 +2199,6 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
     }
 
     return ++frame->localPC;
-
-
 }
 uint32_t Instruction::invokespecialFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
@@ -1977,6 +2246,7 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
     uint8_t byte1 = bytecode[++frame->localPC];
     uint8_t byte2 = bytecode[++frame->localPC];
     uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    MethodArea * methodArea = classLoader->getMethodArea();
 
     string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
     string nameAndType = frame->constantPool[index-1]->getInfo(frame->constantPool).second;
@@ -1988,15 +2258,43 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
     string methodName = nameAndType.substr(0,j);
     string descriptor = nameAndType.substr(j+3,nameAndType.size());
 
-    ClassFile classFile = classLoader->loadClassFile(className + ".class");
-    classLoader->loadSuperClasses(&classFile);
+    if (!methodArea->isClassInitialized(className)) {
+        methodArea->setClassAsInitialized(className);
 
-    bool foundMethod = false;
-    vector<CPInfo*> constantPool = classFile.getConstantPool();
-    vector<MethodInfo*> methods = classFile.getMethods();
+        ClassFile aux = classLoader->loadClassFile(className + ".class");
+        classLoader->loadSuperClasses(&aux);
+        ClassFile * classFile = classLoader->getClassFromMethodArea(className);
+        vector<CPInfo*> constantPool = classFile->getConstantPool();
+        vector<MethodInfo*> methods = classFile->getMethods();
+        MethodInfo* method;
+
+        bool foundClinit = false;
+        for (int i = 0; i < classFile->getMethodsCount() && !foundClinit; i++) {
+            method = methods[i];
+            uint16_t nameIndex = method->getNameIndex();
+            uint16_t descriptorIndex = method->getDescriptorIndex();
+            string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+            string classDescriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+            if (name.compare("<clinit>") == 0 && classDescriptor.compare("()V") == 0) {
+                foundClinit = true;
+            }
+        }
+
+        if (foundClinit) {
+            Frame clinitMethodFrame(constantPool, method, frame->jvmStack);
+            frame->jvmStack->push(clinitMethodFrame);
+            frame->localPC-=2;
+            return clinitMethodFrame.localPC;
+        }
+    }
+
+    ClassFile * classFile = methodArea->getClassFile(className);
+    vector<CPInfo*> constantPool = classFile->getConstantPool();
+    vector<MethodInfo*> methods = classFile->getMethods();
     MethodInfo* method;
+    bool foundMethod = false;
 
-    for (int i = 0; i < classFile.getMethodsCount() && !foundMethod; i++) {
+    for (int i = 0; i < classFile->getMethodsCount() && !foundMethod; i++) {
         method = methods[i];
         uint16_t nameIndex = method->getNameIndex();
         uint16_t descriptorIndex = method->getDescriptorIndex();
@@ -2067,11 +2365,13 @@ uint32_t Instruction::newOpFunction(Frame* frame) {
     if (className.compare("java/lang/String") == 0) {
         JavaType objectref;
         objectref.type_reference = (uint64_t)new string("");
+        objectref.tag = CAT1;
         frame->operandStack.push(objectref);
     }
     else if (className.compare("java/lang/StringBuilder") == 0) {
         JavaType objectref;
         objectref.type_reference = (uint64_t)new string("");
+        objectref.tag = CAT1;
         frame->operandStack.push(objectref);
     }
     else {

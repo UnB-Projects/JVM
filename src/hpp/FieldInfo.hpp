@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "AttributeInfo.hpp"
+#include "Frame.hpp"
 
 
 using namespace std;
@@ -16,6 +17,7 @@ private:
     uint16_t attributesCount;
     vector<AttributeInfo*> attributes;
 public:
+    JavaType staticValue;
     static const uint16_t ACC_PUBLIC = 0x0001;
     static const uint16_t ACC_PRIVATE = 0x0002;
     static const uint16_t ACC_PROTECTED = 0x0004;
