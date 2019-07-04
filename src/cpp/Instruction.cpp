@@ -81,14 +81,16 @@ uint32_t Instruction::iconst_5Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lconst_0Function(Frame* frame) {
-    printf("Instrucao lconst_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType constant;
+    constant.type_long = (int64_t)0;
+    frame->operandStack.push(constant);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lconst_1Function(Frame* frame) {
-    printf("Instrucao lconst_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType constant;
+    constant.type_long = (int64_t)1;
+    frame->operandStack.push(constant);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fconst_0Function(Frame* frame) {
     JavaType value;
@@ -115,14 +117,20 @@ uint32_t Instruction::fconst_2Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::dconst_0Function(Frame* frame) {
-    printf("Instrucao dconst_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    double dconst = 0.0;
+
+    memcpy(&value.type_double, &dconst, sizeof(uint64_t));
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dconst_1Function(Frame* frame) {
-    printf("Instrucao dconst_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    double dconst = 1.0;
+
+    memcpy(&value.type_double, &dconst, sizeof(uint64_t));
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::bipushFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
@@ -135,9 +143,15 @@ uint32_t Instruction::bipushFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::sipushFunction(Frame* frame) {
-    printf("Instrucao sipushFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    JavaType value;
+
+    value.type_short = (int32_t)(((uint16_t)byte1 << 8) | byte2);
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ldcFunction(Frame* frame) {
     uint8_t * bytecode = frame->getCode();
@@ -154,7 +168,7 @@ uint32_t Instruction::ldcFunction(Frame* frame) {
     // case CPInfo::CONSTANT_MethodHandle:
     //     break;
     case CPInfo::CONSTANT_String:
-        value.type_reference = (uint64_t)new string(cpInfo->getInfo(frame->constantPool).first);
+        value.type_reference = (uint64_t)new string(cpInfo->getInfo(frame->constantPool).second);
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Integer:
@@ -162,7 +176,7 @@ uint32_t Instruction::ldcFunction(Frame* frame) {
         frame->operandStack.push(value);
         break;
     case CPInfo::CONSTANT_Float:
-        value.type_float = cpInfo->getFloatNumber();
+        value.type_float = cpInfo->getFloatInfo().bytes;
         frame->operandStack.push(value);
         break;
     default:
@@ -272,64 +286,76 @@ uint32_t Instruction::iload_3Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lload_0Function(Frame* frame) {
-    printf("Instrucao lload_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_long = frame->localVariables[0].type_long;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lload_1Function(Frame* frame) {
-    printf("Instrucao lload_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_long = frame->localVariables[1].type_long;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lload_2Function(Frame* frame) {
-    printf("Instrucao lload_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_long = frame->localVariables[2].type_long;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lload_3Function(Frame* frame) {
-    printf("Instrucao lload_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_long = frame->localVariables[3].type_long;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fload_0Function(Frame* frame) {
-    printf("Instrucao fload_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_float = frame->localVariables[0].type_float;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fload_1Function(Frame* frame) {
-    printf("Instrucao fload_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_float = frame->localVariables[1].type_float;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fload_2Function(Frame* frame) {
-    printf("Instrucao fload_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_float = frame->localVariables[2].type_float;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fload_3Function(Frame* frame) {
-    printf("Instrucao fload_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_float = frame->localVariables[3].type_float;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dload_0Function(Frame* frame) {
-    printf("Instrucao dload_0Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_double = frame->localVariables[0].type_double;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dload_1Function(Frame* frame) {
-    printf("Instrucao dload_1Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_double = frame->localVariables[1].type_double;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dload_2Function(Frame* frame) {
-    printf("Instrucao dload_2Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_double = frame->localVariables[2].type_double;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dload_3Function(Frame* frame) {
-    printf("Instrucao dload_3Function nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    value.type_double = frame->localVariables[3].type_double;
+    frame->operandStack.push(value);
+    return ++frame->localPC;
 }
 uint32_t Instruction::aload_0Function(Frame* frame) {
     printf("Instrucao aload_0Function nao implementada ainda!\n");
@@ -663,19 +689,64 @@ uint32_t Instruction::iaddFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::laddFunction(Frame* frame) {
-    printf("Instrucao laddFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long + (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::faddFunction(Frame* frame) {
-    printf("Instrucao faddFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+    float fresult;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    fresult = fvalue1 + fvalue2;
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::daddFunction(Frame* frame) {
-    printf("Instrucao daddFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+    double dresult;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    dresult = dvalue1 + dvalue2;
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::isubFunction(Frame* frame) {
     JavaType value1;
@@ -693,19 +764,64 @@ uint32_t Instruction::isubFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lsubFunction(Frame* frame) {
-    printf("Instrucao lsubFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long - (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fsubFunction(Frame* frame) {
-    printf("Instrucao fsubFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+    float fresult;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    fresult = fvalue1 - fvalue2;
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dsubFunction(Frame* frame) {
-    printf("Instrucao dsubFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+    double dresult;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    dresult = dvalue1 - dvalue2;
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::imulFunction(Frame* frame) {
     JavaType value1;
@@ -723,19 +839,64 @@ uint32_t Instruction::imulFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lmulFunction(Frame* frame) {
-    printf("Instrucao lmulFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long * (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fmulFunction(Frame* frame) {
-    printf("Instrucao fmulFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+    float fresult;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    fresult = fvalue1 * fvalue2;
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dmulFunction(Frame* frame) {
-    printf("Instrucao dmulFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+    double dresult;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    dresult = dvalue1 * dvalue2;
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::idivFunction(Frame* frame) {
     JavaType value1;
@@ -753,19 +914,64 @@ uint32_t Instruction::idivFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::ldivOpFunction(Frame* frame) {
-    printf("Instrucao ldivOpFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long / (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fdivFunction(Frame* frame) {
-    printf("Instrucao fdivFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+    float fresult;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    fresult = fvalue1 / fvalue2;
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ddivFunction(Frame* frame) {
-    printf("Instrucao ddivFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+    double dresult;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    dresult = dvalue1 / dvalue2;
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iremFunction(Frame* frame) {
     JavaType value1;
@@ -783,19 +989,65 @@ uint32_t Instruction::iremFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lremFunction(Frame* frame) {
-    printf("Instrucao lremFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    result.type_long = (int64_t)((int64_t)value1.type_long - (int64_t)((int64_t)value1.type_long / (int64_t)value2.type_long) * (int64_t)value2.type_long);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fremFunction(Frame* frame) {
-    printf("Instrucao fremFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+    float fresult;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    fresult = fmod(fvalue1, fvalue2);
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dremFunction(Frame* frame) {
-    printf("Instrucao dremFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+    double dresult;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    dresult = fmod(dvalue1, dvalue2);
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::inegFunction(Frame* frame) {
     JavaType value;
@@ -810,19 +1062,50 @@ uint32_t Instruction::inegFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lnegFunction(Frame* frame) {
-    printf("Instrucao lnegFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    result.type_long = (int64_t)(-(int64_t)value.type_long);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fnegFunction(Frame* frame) {
-    printf("Instrucao fnegFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fvalue;
+    float fresult;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    memcpy(&fvalue, &value.type_int, sizeof(float));
+
+    fresult = -fvalue;
+
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dnegFunction(Frame* frame) {
-    printf("Instrucao dnegFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dvalue;
+    double dresult;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    memcpy(&dvalue, &value.type_long, sizeof(double));
+
+    dresult = -dvalue;
+
+    memcpy(&(result.type_double), &dresult, sizeof(double));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ishlFunction(Frame* frame) {
     JavaType value1;
@@ -834,15 +1117,25 @@ uint32_t Instruction::ishlFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
 
-    result.type_int = (int32_t)((int32_t)value1.type_int << ((int32_t)value2.type_int & 0x00000001F));
+    result.type_int = (int32_t)((int32_t)value1.type_int << ((int32_t)value2.type_int & 0x0000001F));
     frame->operandStack.push(result);
 
     return ++frame->localPC;
 }
 uint32_t Instruction::lshlFunction(Frame* frame) {
-    printf("Instrucao lshlFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    result.type_long = (int64_t)((int64_t)value1.type_long << ((int32_t)value2.type_int & 0x0000003F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ishrFunction(Frame* frame) {
     JavaType value1;
@@ -854,15 +1147,25 @@ uint32_t Instruction::ishrFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
 
-    result.type_int = (int32_t)((int32_t)value1.type_int >> ((int32_t)value2.type_int & 0x00000001F));
+    result.type_int = (int32_t)((int32_t)value1.type_int >> ((int32_t)value2.type_int & 0x0000001F));
     frame->operandStack.push(result);
 
     return ++frame->localPC;
 }
 uint32_t Instruction::lshrFunction(Frame* frame) {
-    printf("Instrucao lshrFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    result.type_long = (int64_t)((int64_t)value1.type_long >> ((int32_t)value2.type_int & 0x0000003F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iushrFunction(Frame* frame) {
     JavaType value1;
@@ -874,15 +1177,25 @@ uint32_t Instruction::iushrFunction(Frame* frame) {
     value1.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
 
-    result.type_int = (uint32_t)((uint32_t)value1.type_int >> ((int32_t)value2.type_int & 0x00000001F));
+    result.type_int = (uint32_t)((uint32_t)value1.type_int >> ((int32_t)value2.type_int & 0x0000001F));
     frame->operandStack.push(result);
 
     return ++frame->localPC;
 }
 uint32_t Instruction::lushrFunction(Frame* frame) {
-    printf("Instrucao lushrFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    result.type_long = (uint64_t)((uint64_t)value1.type_long >> ((int32_t)value2.type_int & 0x0000003F));
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iandFunction(Frame* frame) {
     JavaType value1;
@@ -899,9 +1212,18 @@ uint32_t Instruction::iandFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::landFunction(Frame* frame) {
-    printf("Instrucao landFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long & (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iorFunction(Frame* frame) {
     JavaType value1;
@@ -918,9 +1240,18 @@ uint32_t Instruction::iorFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lorFunction(Frame* frame) {
-    printf("Instrucao lorFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long | (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::ixorFunction(Frame* frame) {
     JavaType value1;
@@ -937,34 +1268,76 @@ uint32_t Instruction::ixorFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lxorFunction(Frame* frame) {
-    printf("Instrucao lxorFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)value1.type_long ^ (int64_t)value2.type_long;
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iincFunction(Frame* frame) {
-    printf("Instrucao iincFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+
+    uint16_t index = byte1;
+    int32_t constValue = (int32_t)((int8_t)byte2);
+    frame->localVariables[index].type_int = (int32_t)frame->localVariables[index].type_int + constValue;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2lFunction(Frame* frame) {
-    printf("Instrucao i2lFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_long = (int64_t)((int32_t)value.type_int);
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2fFunction(Frame* frame) {
-    printf("Instrucao i2fFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    float fresult;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    fresult = (float)((int32_t)value.type_int);
+    memcpy(&(result.type_float), &fresult, sizeof(float));
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2dFunction(Frame* frame) {
-    printf("Instrucao i2dFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+    double dresult;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    dresult = (double)((int32_t)value.type_int);
+    memcpy(&(result.type_float), &dresult, sizeof(double));
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::l2iFunction(Frame* frame) {
-    printf("Instrucao l2iFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    result.type_int = int32_t((int64_t)value.type_long);
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::l2fFunction(Frame* frame) {
     printf("Instrucao l2fFunction nao implementada ainda!\n");
@@ -1007,19 +1380,34 @@ uint32_t Instruction::d2fFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::i2bFunction(Frame* frame) {
-    printf("Instrucao i2bFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_byte = (int8_t)((int32_t)value.type_int);
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2cFunction(Frame* frame) {
-    printf("Instrucao i2cFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_char = (uint8_t)((int32_t)value.type_int);
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::i2sFunction(Frame* frame) {
-    printf("Instrucao i2sFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType result;
+
+    value.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    result.type_short = (int16_t)((int32_t)value.type_int);
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::lcmpFunction(Frame* frame) {
     printf("Instrucao lcmpFunction nao implementada ainda!\n");
@@ -1153,19 +1541,37 @@ uint32_t Instruction::ireturnFunction(Frame* frame) {
     return invoker->localPC;
 }
 uint32_t Instruction::lreturnFunction(Frame* frame) {
-    printf("Instrucao lreturnFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+
+    value.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    frame->jvmStack->pop();
+
+    Frame* invoker = &(frame->jvmStack->top());
+    invoker->operandStack.push(value);
+    return invoker->localPC;
 }
 uint32_t Instruction::freturnFunction(Frame* frame) {
-    printf("Instrucao freturnFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+
+    value.type_float = frame->operandStack.top().type_float;
+    frame->operandStack.pop();
+    frame->jvmStack->pop();
+
+    Frame* invoker = &(frame->jvmStack->top());
+    invoker->operandStack.push(value);
+    return invoker->localPC;
 }
 uint32_t Instruction::dreturnFunction(Frame* frame) {
-    printf("Instrucao dreturnFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+   JavaType value;
+
+    value.type_double = frame->operandStack.top().type_double;
+    frame->operandStack.pop();
+    frame->jvmStack->pop();
+
+    Frame* invoker = &(frame->jvmStack->top());
+    invoker->operandStack.push(value);
+    return invoker->localPC;
 }
 uint32_t Instruction::areturnFunction(Frame* frame) {
     printf("Instrucao areturnFunction nao implementada ainda!\n");
@@ -1245,6 +1651,11 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 string* stringReference = (string*)(frame->operandStack.top().type_reference);
                 frame->operandStack.pop();
                 cout << *stringReference << endl;
+            }
+            else if (descriptor.compare("(C)V") == 0) {
+                uint8_t character = frame->operandStack.top().type_char;
+                frame->operandStack.pop();
+                cout << character << endl;
             }
             else if (descriptor.compare("(I)V") == 0) {
                 int32_t integer = (int32_t)(frame->operandStack.top().type_int);
@@ -1531,14 +1942,24 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
 
     int argCnt = -1;
     for (int i = 0; descriptor[i] != ')'; i++) {
-        if (descriptor[i] == 'I') {
+        if (descriptor[i] == 'I' || descriptor[i] == 'F') {
             argCnt++;
+        }
+        else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
+            argCnt += 2;
         }
     }
     for (int i = 1; descriptor[i] != ')'; i++) {
-        if (descriptor[i] == 'I') {
+        if (descriptor[i] == 'I' || descriptor[i] == 'F') {
             JavaType arg = frame->operandStack.top();
             frame->operandStack.pop();
+            staticMethodFrame.localVariables[argCnt] = arg;
+            argCnt--;
+        }
+        else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
+            JavaType arg = frame->operandStack.top();
+            frame->operandStack.pop();
+            argCnt--;
             staticMethodFrame.localVariables[argCnt] = arg;
             argCnt--;
         }

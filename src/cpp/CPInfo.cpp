@@ -131,11 +131,12 @@ pair<string,string> CPInfo::getNameAndTypeUTF8(vector<CPInfo*> constantPool) {
     CPInfo *descriptorInfo = constantPool[CONSTANT_NameAndType_info.descriptor_index-1];
     string name = nameInfo->getUTF8(constantPool);
     string descriptor = descriptorInfo->getUTF8(constantPool);
-    return make_pair(name, descriptor); 
+    return make_pair(name, descriptor);
 }
 
 pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
     pair<string,string> info;
+    string str;
     switch(tag) {
     case CONSTANT_Utf8:
         info =  make_pair(getUTF8(constantPool), "");
@@ -156,7 +157,8 @@ pair<string,string> CPInfo::getInfo(vector<CPInfo*> constantPool) {
         info = getInterfaceMethodrefUTF8(constantPool);
         break;
     case CONSTANT_String:
-        info = make_pair(getStringUTF8(constantPool), "");
+        str = (char*)constantPool[CONSTANT_String_info.string_index-1]->CONSTANT_Utf8_info.bytes;
+        info = make_pair(getStringUTF8(constantPool), str);
         break;
     case CONSTANT_Integer:
         info = make_pair(to_string(getIntegerInfo().bytes), "");

@@ -2,6 +2,7 @@
 #define INSTRUCTION_H
 
 #include <string>
+#include <cmath>
 #include "Frame.hpp"
 #include "ClassLoader.hpp"
 
