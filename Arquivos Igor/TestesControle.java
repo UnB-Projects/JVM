@@ -6,6 +6,36 @@ class TestesControle {
         if_zero();
         System.out.println("\nifnull");
         ifnull();
+        System.out.println("\ncmp");
+        cmp();
+    }
+
+    static void cmp() {
+        long a = 1;
+        long b = 2;
+
+        boolean c = a == b;
+        System.out.println(c);
+        c = a < b;
+        System.out.println(c);
+        c = a > b;
+        System.out.println(c);
+
+        float d = 2.5f;
+        float e = -2.7f;
+
+        boolean f = d < e;
+        System.out.println(f);
+        f = d > e;
+        System.out.println(f);
+
+        double g = 2.5;
+        double h = -2.7;
+
+        boolean i = g < h;
+        System.out.println(i);
+        i = g > h;
+        System.out.println(i);
     }
 
     static void ifnull() {

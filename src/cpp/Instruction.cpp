@@ -278,9 +278,14 @@ uint32_t Instruction::dloadFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::aloadFunction(Frame* frame) {
-    printf("Instrucao aloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t index = bytecode[++frame->localPC];
+    JavaType value;
+
+    value = frame->localVariables[index];
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::iload_0Function(Frame* frame) {
     JavaType value;
@@ -411,24 +416,68 @@ uint32_t Instruction::aload_3Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::ialoadFunction(Frame* frame) {
-    printf("Instrucao ialoadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::laloadFunction(Frame* frame) {
-    printf("Instrucao laloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::faloadFunction(Frame* frame) {
-    printf("Instrucao faloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::daloadFunction(Frame* frame) {
-    printf("Instrucao daloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::aaloadFunction(Frame* frame) {
     printf("Instrucao aaloadFunction nao implementada ainda!\n");
@@ -436,25 +485,59 @@ uint32_t Instruction::aaloadFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::baloadFunction(Frame* frame) {
-    printf("Instrucao baloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::caloadFunction(Frame* frame) {
-    printf("Instrucao caloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::saloadFunction(Frame* frame) {
-    printf("Instrucao saloadFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType index;
+    JavaType arrayref;
+
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    JavaType value = array->at((int32_t)index.type_int);
+
+    frame->operandStack.push(value);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::istoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
     JavaType value;
 
+    value.tag = CAT1;
     value.type_int = frame->operandStack.top().type_int;
     frame->operandStack.pop();
     frame->localVariables[index] = value;
@@ -466,6 +549,7 @@ uint32_t Instruction::lstoreFunction(Frame* frame) {
     uint8_t index = bytecode[++frame->localPC];
     JavaType value;
 
+    value.tag = CAT2;
     value.type_long = frame->operandStack.top().type_long;
     frame->operandStack.pop();
     frame->localVariables[index] = value;
@@ -477,6 +561,7 @@ uint32_t Instruction::fstoreFunction(Frame* frame) {
     uint8_t index = bytecode[++frame->localPC];
     JavaType value;
 
+    value.tag = CAT1;
     value.type_float = frame->operandStack.top().type_float;
     frame->operandStack.pop();
     frame->localVariables[index] = value;
@@ -488,6 +573,7 @@ uint32_t Instruction::dstoreFunction(Frame* frame) {
     uint8_t index = bytecode[++frame->localPC];
     JavaType value;
 
+    value.tag = CAT2;
     value.type_double = frame->operandStack.top().type_double;
     frame->operandStack.pop();
     frame->localVariables[index] = value;
@@ -495,9 +581,16 @@ uint32_t Instruction::dstoreFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::astoreFunction(Frame* frame) {
-    printf("Instrucao astoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t index = bytecode[++frame->localPC];
+    JavaType value;
+
+    value.tag = CAT1;
+    value.type_reference = frame->operandStack.top().type_reference;
+    frame->operandStack.pop();
+    frame->localVariables[index] = value;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::istore_0Function(Frame* frame) {
     frame->localVariables[0] = frame->operandStack.top();
@@ -582,6 +675,7 @@ uint32_t Instruction::dstore_3Function(Frame* frame) {
 uint32_t Instruction::astore_0Function(Frame* frame) {
     JavaType objectref;
 
+    objectref.tag = CAT1;
     objectref.type_reference = frame->operandStack.top().type_reference;
     frame->operandStack.pop();
     frame->localVariables[0] = objectref;
@@ -591,6 +685,7 @@ uint32_t Instruction::astore_0Function(Frame* frame) {
 uint32_t Instruction::astore_1Function(Frame* frame) {
     JavaType objectref;
 
+    objectref.tag = CAT1;
     objectref.type_reference = frame->operandStack.top().type_reference;
     frame->operandStack.pop();
     frame->localVariables[1] = objectref;
@@ -600,6 +695,7 @@ uint32_t Instruction::astore_1Function(Frame* frame) {
 uint32_t Instruction::astore_2Function(Frame* frame) {
     JavaType objectref;
 
+    objectref.tag = CAT1;
     objectref.type_reference = frame->operandStack.top().type_reference;
     frame->operandStack.pop();
     frame->localVariables[2] = objectref;
@@ -609,6 +705,7 @@ uint32_t Instruction::astore_2Function(Frame* frame) {
 uint32_t Instruction::astore_3Function(Frame* frame) {
     JavaType objectref;
 
+    objectref.tag = CAT1;
     objectref.type_reference = frame->operandStack.top().type_reference;
     frame->operandStack.pop();
     frame->localVariables[3] = objectref;
@@ -616,24 +713,72 @@ uint32_t Instruction::astore_3Function(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::iastoreFunction(Frame* frame) {
-    printf("Instrucao iastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = value;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::lastoreFunction(Frame* frame) {
-    printf("Instrucao lastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = value;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fastoreFunction(Frame* frame) {
-    printf("Instrucao fastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = value;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::dastoreFunction(Frame* frame) {
-    printf("Instrucao dastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = value;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::aastoreFunction(Frame* frame) {
     printf("Instrucao aastoreFunction nao implementada ainda!\n");
@@ -641,19 +786,67 @@ uint32_t Instruction::aastoreFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::bastoreFunction(Frame* frame) {
-    printf("Instrucao bastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType byteValue;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    byteValue.tag = CAT1;
+    byteValue.type_byte = (int8_t)value.type_int;
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = byteValue;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::castoreFunction(Frame* frame) {
-    printf("Instrucao castoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType charValue;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    charValue.tag = CAT1;
+    charValue.type_byte = (int8_t)value.type_int;
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = charValue;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::sastoreFunction(Frame* frame) {
-    printf("Instrucao sastoreFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value;
+    JavaType shortValue;
+    JavaType index;
+    JavaType arrayref;
+
+    value = frame->operandStack.top();
+    frame->operandStack.pop();
+    index = frame->operandStack.top();
+    frame->operandStack.pop();
+    arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    shortValue.tag = CAT1;
+    shortValue.type_byte = (int16_t)value.type_int;
+
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+    array->at((int32_t)index.type_int) = shortValue;
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::popFunction(Frame* frame) {
     frame->operandStack.pop();
@@ -1579,29 +1772,171 @@ uint32_t Instruction::i2sFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::lcmpFunction(Frame* frame) {
-    printf("Instrucao lcmpFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    if (value1.type_long > value2.type_long) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+    else if (value1.type_long == value2.type_long) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)0;
+    }
+    else if (value1.type_long < value2.type_long) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+
+    frame->operandStack.push(result);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::fcmplFunction(Frame* frame) {
-    printf("Instrucao fcmplFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    if (fvalue1 > fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+    else if (fvalue1 == fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)0;
+    }
+    else if (fvalue1 < fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+    else {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::fcmpgFunction(Frame* frame) {
-    printf("Instrucao fcmpgFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    float fvalue1;
+    float fvalue2;
+
+    value2.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+    value1.type_int = frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    memcpy(&fvalue1, &value1.type_int, sizeof(float));
+    memcpy(&fvalue2, &value2.type_int, sizeof(float));
+
+    if (fvalue1 > fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+    else if (fvalue1 == fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)0;
+    }
+    else if (fvalue1 < fvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+    else {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dcmplFunction(Frame* frame) {
-    printf("Instrucao dcmplFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    if (dvalue1 > dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+    else if (dvalue1 == dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)0;
+    }
+    else if (dvalue1 < dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+    else {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::dcmpgFunction(Frame* frame) {
-    printf("Instrucao dcmpgFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType value1;
+    JavaType value2;
+    JavaType result;
+    double dvalue1;
+    double dvalue2;
+
+    value2.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+    value1.type_long = frame->operandStack.top().type_long;
+    frame->operandStack.pop();
+
+    memcpy(&dvalue1, &value1.type_long, sizeof(double));
+    memcpy(&dvalue2, &value2.type_long, sizeof(double));
+
+    if (dvalue1 > dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+    else if (dvalue1 == dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)0;
+    }
+    else if (dvalue1 < dvalue2) {
+        result.tag = CAT1;
+        result.type_int = (int32_t)-1;
+    }
+    else {
+        result.tag = CAT1;
+        result.type_int = (int32_t)1;
+    }
+
+    frame->operandStack.push(result);
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifeqFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
@@ -2549,9 +2884,74 @@ uint32_t Instruction::newOpFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::newarrayFunction(Frame* frame) {
-    printf("Instrucao newarrayFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t atype = bytecode[++frame->localPC];
+
+    JavaType count;
+    count.type_int = (int32_t)frame->operandStack.top().type_int;
+    frame->operandStack.pop();
+
+    vector<JavaType>* array = new vector<JavaType>(count.type_int);
+
+    if (atype == T_BOOLEAN) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_boolean = (int8_t)0;
+        }
+    }
+    else if (atype == T_CHAR) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_char = (int16_t)0;
+        }
+    }
+    else if (atype == T_FLOAT) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_float = (uint32_t)0;
+        }
+    }
+    else if (atype == T_DOUBLE) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT2;
+            array->at(i).type_double = (uint64_t)0;
+        }
+    }
+    else if (atype == T_BYTE) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_byte = (int8_t)0;
+        }
+    }
+    else if (atype == T_SHORT) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_short = (int16_t)0;
+        }
+    }
+    else if (atype == T_INT) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT1;
+            array->at(i).type_int = (int32_t)0;
+        }
+    }
+    else if (atype == T_LONG) {
+        for (int32_t i = 0; i < count.type_int; i++) {
+            array->at(i).tag = CAT2;
+            array->at(i).type_long = (int64_t)0;
+        }
+    }
+    else {
+        printf("newarray: tipo de array indefinido: %u\n", atype);
+    }
+
+
+    JavaType arrayref;
+    arrayref.tag = CAT1;
+    arrayref.type_reference = (uint64_t)array;
+    frame->operandStack.push(arrayref);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::anewarrayFunction(Frame* frame) {
     printf("Instrucao anewarrayFunction nao implementada ainda!\n");

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cmath>
+#include <vector>
 #include "Frame.hpp"
 #include "ClassLoader.hpp"
 
