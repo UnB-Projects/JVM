@@ -1,5 +1,20 @@
 class TestesArray {
     public static void main(String[] args) {
+       criacao_arrays();
+       multianewarray();
+    }
+
+    static void multianewarray() {
+        int[][] a;
+        int[][] b = {{1,2,3}, {4,5,6}, {7,8,9}};
+
+        for (int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                System.out.println(b[i][j]);
+            }
+        }
+    }
+    static void criacao_arrays() {
         int[] a;
         int[] b = {1,2,3,4,5,6,7,8,9,10};
         boolean[] c = {true,false,true,false,true,false,true,false,true,false};

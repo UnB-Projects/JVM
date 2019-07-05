@@ -34,7 +34,7 @@ uint32_t Instruction::nopFunction(Frame* frame) {
 uint32_t Instruction::aconst_nullFunction(Frame* frame) {
     JavaType null;
     null.tag = CAT_NULL;
-    null.type_reference = 0;
+    null.type_reference = JAVA_NULL;
     frame->operandStack.push(null);
     return ++frame->localPC;
 }
@@ -2185,14 +2185,90 @@ uint32_t Instruction::retFunction(Frame* frame) {
     return -1;
 }
 uint32_t Instruction::tableswitchFunction(Frame* frame) {
-    printf("Instrucao tableswitchFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    JavaType key = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    while ((frame->localPC)%4 != 0) {
+        frame->localPC++;
+    }
+
+    uint8_t defaultByte1 = bytecode[frame->localPC++];
+    uint8_t defaultByte2 = bytecode[frame->localPC++];
+    uint8_t defaultByte3 = bytecode[frame->localPC++];
+    uint8_t defaultByte4 = bytecode[frame->localPC++];
+    int32_t defaultValue = (defaultByte1 << 24) | (defaultByte2 << 16) | (defaultByte3 << 8) | defaultByte4;
+
+    uint8_t lowByte1 = bytecode[frame->localPC++];
+    uint8_t lowByte2 = bytecode[frame->localPC++];
+    uint8_t lowByte3 = bytecode[frame->localPC++];
+    uint8_t lowByte4 = bytecode[frame->localPC++];
+    int32_t low = (lowByte1 << 24) | (lowByte2 << 16) | (lowByte3 << 8) | lowByte4;
+
+    uint8_t highByte1 = bytecode[frame->localPC++];
+    uint8_t highByte2 = bytecode[frame->localPC++];
+    uint8_t highByte3 = bytecode[frame->localPC++];
+    uint8_t highByte4 = bytecode[frame->localPC++];
+    int32_t high = (highByte1 << 24) | (highByte2 << 16) | (highByte3 << 8) | highByte4;
+
+    for (int match = low; match <= high; match++) {
+        uint8_t offsetByte1 = bytecode[frame->localPC++];
+        uint8_t offsetByte2 = bytecode[frame->localPC++];
+        uint8_t offsetByte3 = bytecode[frame->localPC++];
+        uint8_t offsetByte4 = bytecode[frame->localPC++];
+        int32_t offset = (offsetByte1 << 24) | (offsetByte2 << 16) | (offsetByte3 << 8) | offsetByte4;
+
+        if ((int32_t)key.type_int == match) {
+            frame->localPC = baseAddress + offset;
+            return frame->localPC;
+        }
+    }
+    frame->localPC = baseAddress + defaultValue;
+    return frame->localPC;
 }
 uint32_t Instruction::lookupswitchFunction(Frame* frame) {
-    printf("Instrucao lookupswitchFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint32_t baseAddress = frame->localPC;
+    JavaType key = frame->operandStack.top();
+    frame->operandStack.pop();
+
+    while ((frame->localPC)%4 != 0) {
+        frame->localPC++;
+    }
+
+    uint8_t defaultByte1 = bytecode[frame->localPC++];
+    uint8_t defaultByte2 = bytecode[frame->localPC++];
+    uint8_t defaultByte3 = bytecode[frame->localPC++];
+    uint8_t defaultByte4 = bytecode[frame->localPC++];
+    int32_t defaultValue = (defaultByte1 << 24) | (defaultByte2 << 16) | (defaultByte3 << 8) | defaultByte4;
+
+    uint8_t npairs1 = bytecode[frame->localPC++];
+    uint8_t npairs2 = bytecode[frame->localPC++];
+    uint8_t npairs3 = bytecode[frame->localPC++];
+    uint8_t npairs4 = bytecode[frame->localPC++];
+    int32_t npairs = (npairs1 << 24) | (npairs2 << 16) | (npairs3 << 8) | npairs4;
+
+    for (int i = 0; i < npairs; i++) {
+        uint8_t matchByte1 = bytecode[frame->localPC++];
+        uint8_t matchByte2 = bytecode[frame->localPC++];
+        uint8_t matchByte3 = bytecode[frame->localPC++];
+        uint8_t matchByte4 = bytecode[frame->localPC++];
+        int32_t match = (matchByte1 << 24) | (matchByte2 << 16) | (matchByte3 << 8) | matchByte4;
+
+        uint8_t offsetByte1 = bytecode[frame->localPC++];
+        uint8_t offsetByte2 = bytecode[frame->localPC++];
+        uint8_t offsetByte3 = bytecode[frame->localPC++];
+        uint8_t offsetByte4 = bytecode[frame->localPC++];
+        int32_t offset = (offsetByte1 << 24) | (offsetByte2 << 16) | (offsetByte3 << 8) | offsetByte4;
+
+        if ((int32_t)key.type_int == match) {
+            frame->localPC = baseAddress + offset;
+            return frame->localPC;
+        }
+    }
+    frame->localPC = baseAddress + defaultValue;
+    return frame->localPC;
 }
 uint32_t Instruction::ireturnFunction(Frame* frame) {
     JavaType value;
@@ -3008,7 +3084,7 @@ uint32_t Instruction::ifnullFunction(Frame* frame) {
     JavaType value = frame->operandStack.top();
     frame->operandStack.pop();
 
-    if (value.type_reference == 0) {
+    if (value.type_reference == JAVA_NULL) {
         frame->localPC = baseAddress + branchOffset;
         return frame->localPC;
     }
@@ -3025,7 +3101,7 @@ uint32_t Instruction::ifnonnullFunction(Frame* frame) {
     JavaType value = frame->operandStack.top();
     frame->operandStack.pop();
 
-    if (value.type_reference != 0) {
+    if (value.type_reference != JAVA_NULL) {
         frame->localPC = baseAddress + branchOffset;
         return frame->localPC;
     }

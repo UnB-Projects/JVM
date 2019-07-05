@@ -449,7 +449,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
             cout << low << " to " << high << endl;
 
-            for (int j = 0; j < high-low+1; j++) {
+            for (int j = low; j <= high; j++) {
                 uint8_t jumpByte1 = bytecode[i++];
                 uint8_t jumpByte2 = bytecode[i++];
                 uint8_t jumpByte3 = bytecode[i++];
@@ -457,7 +457,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 int32_t jump = (jumpByte1 << 24) | (jumpByte2 << 16) | (jumpByte3 << 8) | jumpByte4;
 
                 string sign = jump > 0 ? "+" : "";
-                printf("\t%d:    %d (%s%d)\n", j+1, baseAddress+jump, sign.c_str(), jump);
+                printf("\t%d:    %d (%s%d)\n", j, baseAddress+jump, sign.c_str(), jump);
             }
             string sign = defaultValue > 0 ? "+" : "";
             printf("\tdefault:    %d (%s%d)\n", baseAddress+defaultValue, sign.c_str(), defaultValue);
