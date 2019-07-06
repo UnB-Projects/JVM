@@ -4,6 +4,7 @@ class Cachorro extends Animal {
 
     Cachorro() {
         coleira = new Coleira();
+        raca = 3;
     }
 
     public void andar() {

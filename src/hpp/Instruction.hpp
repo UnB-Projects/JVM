@@ -24,6 +24,7 @@ public:
     string getMnemonic();
     uint32_t getBytesCount();
 
+    static map<string, JavaType>* initializeFields(ClassFile*);
     static ClassFile* resolveClass(string);
     static FieldInfo* resolveField(ClassFile*, string, string);
 
