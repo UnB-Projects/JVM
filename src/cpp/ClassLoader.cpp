@@ -48,7 +48,7 @@ void ClassLoader::loadSuperClasses(ClassFile* classFile) {
             superClassFile = loadClassFile("java/lang/Object");
         }
         else {
-            superClassFile = loadClassFile(superClassPath);
+            superClassFile = loadClassFile(superClassPath+".class");
             loadSuperClasses(&superClassFile);
         }
     #endif

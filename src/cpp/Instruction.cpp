@@ -8,7 +8,6 @@ Instruction::Instruction() {
     //Para declarar sem argumentos
 }
 
-
 Instruction::Instruction(string mnemonic, uint32_t bytesCount, uint32_t (*func)(Frame*)) {
     this->mnemonic = mnemonic;
     this->bytesCount = bytesCount;
@@ -26,6 +25,48 @@ void Instruction::setBytesCount(uint32_t bytesCount) {
 }
 uint32_t Instruction::getBytesCount() {
     return this->bytesCount;
+}
+
+FieldInfo* Instruction::resolveField(ClassFile* currentClass, string fieldName, string fieldDescriptor) {
+    vector<CPInfo*> constantPool = currentClass->getConstantPool();
+    MethodArea * methodArea = classLoader->getMethodArea();
+    FieldInfo* returnField;
+    FieldInfo* noSuchField;
+    noSuchField->nameIndex = 0;
+
+    vector<FieldInfo*> fields = currentClass->getFields();
+    for (uint16_t i = 0; i < currentClass->getFieldsCount(); i++) {
+        CPInfo * nameInfo = constantPool[fields[i]->getNameIndex()-1];
+        string name = nameInfo->getInfo(constantPool).first;
+        CPInfo * descriptorInfo = constantPool[fields[i]->getDescriptorIndex()-1];
+        string descriptor = descriptorInfo->getInfo(constantPool).first;
+
+        if (name.compare(fieldName) == 0 && descriptor.compare(fieldDescriptor) == 0) {
+            return fields[i];
+        }
+    }
+
+    vector<InterfaceInfo*> interfaces = currentClass->getInterfaces();
+    for (uint16_t i = 0; i < currentClass->getInterfacesCount(); i++) {
+        CPInfo * classInfo = constantPool[interfaces[i]->getInterfaceIndex()-1];
+        string interfaceName = classInfo->getInfo(constantPool).first;
+        ClassFile * interfaceClass = methodArea->getClassFile(interfaceName);
+
+        returnField = resolveField(interfaceClass, fieldName, fieldDescriptor);
+        if (returnField->nameIndex != 0) {
+            return returnField;
+        }
+    }
+
+    CPInfo* superClassInfo = constantPool[currentClass->getSuperClass()-1];
+    string superClassName = superClassInfo->getInfo(constantPool).first;
+    ClassFile * superClass = methodArea->getClassFile(superClassName);
+    returnField = resolveField(superClass, fieldName, fieldDescriptor);
+    if (returnField->nameIndex != 0) {
+        return returnField;
+    }
+
+    return noSuchField;
 }
 
 uint32_t Instruction::nopFunction(Frame* frame) {
@@ -2937,8 +2978,9 @@ uint32_t Instruction::newOpFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
     uint8_t byte2 = bytecode[++frame->localPC];
-
     uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    MethodArea * methodArea = classLoader->getMethodArea();
+
     string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
 
     if (className.compare("java/lang/String") == 0) {
@@ -2954,8 +2996,53 @@ uint32_t Instruction::newOpFunction(Frame* frame) {
         frame->operandStack.push(objectref);
     }
     else {
-        printf("newOp: ainda nao esta funcionando para casos alem de string do java\n");
-        exit(0);
+        if (!methodArea->isClassInitialized(className)) {
+            methodArea->setClassAsInitialized(className);
+
+            ClassFile aux = classLoader->loadClassFile(className + ".class");
+            classLoader->loadSuperClasses(&aux);
+            ClassFile * classFile = classLoader->getClassFromMethodArea(className);
+            vector<CPInfo*> constantPool = classFile->getConstantPool();
+            vector<MethodInfo*> methods = classFile->getMethods();
+            MethodInfo* method;
+
+            bool foundClinit = false;
+            for (int i = 0; i < classFile->getMethodsCount() && !foundClinit; i++) {
+                method = methods[i];
+                uint16_t nameIndex = method->getNameIndex();
+                uint16_t descriptorIndex = method->getDescriptorIndex();
+                string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
+                string classDescriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
+                if (name.compare("<clinit>") == 0 && classDescriptor.compare("()V") == 0) {
+                    foundClinit = true;
+                }
+            }
+
+            if (foundClinit) {
+                Frame clinitMethodFrame(constantPool, method, frame->jvmStack);
+                frame->jvmStack->push(clinitMethodFrame);
+                frame->localPC-=2;
+                return clinitMethodFrame.localPC;
+            }
+        }
+        ClassFile * classFile = methodArea->getClassFile(className);
+        vector<CPInfo*> constantPool = classFile->getConstantPool();
+        vector<FieldInfo*> fields = classFile->getFields();
+
+        uint32_t fieldsCnt = 0;
+        ClassFile * superClass = classFile;
+        do {
+            vector<CPInfo*> superConstantPool = superClass->getConstantPool();
+            fieldsCnt += classFile->getFieldsCount();
+            string superClassName = superConstantPool[superClass->getSuperClass()-1]->getInfo(superConstantPool).first;
+            superClass = methodArea->getClassFile(superClassName);
+        } while (superClass->getSuperClass() != 0);
+
+        vector<JavaType>* object = new vector<JavaType>(fieldsCnt);
+        JavaType objectref;
+        objectref.tag = CAT1;
+        objectref.type_reference = (uint64_t)object;
+        frame->operandStack.push(objectref);
     }
     return ++frame->localPC;
 }

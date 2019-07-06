@@ -24,6 +24,9 @@ public:
     string getMnemonic();
     uint32_t getBytesCount();
 
+    static ClassFile* resolveClass(string);
+    static FieldInfo* resolveField(ClassFile*, string, string);
+
 
     static uint32_t nopFunction(Frame*);
     static uint32_t aconst_nullFunction(Frame*);
