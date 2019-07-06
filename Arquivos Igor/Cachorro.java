@@ -1,5 +1,5 @@
 class Cachorro extends Animal {
-    private int raca;
+    public int raca;
     public Coleira coleira;
 
     Cachorro() {
