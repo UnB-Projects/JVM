@@ -21,7 +21,7 @@
 
 using namespace std;
 /** @class ClassPrinter
-*   @brief classe que contém a chamada de todos os métodos que visam mostrar na tela os campos do classFile; 
+*   @brief Classe que contém a chamada de todos os métodos que visam mostrar na tela os campos do classFile; 
 *   
 */
 class ClassPrinter {

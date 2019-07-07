@@ -1,5 +1,14 @@
+/** @file ClassPrinter.cpp
+ *  @brief Métodos que descrevem como será mostrado na tela
+ *  @bug No known bugs.
+ */
 #include "../hpp/ClassPrinter.hpp"
 
+/** @class ClassPrinter::interpretClassFlags
+ *  @brief Método para identificar a descrição da flag passada
+ *  @param accessFlag code da flag
+ *  @return Descritor da flag
+ */
 string ClassPrinter::interpretClassFlags(uint16_t accessFlags) {
     vector<string> identifiedFlags;
     ostringstream outputFlagsStream;
@@ -40,6 +49,12 @@ string ClassPrinter::interpretClassFlags(uint16_t accessFlags) {
     return outputFlagsStream.str();
 }
 
+
+/** @class ClassPrinter::interpretMethodFlags
+ *  @brief Método para identificar a descrição da flag passada
+ *  @param accessFlag code da flag
+ *  @return Descritor da flag
+ */
 string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
     vector<string> identifiedFlags;
     ostringstream outputFlagsStream;
@@ -91,6 +106,11 @@ string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
     return outputFlagsStream.str();
 }
 
+/** @class ClassPrinter::interpretFieldFlags
+ *  @brief Método para identificar a descrição da flag passada
+ *  @param accessFlag code da flag
+ *  @return Descritor da flag
+ */
 string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
     vector<string> identifiedFlags;
     ostringstream outputFlagsStream;
@@ -133,11 +153,21 @@ string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
 return outputFlagsStream.str();
 }
 
+/** @fn ClassPrinter::ClassPrinter
+ *  @brief Armazena os valores do .class e do conjunto de instruções nas variáveis locais
+ *  @param classFile arquivo .class @param  instructionSet conjunto de instruções
+ *  @return 
+ */
 ClassPrinter::ClassPrinter(ClassFile classFile, InstructionSet * instructionSet) {
     this->classFile = classFile;
     this->instructionSet = instructionSet;
 }
 
+/** @class ClassPrinter::printGeneralInformation
+ *  @brief Ientifica e mostra na tela as informações gerais do .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printGeneralInformation() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     string version = "";
@@ -200,6 +230,12 @@ void ClassPrinter::printGeneralInformation() {
     printf("Atributes count:     %d\n", classFile.getAttributesCount());
 }
 
+
+/** @class ClassPrinter::printConstantPool
+ *  @brief Mostra na tela todas as ConstantPools identificadas no .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printConstantPool() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
@@ -286,6 +322,11 @@ void ClassPrinter::printConstantPool() {
     }
 }
 
+/** @class ClassPrinter::printerInterfaces
+ *  @brief Método para identificar e mostrar na tela as interfaces contidas no arquivo .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printInterfaces() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<InterfaceInfo*> interfaces = classFile.getInterfaces();
@@ -301,6 +342,11 @@ void ClassPrinter::printInterfaces() {
     cout << endl;
 }
 
+/** @class ClassPrinter::printerFields
+ *  @brief Método para identificar e mostrar na tela os fields contidos no arquivo .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printFields() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<FieldInfo*> fields = classFile.getFields();
@@ -323,6 +369,11 @@ void ClassPrinter::printFields() {
     }
 }
 
+/** @class ClassPrinter::printerMethods
+ *  @brief Método para identificar e mostrar na tela os methods contidos no arquivo .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printMethods() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<MethodInfo*> methods = classFile.getMethods();
@@ -351,6 +402,11 @@ void ClassPrinter::printMethods() {
 
 }
 
+/** @class ClassPrinter::printSourceFieldInfo
+ *  @brief Método que visa mostrar na tela o index referente ao attribute localizado na tabela de constantpool
+ *  @param attribute
+ *  @return 
+ */
 void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
     uint16_t sourceFileIndex = attribute->getSourceFileIndex();
     vector<CPInfo*> constantPool = classFile.getConstantPool();
