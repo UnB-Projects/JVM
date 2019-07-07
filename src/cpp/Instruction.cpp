@@ -2970,8 +2970,9 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 if (!foundMethod) {
                     if (classFile->getSuperClass() == 0) {
                         printf("invokevirutal:  metodo nao foi encontrado em nenhuma superclasse! Talvez esteja em uma interface, falta Implementar!\n");
+                        exit(0);
                     }
-                    string className = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first;
+                    className = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first;
                 }
             } while(!foundMethod);
         }
@@ -3439,6 +3440,10 @@ map<string, JavaType>* Instruction::initializeFields(ClassFile* classFile) {
                 fieldContent.tag = CAT1;
                 fieldContent.type_reference = JAVA_NULL;
             }
+            else if (fieldDescriptor[0] == '[') {
+                fieldContent.tag = CAT1;
+                fieldContent.type_reference = JAVA_NULL;
+            }
             else {
                 printf("Criacao de fields: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
                 exit(0);
@@ -3557,9 +3562,16 @@ uint32_t Instruction::anewarrayFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::arraylengthFunction(Frame* frame) {
-    printf("Instrucao arraylengthFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+
+    JavaType length;
+    length.tag = CAT1;
+    length.type_int = (uint32_t)array->size();
+    frame->operandStack.push(length);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::athrowFunction(Frame* frame) {
     printf("Instrucao athrowFunction nao implementada ainda!\n");
