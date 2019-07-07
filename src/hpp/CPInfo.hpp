@@ -1,3 +1,7 @@
+/** @file CpInfo.hpp
+ *  @brief Declarações das funções e dos atributos do Pool de constantes.
+ *  @bug No known bugs.
+ */
 #ifndef CPINFO_H_INCLUDED
 #define CPINFO_H_INCLUDED
 
@@ -76,6 +80,10 @@ typedef struct {
     uint16_t bootstrap_method_attr_index;
     uint16_t name_and_type_index;
 } ConstantInvokeDynamicInfo;
+/**
+*   @class CpInfo
+*   @brief Classe contém tag(uint8) e union que será um tipo diferente dependendo de qual tag que será passada;
+*/
 
 class CPInfo {
 private:

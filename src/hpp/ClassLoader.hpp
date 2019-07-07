@@ -1,3 +1,7 @@
+/** @file ClassPrinter.hpp
+ *  @brief Declarações das funções que simular o programa jclasslib ao inserir um arquivo .class
+ *  @bug No known bugs.
+ */
 #ifndef __CLASSLOADER_H_INCLUDED__
 #define __CLASSLOADER_H_INCLUDED__
 
