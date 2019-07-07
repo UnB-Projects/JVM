@@ -1,3 +1,7 @@
+/** @file ClassFile.cpp
+ *  @brief Métodos com o objetivo de armazenar toda a estrutura do ClassFile 
+ *  @bug No known bugs.
+ */
 #include "../hpp/ClassFile.hpp"
 
 ClassFile::ClassFile() {

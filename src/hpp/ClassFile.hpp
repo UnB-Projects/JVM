@@ -1,3 +1,7 @@
+/** @file ClassFile.hpp
+ *  @brief Contém toda a estrura do .class definida pela documentação
+ *  @bug No known bugs.
+ */
 #ifndef __CLASSFILE_H_INCLUDED__
 #define __CLASSFILE_H_INCLUDED__
 
@@ -16,6 +20,10 @@
 
 
 using namespace std;
+/** @class ClassFile
+*   @brief Classe que contém toda a estrutura do .class
+*   @bug No known bugs.
+*/
 
 class ClassFile {
 private:

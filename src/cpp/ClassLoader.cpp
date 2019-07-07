@@ -1,3 +1,7 @@
+/** @file AttributeInfo.cpp
+ *  @brief Métodos com o objetivo de adquirir as informações dos atributos do arquivo .class 
+ *  @bug No known bugs.
+ */
 #include "../hpp/ClassLoader.hpp"
 
 ClassLoader::ClassLoader(string projectPath) {
