@@ -404,7 +404,7 @@ void ClassPrinter::printMethods() {
 
 /** @class ClassPrinter::printSourceFieldInfo
  *  @brief Método que visa mostrar na tela o index referente ao attribute localizado na tabela de constantpool
- *  @param attribute
+ *  @param attribute tipo SourceFileAttribute
  *  @return 
  */
 void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
@@ -414,7 +414,11 @@ void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
 
     cout << "Source file name index: cp_info #" << sourceFileIndex << " <" << info->getInfo(constantPool).first << ">" << endl;
 }
-
+/** @class ClassPrinter::printConstantValueInfo
+ *  @brief Método que visa mostrar na tela o index referente ao attribute localizado na tabela de constantpool
+ *  @param attribute tipo ConstantValueAttribute
+ *  @return 
+ */
 void ClassPrinter::printConstantValueInfo(ConstantValueAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint16_t index = attribute->getConstantValueIndex();
@@ -422,7 +426,11 @@ void ClassPrinter::printConstantValueInfo(ConstantValueAttribute* attribute) {
 
     cout << "Constante value Index: cp info #" << index << constantValueInfo->getInfo(constantPool).first << endl;
 }
-
+/** @class ClassPrinter::printCodeExceptionTableInfo
+ *  @brief Método que visa mostrar na tela as informações da Tabela de exceções
+ *  @param exceptionTable tipo ExceptionHandler @param exceptionTableLength tamanho da tabela exceptionTable
+ *  @return 
+ */
 void ClassPrinter::printCodeExceptionTableInfo(ExceptionHandler* exceptionTable, uint16_t exceptionTableLength) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
@@ -441,6 +449,11 @@ void ClassPrinter::printCodeExceptionTableInfo(ExceptionHandler* exceptionTable,
     }
 }
 
+/** @class ClassPrinter::printCodeInfo
+ *  @brief Método que visa mostrar na tela as informações do bytecode 
+ *  @param attribute tipo CodeAttribute
+ *  @return 
+ */
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
@@ -693,6 +706,11 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
 }
 
+/** @class ClassPrinter::printLineNumberTableInfo
+ *  @brief Método que visa mostrar na tela o index, o startPC e o lineNumber;
+ *  @param attribute tipo LineNumberTableAttribute
+ *  @return 
+ */
 void ClassPrinter::printLineNumberTableInfo(LineNumberTableAttribute* attribute) {
     uint16_t lineNumberTableLength = attribute->getLineNumberTableLength();
     LineNumber* lineNumberTable = attribute->getLineNumberTable();
@@ -703,6 +721,11 @@ void ClassPrinter::printLineNumberTableInfo(LineNumberTableAttribute* attribute)
     }
 }
 
+/** @class ClassPrinter::printLocalVariableTableInfo
+ *  @brief Método que visa mostrar na tela as características das varíaveis locais da tabela de informações;
+ *  @param attribute tipo LocalVariableTableAttribute
+ *  @return 
+ */
 void ClassPrinter::printLocalVariableTableInfo(LocalVariableTableAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint16_t localVariableTableLength = attribute->getLocalVariableTableLength();
@@ -723,6 +746,11 @@ void ClassPrinter::printLocalVariableTableInfo(LocalVariableTableAttribute* attr
     }
 }
 
+/** @class ClassPrinter::printExceptionsInfo
+ *  @brief Método que visa mostrar na tela as informações das exceções contidas na tabela de exceções;
+ *  @param attribute tipo ExceptionsInfo
+ *  @return 
+ */
 void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint16_t *exceptionTable = attribute->getExeceptionIndexTable();
@@ -737,6 +765,11 @@ void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
     }
 }
 
+/** @class ClassPrinter::printInnerClassesInfo
+ *  @brief Método que visa mostrar as informações da InnerClasses
+ *  @param attribute tipo InnerClassesAttribute
+ *  @return 
+ */
 void ClassPrinter::printInnerClassesInfo(InnerClassesAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     ClassInfo* classes = attribute->getClasses();
@@ -759,6 +792,11 @@ void ClassPrinter::printInnerClassesInfo(InnerClassesAttribute* attribute) {
     }
 }
 
+/** @class ClassPrinter::printAttributes
+ *  @brief Método que visa mostrar na tela os atributos contidos no .class
+ *  @param attributes tipo AttributeInfo @param attributesCount tamanho da quantidade de attributes passados
+ *  @return 
+ */
 void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attributesCount) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
 
@@ -805,11 +843,21 @@ void ClassPrinter::printAttributes(AttributeInfo* attributes, uint16_t attribute
     }
 }
 
+/** @class ClassPrinter::printClassFileAttributes
+ *  @brief Método que visa chamar os metodos de pegar os atributos e o tamanho final da quantidade destes no .class
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::printClassFileAttributes() {
     cout << "******************************Attributes******************************" << endl << endl;
     printAttributes(classFile.getAttributes(), classFile.getAttributesCount());
 }
 
+/** @class ClassPrinter::printAttributes
+ *  @brief Método que tem objetivo de chamar os outros métodos para que seja mostrado na tela a mesma ordem feita pelo jclasslib
+ *  @param 
+ *  @return 
+ */
 void ClassPrinter::print(){
     printGeneralInformation();
     printConstantPool();
