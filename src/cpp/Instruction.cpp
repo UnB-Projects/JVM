@@ -204,7 +204,7 @@ uint32_t Instruction::sipushFunction(Frame* frame) {
     uint8_t byte2 = bytecode[++frame->localPC];
     JavaType value;
 
-    value.type_short = (int32_t)(((uint16_t)byte1 << 8) | byte2);
+    value.type_short = (int32_t)((((int16_t)(int8_t)byte1 << 8)) | byte2);
     value.tag = CAT1;
     frame->operandStack.push(value);
 
@@ -2250,6 +2250,7 @@ uint32_t Instruction::tableswitchFunction(Frame* frame) {
     JavaType key = frame->operandStack.top();
     frame->operandStack.pop();
 
+    frame->localPC++;
     while ((frame->localPC)%4 != 0) {
         frame->localPC++;
     }
@@ -2293,6 +2294,7 @@ uint32_t Instruction::lookupswitchFunction(Frame* frame) {
     JavaType key = frame->operandStack.top();
     frame->operandStack.pop();
 
+    frame->localPC++;
     while ((frame->localPC)%4 != 0) {
         frame->localPC++;
     }
@@ -2487,6 +2489,9 @@ uint32_t Instruction::getstaticFunction(Frame* frame) {
         else if (fieldDescriptor.compare("Z") == 0) {
             frame->operandStack.push(field->staticValue);
         }
+        else if (fieldDescriptor[0] == '[') {
+            frame->operandStack.push(field->staticValue);
+        }
         else {
             printf("getstatic: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
             exit(0);
@@ -2592,6 +2597,11 @@ uint32_t Instruction::putstaticFunction(Frame* frame) {
     else if (fieldDescriptor.compare("Z") == 0) {
         field->staticValue.tag = CAT1;
         field->staticValue.type_boolean = frame->operandStack.top().type_boolean;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor[0] == '[') {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_reference = frame->operandStack.top().type_reference;
         frame->operandStack.pop();
     }
     else {
@@ -2886,11 +2896,39 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
         }
     }
     else {
+        stack<JavaType> auxstack;
+        for (int i = 1; descriptor[i] != ')'; i++) {
+            if (descriptor[i] == 'I' || descriptor[i] == 'F') {
+            }
+            else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
+            }
+            else if (descriptor[i] == 'L') {
+                while (descriptor[i] != ';') {
+                    i++;
+                }
+            }
+            else if (descriptor[i] == '[') {
+                while (descriptor[i] == '[') {
+                    i++;
+                }
+                if (descriptor[i] == 'L') {
+                    while (descriptor[i] != ';') {
+                        i++;
+                    }
+                }
+            }
+            else {
+                cout << "Tipo de descritor nao reconhecido na contagem: " << descriptor[i] << endl;
+                exit(0);
+            }
+            auxstack.push(frame->operandStack.top());
+            frame->operandStack.pop();
+        }
+
         bool foundMethod = false;
         vector<CPInfo*> constantPool;
         MethodInfo* method;
 
-        //Primeiro verifica se na classe de instancia do metodo nao existe o metodo
         JavaType objectref = frame->operandStack.top();
         frame->operandStack.pop();
         map<string, JavaType>* object = (map<string, JavaType>*)objectref.type_reference;
@@ -2932,84 +2970,59 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 if (!foundMethod) {
                     if (classFile->getSuperClass() == 0) {
                         printf("invokevirutal:  metodo nao foi encontrado em nenhuma superclasse! Talvez esteja em uma interface, falta Implementar!\n");
+                        exit(0);
                     }
-                    string className = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first;
+                    className = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first;
                 }
             } while(!foundMethod);
         }
 
         Frame staticMethodFrame(constantPool, method, frame->jvmStack);
 
-        int argCnt = 0;
+        int argCnt = 1;
         for (int i = 1; descriptor[i] != ')'; i++) {
             if (descriptor[i] == 'I' || descriptor[i] == 'F') {
+                JavaType arg = auxstack.top();
+                auxstack.pop();
+                staticMethodFrame.localVariables[argCnt] = arg;
                 argCnt++;
             }
             else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-                argCnt += 2;
-            }
-            else if (descriptor[i] == 'L') {
-                while (descriptor[i] != ';') {
-                    i++;
-                }
-                argCnt++;
-            }
-            else if (descriptor[i] == '[') {
-                i++;
-                if (descriptor[i] == 'L') {
-                    while (descriptor[i] != ';') {
-                        i++;
-                    }
-                }
-                argCnt++;
-            }
-            else {
-                cout << "Tipo de descritor nao reconhecido na contagem: " << descriptor[i] << endl;
-                exit(0);
-            }
-        }
-        for (int i = 1; descriptor[i] != ')'; i++) {
-            if (descriptor[i] == 'I' || descriptor[i] == 'F') {
-                JavaType arg = frame->operandStack.top();
-                frame->operandStack.pop();
+                JavaType arg = auxstack.top();
+                auxstack.pop();
                 staticMethodFrame.localVariables[argCnt] = arg;
-                argCnt--;
-            }
-            else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-                JavaType arg = frame->operandStack.top();
-                frame->operandStack.pop();
-                argCnt--;
-                staticMethodFrame.localVariables[argCnt] = arg;
-                argCnt--;
+                argCnt+=2;
             }
             else if (descriptor[i] == 'L') {
                 int j = i;
                 while (descriptor[i] != ';') {
                     i++;
                 }
-                JavaType arg = frame->operandStack.top();
-                frame->operandStack.pop();
+                JavaType arg = auxstack.top();
+                auxstack.pop();
                 staticMethodFrame.localVariables[argCnt] = arg;
-                argCnt--;
+                argCnt++;
             }
             else if (descriptor[i] == '[') {
-                i++;
+                while (descriptor[i] == '[') {
+                    i++;
+                }
                 if (descriptor[i] == 'L') {
                     while (descriptor[i] != ';') {
                         i++;
                     }
                 }
-                JavaType arg = frame->operandStack.top();
-                frame->operandStack.pop();
+                JavaType arg = auxstack.top();
+                auxstack.pop();
                 staticMethodFrame.localVariables[argCnt] = arg;
-                argCnt--;
+                argCnt++;
             }
             else {
                 cout << "Tipo de descritor nao reconhecido: " << descriptor[i] << endl;
                 exit(0);
             }
         }
-        staticMethodFrame.localVariables[argCnt] = objectref;
+        staticMethodFrame.localVariables[0] = objectref;
 
         frame->jvmStack->push(staticMethodFrame);
         frame->localPC++;
@@ -3076,7 +3089,7 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
 
         if (!foundMethod) {
             if (classFile->getSuperClass() == 0) {
-                printf("invokevirutal:  metodo nao foi encontrado em nenhuma superclasse! Talvez esteja em uma interface, falta Implementar!\n");
+                printf("invokespecial:  metodo nao foi encontrado em nenhuma superclasse! Talvez esteja em uma interface, falta Implementar!\n");
             }
             string className = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first;
         }
@@ -3084,69 +3097,72 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
 
     Frame staticMethodFrame(constantPool, method, frame->jvmStack);
 
-    int argCnt = 0;
+    stack<JavaType> auxstack;
+
     for (int i = 1; descriptor[i] != ')'; i++) {
         if (descriptor[i] == 'I' || descriptor[i] == 'F') {
-            argCnt++;
         }
         else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-            argCnt += 2;
         }
         else if (descriptor[i] == 'L') {
             while (descriptor[i] != ';') {
                 i++;
             }
-            argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
                 }
             }
-            argCnt++;
         }
         else {
             cout << "Tipo de descritor nao reconhecido na contagem: " << descriptor[i] << endl;
             exit(0);
         }
+        auxstack.push(frame->operandStack.top());
+        frame->operandStack.pop();
     }
+    int argCnt = 1;
     for (int i = 1; descriptor[i] != ')'; i++) {
         if (descriptor[i] == 'I' || descriptor[i] == 'F') {
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
-            argCnt--;
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt += 2;
         }
         else if (descriptor[i] == 'L') {
             int j = i;
             while (descriptor[i] != ';') {
                 i++;
             }
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
                 }
             }
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else {
             cout << "Tipo de descritor nao reconhecido: " << descriptor[i] << endl;
@@ -3155,7 +3171,7 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
     }
     JavaType objectref = frame->operandStack.top();
     frame->operandStack.pop();
-    staticMethodFrame.localVariables[argCnt] = objectref;
+    staticMethodFrame.localVariables[0] = objectref;
 
     frame->jvmStack->push(staticMethodFrame);
     frame->localPC++;
@@ -3232,75 +3248,79 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
 
     Frame staticMethodFrame(constantPool, method, frame->jvmStack);
 
-    int argCnt = -1;
+    stack<JavaType> auxstack;
+
     for (int i = 1; descriptor[i] != ')'; i++) {
         if (descriptor[i] == 'I' || descriptor[i] == 'F') {
-            argCnt++;
         }
         else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-            argCnt += 2;
         }
         else if (descriptor[i] == 'L') {
             while (descriptor[i] != ';') {
                 i++;
             }
-            argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
                 }
             }
-            argCnt++;
         }
         else {
             cout << "Tipo de descritor nao reconhecido na contagem: " << descriptor[i] << endl;
             exit(0);
         }
+        auxstack.push(frame->operandStack.top());
+        frame->operandStack.pop();
     }
+    int argCnt = 0;
     for (int i = 1; descriptor[i] != ')'; i++) {
         if (descriptor[i] == 'I' || descriptor[i] == 'F') {
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else if (descriptor[i] == 'J' || descriptor[i] == 'D') {
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
-            argCnt--;
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt += 2;
         }
         else if (descriptor[i] == 'L') {
             int j = i;
             while (descriptor[i] != ';') {
                 i++;
             }
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
                 }
             }
-            JavaType arg = frame->operandStack.top();
-            frame->operandStack.pop();
+            JavaType arg = auxstack.top();
+            auxstack.pop();
             staticMethodFrame.localVariables[argCnt] = arg;
-            argCnt--;
+            argCnt++;
         }
         else {
             cout << "Tipo de descritor nao reconhecido: " << descriptor[i] << endl;
             exit(0);
         }
     }
+
     frame->jvmStack->push(staticMethodFrame);
     frame->localPC++;
     return staticMethodFrame.localPC;
@@ -3417,6 +3437,10 @@ map<string, JavaType>* Instruction::initializeFields(ClassFile* classFile) {
                 fieldContent.type_boolean = 0;
             }
             else if (fieldDescriptor[0] == 'L') {
+                fieldContent.tag = CAT1;
+                fieldContent.type_reference = JAVA_NULL;
+            }
+            else if (fieldDescriptor[0] == '[') {
                 fieldContent.tag = CAT1;
                 fieldContent.type_reference = JAVA_NULL;
             }
@@ -3538,9 +3562,16 @@ uint32_t Instruction::anewarrayFunction(Frame* frame) {
     return ++frame->localPC;
 }
 uint32_t Instruction::arraylengthFunction(Frame* frame) {
-    printf("Instrucao arraylengthFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    JavaType arrayref = frame->operandStack.top();
+    frame->operandStack.pop();
+    vector<JavaType>* array = (vector<JavaType>*)arrayref.type_reference;
+
+    JavaType length;
+    length.tag = CAT1;
+    length.type_int = (uint32_t)array->size();
+    frame->operandStack.push(length);
+
+    return ++frame->localPC;
 }
 uint32_t Instruction::athrowFunction(Frame* frame) {
     printf("Instrucao athrowFunction nao implementada ainda!\n");

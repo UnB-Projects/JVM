@@ -6,7 +6,7 @@
 //     }
 // }
 
-void FieldInfo::read(FILE *fp, std::vector<CPInfo*> trueCpInfo){
+void FieldInfo::read(FILE *fp, vector<CPInfo*> constantPool){
     ByteReader<uint16_t> twoByteReader;
 
     accessFlags = twoByteReader.byteCatch(fp);
@@ -15,9 +15,9 @@ void FieldInfo::read(FILE *fp, std::vector<CPInfo*> trueCpInfo){
     attributesCount = twoByteReader.byteCatch(fp);
     
     for(int i = 0; i < attributesCount; i++) {
-        AttributeInfo * attribute = (AttributeInfo *)calloc(1, sizeof(*attribute));
+        AttributeInfo * attribute = (AttributeInfo *)calloc(1, sizeof(AttributeInfo));
         //TALVEZ ESTEJA ERRADA ESSA PARTE NAO ESQUECE
-        attribute->read(fp,trueCpInfo);
+        attribute->read(fp,constantPool);
         attributes.push_back(attribute);
     }
 }
