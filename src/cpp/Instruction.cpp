@@ -2487,6 +2487,9 @@ uint32_t Instruction::getstaticFunction(Frame* frame) {
         else if (fieldDescriptor.compare("Z") == 0) {
             frame->operandStack.push(field->staticValue);
         }
+        else if (fieldDescriptor[0] == '[') {
+            frame->operandStack.push(field->staticValue);
+        }
         else {
             printf("getstatic: tipo do descritor nao reconhecido: %s\n", fieldDescriptor.c_str());
             exit(0);
@@ -2592,6 +2595,11 @@ uint32_t Instruction::putstaticFunction(Frame* frame) {
     else if (fieldDescriptor.compare("Z") == 0) {
         field->staticValue.tag = CAT1;
         field->staticValue.type_boolean = frame->operandStack.top().type_boolean;
+        frame->operandStack.pop();
+    }
+    else if (fieldDescriptor[0] == '[') {
+        field->staticValue.tag = CAT1;
+        field->staticValue.type_reference = frame->operandStack.top().type_reference;
         frame->operandStack.pop();
     }
     else {
@@ -2955,7 +2963,9 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 argCnt++;
             }
             else if (descriptor[i] == '[') {
-                i++;
+                while (descriptor[i] == '[') {
+                    i++;
+                }
                 if (descriptor[i] == 'L') {
                     while (descriptor[i] != ';') {
                         i++;
@@ -2993,7 +3003,9 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
                 argCnt--;
             }
             else if (descriptor[i] == '[') {
-                i++;
+                while (descriptor[i] == '[') {
+                    i++;
+                }
                 if (descriptor[i] == 'L') {
                     while (descriptor[i] != ';') {
                         i++;
@@ -3099,7 +3111,9 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
             argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
@@ -3137,7 +3151,9 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
             argCnt--;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
@@ -3247,7 +3263,9 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
             argCnt++;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
@@ -3285,7 +3303,9 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
             argCnt--;
         }
         else if (descriptor[i] == '[') {
-            i++;
+            while (descriptor[i] == '[') {
+                i++;
+            }
             if (descriptor[i] == 'L') {
                 while (descriptor[i] != ';') {
                     i++;
