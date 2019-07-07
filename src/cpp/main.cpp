@@ -10,9 +10,15 @@ using namespace std;
 string getProjectPath(string commandLinePath) {
     int i = commandLinePath.size()-1;
 
+    #if defined(_WIN32)
+    while (i >= 0 && commandLinePath[i] != '\\') {
+        i--;
+    }
+    #else
     while (i >= 0 && commandLinePath[i] != '/') {
         i--;
     }
+    #endif
 
     return commandLinePath.substr(0, i+1);
 }
@@ -20,9 +26,15 @@ string getProjectPath(string commandLinePath) {
 string getClassName(string commandLinePath) {
     int i = commandLinePath.size()-1;
 
+    #if defined(_WIN32)
+    while (i >= 0 && commandLinePath[i] != '\\') {
+        i--;
+    }
+    #else
     while (i >= 0 && commandLinePath[i] != '/') {
         i--;
     }
+    #endif
 
     return commandLinePath.substr(i+1, commandLinePath.size());
 }
