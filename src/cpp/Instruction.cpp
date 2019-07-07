@@ -2250,6 +2250,7 @@ uint32_t Instruction::tableswitchFunction(Frame* frame) {
     JavaType key = frame->operandStack.top();
     frame->operandStack.pop();
 
+    frame->localPC++;
     while ((frame->localPC)%4 != 0) {
         frame->localPC++;
     }
@@ -2293,6 +2294,7 @@ uint32_t Instruction::lookupswitchFunction(Frame* frame) {
     JavaType key = frame->operandStack.top();
     frame->operandStack.pop();
 
+    frame->localPC++;
     while ((frame->localPC)%4 != 0) {
         frame->localPC++;
     }
