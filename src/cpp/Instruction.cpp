@@ -3572,10 +3572,62 @@ uint32_t Instruction::wideFunction(Frame* frame) {
     exit(0);
     return -1;
 }
+
+vector<JavaType>* Instruction::buildMultiAnewArray(vector<int> dimensions, int index, char type) {
+    vector<JavaType>* array = new vector<JavaType>(dimensions[index]);
+
+    if (index == 0) {
+        for (int i = 0; i < dimensions[index]; i++) {
+            if (type == 'B' || type == 'C' || type == 'F' || type == 'I' || type == 'S' || type == 'Z' || type == ';') {
+                array->at(i).tag = CAT1;
+                array->at(i).type_int = 0;
+            }
+            else if (type == 'D' || type == 'J') {
+                array->at(i).tag = CAT1;
+                array->at(i).type_int = 0;
+            }
+            else {
+                cout << "Tipo de multianewaray desconhecido: " << type << endl;
+                exit(0);
+            }
+        }
+        return array;
+    }
+
+    for (int i = 0; i < dimensions[index]; i++) {
+        array->at(i).tag = CAT1;
+        array->at(i).type_reference = (uint64_t)buildMultiAnewArray(dimensions, index-1, type);
+    }
+
+    return array;
+}
+
 uint32_t Instruction::multianewarrayFunction(Frame* frame) {
-    printf("Instrucao multianewarrayFunction nao implementada ainda!\n");
-    exit(0);
-    return -1;
+    uint8_t* bytecode = frame->getCode();
+    uint8_t byte1 = bytecode[++frame->localPC];
+    uint8_t byte2 = bytecode[++frame->localPC];
+    uint8_t byte3 = bytecode[++frame->localPC];
+    uint16_t index = ((uint16_t)byte1 << 8) | byte2;
+    uint32_t dimensions = byte3;
+    vector<int> dimensionsArray;
+
+    for (int i = 0; i < dimensions; i++) {
+        uint32_t dimension = frame->operandStack.top().type_int;
+        frame->operandStack.pop();
+        if (dimension == 0) {
+            break;
+        }
+        dimensionsArray.push_back(dimension);
+    }
+
+    string className = frame->constantPool[index-1]->getInfo(frame->constantPool).first;
+    vector<JavaType>* array = buildMultiAnewArray(dimensionsArray, dimensions-1, className[className.size()-1]);
+
+    JavaType arrayref;
+    arrayref.tag = CAT1;
+    arrayref.type_reference = (uint64_t)array;
+    frame->operandStack.push(arrayref);
+    return ++frame->localPC;
 }
 uint32_t Instruction::ifnullFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();

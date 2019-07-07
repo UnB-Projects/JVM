@@ -25,8 +25,10 @@ public:
     uint32_t getBytesCount();
 
     static map<string, JavaType>* initializeFields(ClassFile*);
+    static vector<JavaType>* buildMultiAnewArray(vector<int>, int, char);
     static ClassFile* resolveClass(string);
     static FieldInfo* resolveField(ClassFile*, string, string);
+
 
 
     static uint32_t nopFunction(Frame*);
