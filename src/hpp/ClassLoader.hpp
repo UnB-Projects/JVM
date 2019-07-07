@@ -3,7 +3,10 @@
 
 #include "ClassFile.hpp"
 #include "MethodArea.hpp"
-
+/** @class ClassLoader
+*   @brief Classe que armazena o caminho para o arquivo .class e separa o MethodArea; 
+*   
+*/
 class ClassLoader {
 private:
     MethodArea * methodArea;

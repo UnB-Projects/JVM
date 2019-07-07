@@ -1,13 +1,25 @@
-/** @file AttributeInfo.cpp
- *  @brief Métodos com o objetivo de adquirir as informações dos atributos do arquivo .class 
+/** @file ClassLoader.cpp
+ *  @brief Métodos com o objetivo de armazenar toda a estrutura do ClassFile 
  *  @bug No known bugs.
  */
 #include "../hpp/ClassLoader.hpp"
 
+
+/** @fn ClassLoader::ClassLoader
+ *  @brief Construtor ClassLoader
+ *  @param projectPath
+ *  @return 
+ */
 ClassLoader::ClassLoader(string projectPath) {
     this->projectPath = projectPath;
 }
 
+
+/** @class ClassLoader::loadClassFile
+ *  @brief Método que visa carregar o arquivo .class
+ *  @param className tipo string
+ *  @return tipo ClassFile
+ */
 ClassFile ClassLoader::loadClassFile(string className) {
     FILE *fp;
 
@@ -27,6 +39,12 @@ ClassFile ClassLoader::loadClassFile(string className) {
     cout << "Nao foi possivel abrir o arquivo! Programa terminado!" << projectPath << " " << className << endl;
     exit(0);
 }
+
+/** @class ClassLoader::loadSuperClasses
+ *  @brief Método que visa carregar as superClasses o arquivo .class
+ *  @param classFile ponteiro do tipo ClassFile
+ *  @return
+ */
 
 void ClassLoader::loadSuperClasses(ClassFile* classFile) {
     vector<CPInfo*> constantPool = classFile->getConstantPool();
