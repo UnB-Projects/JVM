@@ -4,9 +4,20 @@
  */
 #include "../hpp/ClassFile.hpp"
 
+/** @class ClassFile::ClassFile
+ *  @brief Método apenas para inicializar na main
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 ClassFile::ClassFile() {
     //Apenas para inicializar na main
 }
+
+/** @class ClassFile::ClassFile
+ *  @brief Método para verificar se o inicio do MagicNumber é 0xCAFEBABE, caso contrário mostra erro. Além de setar todos os valores adquiridos das informações retiradas do .class
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 ClassFile::ClassFile(FILE * fp) {
     this->setMagic(fp);
@@ -33,6 +44,12 @@ ClassFile::ClassFile(FILE * fp) {
     }
 }
 
+
+/** @class ClassFile::~ClassFile
+ *  @brief Destrutor
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 ClassFile::~ClassFile() {
     // for (auto i : interfaces) {
     //     i->~InterfaceInfo();
@@ -57,25 +74,52 @@ ClassFile::~ClassFile() {
 }
 
 
+
+/** @class ClassFile::setMagic
+ *  @brief Método que armazena o valor do Magic
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 void ClassFile::setMagic(FILE * fp) {
     ByteReader<typeof(magic)> magicReader;
     magic = magicReader.byteCatch(fp);
 }
 
+/** @class ClassFile::setMajorVersion
+ *  @brief Método que armazena o valor de MajorVersion
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
+
 void ClassFile::setMajorVersion(FILE * fp) {
     ByteReader<typeof(majorVersion)> majorReader;
     majorVersion = majorReader.byteCatch(fp);
 }
+/** @class ClassFile::setMinor
+ *  @brief Método que armazena o valor do Minor
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setMinor(FILE * fp) {
     ByteReader<typeof(majorVersion)> minorReader;
     minorVersion = minorReader.byteCatch(fp);
 }
+/** @class ClassFile::setConstantPoolCount
+ *  @brief Método que armazena o valor do Quantidade de ConstantPool
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setConstantPoolCount(FILE * fp) {
     ByteReader<typeof(constantPoolCount)> cpCountReader;
     constantPoolCount = cpCountReader.byteCatch(fp);
 }
+/** @class ClassFile::setConstantPool
+ *  @brief Método que armazena o valor das ConstantPool
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setConstantPool(FILE * fp) {
     for (int i = 0; i < this->constantPoolCount-1; i++) {
@@ -91,26 +135,50 @@ void ClassFile::setConstantPool(FILE * fp) {
         }
     } 
 }
+/** @class ClassFile::setAccessFlags
+ *  @brief Método que armazena o valor do accessFlag
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setAccessFlags(FILE * fp) {
     ByteReader<typeof(accessFlags)> accessFlagsReader;
     accessFlags = accessFlagsReader.byteCatch(fp);
 }
-
+/** @class ClassFile::setThisClass
+ *  @brief Método que armazena o valor do ThisClass
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 void ClassFile::setThisClass(FILE * fp) {
     ByteReader<typeof(thisClass)> thisClassReader;
     thisClass = thisClassReader.byteCatch(fp);
 }
+/** @class ClassFile::setSuperClass
+ *  @brief Método que armazena o valor de SuperClass
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setSuperClass(FILE * fp) {
     ByteReader<typeof(superClass)> superClassReader;
     superClass = superClassReader.byteCatch(fp);
 }
+/** @class ClassFile::setInterfacesCount
+ *  @brief Método que armazena o valor da quantidade de Interfaces
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setInterfacesCount(FILE * fp) {
     ByteReader<typeof(interfacesCount)> interfacesCountReader;
     interfacesCount = interfacesCountReader.byteCatch(fp);
 }
+/** @class ClassFile::setInterfaces
+ *  @brief Método que armazena o valor das interfaces
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setInterfaces(FILE * fp) {
     for (int i = 0; i < this->interfacesCount; i++) {
@@ -120,11 +188,21 @@ void ClassFile::setInterfaces(FILE * fp) {
     }
     
 }
+/** @class ClassFile::setFieldsCount
+ *  @brief Método que armazena o valor da quantidade de fields
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setFieldsCount(FILE * fp) {
     ByteReader<typeof(fieldsCount)> fieldsCountReader;
     fieldsCount = fieldsCountReader.byteCatch(fp);
 }
+/** @class ClassFile::setFields
+ *  @brief Método que armazena o valor das fields
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setFields(FILE * fp) {
     for(int i = 0; i < this->fieldsCount; i++) {
@@ -133,11 +211,21 @@ void ClassFile::setFields(FILE * fp) {
         this->fields.push_back(field);
     }
 }
+/** @class ClassFile::setMethodsCount
+ *  @brief Método que armazena o valor da quantidade de métodos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setMethodsCount(FILE * fp) {
     ByteReader<typeof(methodsCount)> methodsCountReader;
     methodsCount = methodsCountReader.byteCatch(fp);
 }
+/** @class ClassFile::setMethods
+ *  @brief Método que armazena o valor dos métodos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setMethods(FILE * fp) {
     for (int i = 0; i < this->methodsCount; i++) {
@@ -146,11 +234,21 @@ void ClassFile::setMethods(FILE * fp) {
         this->methods.push_back(methodInfo);
     }
 }
+/** @class ClassFile::setAttributesCount
+ *  @brief Método que armazena o valor da quantidade de atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setAttributesCount(FILE * fp) {
     ByteReader<typeof(attributesCount)> attributesCountReader;
     attributesCount = attributesCountReader.byteCatch(fp);
 }
+/** @class ClassFile::setAttributes
+ *  @brief Método que armazena o valor dos atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 
 void ClassFile::setAttributes(FILE * fp) {
     this->attributes = (AttributeInfo*)calloc(this->attributesCount, sizeof(AttributeInfo));
