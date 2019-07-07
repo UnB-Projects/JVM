@@ -25,31 +25,27 @@ ClassFile ClassLoader::loadClassFile(string className) {
 }
 
 void ClassLoader::loadSuperClasses(ClassFile* classFile) {
-    #if defined(_WIN32)
-        printf("Faltou implementar no windows!\n");
-    #else
-        vector<CPInfo*> constantPool = classFile->getConstantPool();
+    vector<CPInfo*> constantPool = classFile->getConstantPool();
 
-        if (classFile->getSuperClass() == 0) {
-            return;
-        }
+    if (classFile->getSuperClass() == 0) {
+        return;
+    }
 
-        string superClassPath = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first.c_str();
+    string superClassPath = constantPool[classFile->getSuperClass()-1]->getInfo(constantPool).first.c_str();
 
-        // if (superClassPath.compare("java/lang/string") == 0 ||
-        //     superClassPath.compare("java/lang/System.out") == 0 ||
-        //     superClassPath.compare("java/lang/System.in") == 0) {
-        //     return;
-        // }
+    // if (superClassPath.compare("java/lang/string") == 0 ||
+    //     superClassPath.compare("java/lang/System.out") == 0 ||
+    //     superClassPath.compare("java/lang/System.in") == 0) {
+    //     return;
+    // }
 
-        ClassFile superClassFile;
+    ClassFile superClassFile;
 
-        if (superClassPath.compare("java/lang/Object") == 0) {
-            superClassFile = loadClassFile("java/lang/Object");
-        }
-        else {
-            superClassFile = loadClassFile(superClassPath+".class");
-            loadSuperClasses(&superClassFile);
-        }
-    #endif
+    if (superClassPath.compare("java/lang/Object") == 0) {
+        superClassFile = loadClassFile("java/lang/Object");
+    }
+    else {
+        superClassFile = loadClassFile(superClassPath+".class");
+        loadSuperClasses(&superClassFile);
+    }
 }
