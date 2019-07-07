@@ -17,7 +17,10 @@ using namespace std;
 class AttributeInfo;
 class ConstantValueAttribute;
 class CodeAttribute;
-
+/** @class ConstantValueAttribute
+*   @brief Classe que consiste em armazenar as informações dos index referentes aos atributos
+*   @bug No known bugs.
+*/
 
 class ConstantValueAttribute {
 private:
@@ -29,6 +32,10 @@ public:
     }
 };
 
+/** @class ExceptionHandler
+*   @brief Classe que consiste em armazenar as informações das exceções 
+*   @bug No known bugs.
+*/
 
 class ExceptionHandler {
 private:
@@ -51,6 +58,11 @@ public:
         return catchType;
     };
 };
+
+/** @class CodeAttribute
+ *  @brief Classe que consiste em armazenar as  informações dos atributos
+ * @bug No known bugs.
+*/
 
 class CodeAttribute {
 private:
@@ -90,6 +102,12 @@ public:
     }
 };
 
+/** @class ExceptionAttribute
+*   @brief Classe contém numberOfExceptions e ponteiro para exceptionIndexTable - todos uint16;
+*   @bug No known bugs.
+*/
+
+
 class ExceptionsAttribute {
 private:
     uint16_t numberOfExceptions;
@@ -103,6 +121,11 @@ public:
         return execeptionIndexTable;
     }
 };
+
+/** @class ClassInfo
+*   @brief Classe que contém as informações gerais das classes
+*   @bug No known bugs.
+*/
 
 class ClassInfo {
 private:
@@ -126,6 +149,11 @@ public:
     };
 };
 
+
+/** @class InnerClassesAttribute
+*   @brief Classe que contém as informações dos atributos das classes
+*   @bug No known bugs.
+*/
 class InnerClassesAttribute {
 private:
     uint16_t numberOfClasses;
@@ -141,6 +169,11 @@ public:
 };
 
 
+/** @class SourceFileAttribute
+*   @brief Classe que contém as informações do index do SourceFile
+*   @bug No known bugs.
+*/
+
 class SourceFileAttribute {
 private:
     uint16_t sourcefileIndex;
@@ -150,6 +183,11 @@ public:
         return sourcefileIndex;
     }
 };
+
+/** @class LineNumber
+*   @brief Classe que contém as informações LineNumber contendo startPC e o lineNumber
+*   @bug No known bugs.
+*/
 
 class LineNumber {
 private:
@@ -165,6 +203,11 @@ public:
     }
 };
 
+/** @class LineNumberTableAttribute
+*   @brief Classe que contém as informações LineNumberTableAttribute contendo o tamanho da LineNumberTable e um ponteiro do tipo LineNumber
+*   @bug No known bugs.
+*/
+
 class LineNumberTableAttribute {
 private:
     uint16_t lineNumberTableLength;
@@ -179,6 +222,11 @@ public:
     }
 };
 
+
+/** @class LocalVariable
+*   @brief Classe que contém as características das variáveis locais;
+*   @bug No known bugs.
+*/
 class LocalVariable {
 private:
     uint16_t startPC;
@@ -205,6 +253,11 @@ public:
     };
 };
 
+/** @class LocalVariableTableAttribute
+*   @brief Classe que contém as variáves locais na tabela de atributos
+*   @bug No known bugs.
+*/
+
 class LocalVariableTableAttribute {
 private:
     uint16_t localVariableTableLength;
@@ -219,6 +272,10 @@ public:
     };
 };
 
+/** @class AttributeInfo
+*   @brief Classe que contém as informações dos atributos
+*   @bug No known bugs.
+*/
 class AttributeInfo {
 private:
     uint16_t attributeNameIndex;
