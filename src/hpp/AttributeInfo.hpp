@@ -1,3 +1,7 @@
+/** @file AttributeInfo.hpp
+ *  @brief Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo .class.
+ *  @bug No known bugs.
+ */
 #ifndef ATTRIBUTE_INFO_H_INCLUDED
 #define ATTRIBUTE_INFO_H_INCLUDED
 
