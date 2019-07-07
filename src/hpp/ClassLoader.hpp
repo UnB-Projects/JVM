@@ -2,10 +2,25 @@
 #define __CLASSLOADER_H_INCLUDED__
 
 #include "ClassFile.hpp"
+#include "MethodArea.hpp"
 
 class ClassLoader {
+private:
+    MethodArea * methodArea;
+    string projectPath;
 public:
-    ClassFile loadClassFile(FILE * fp);
+    ClassLoader(string);
+    ClassFile loadClassFile(string);
+    void loadSuperClasses(ClassFile*);
+    void setMethodArea(MethodArea* methodArea) {
+        this->methodArea = methodArea;
+    }
+    ClassFile * getClassFromMethodArea(string className) {
+        return this->methodArea->getClassFile(className);
+    }
+    MethodArea * getMethodArea() {
+        return this->methodArea;
+    }
 };
 
 #endif

@@ -2,6 +2,10 @@
 #define INSTRUCTION_H
 
 #include <string>
+#include <cmath>
+#include <vector>
+#include "Frame.hpp"
+#include "ClassLoader.hpp"
 
 using namespace std;
 
@@ -10,12 +14,244 @@ private:
     string mnemonic;
     uint32_t bytesCount;
 public:
-    Instruction(){};
-    Instruction(string, uint32_t);
+    static ClassLoader * classLoader;
+    static void setClassLoader(ClassLoader*);
+    uint32_t (*func)(Frame*);
+    Instruction();
+    Instruction(string, uint32_t, uint32_t (*)(Frame*));
     void setMnemonic(string);
     void setBytesCount(uint32_t);
     string getMnemonic();
     uint32_t getBytesCount();
+
+    static map<string, JavaType>* initializeFields(ClassFile*);
+    static vector<JavaType>* buildMultiAnewArray(vector<int>, int, char);
+    static ClassFile* resolveClass(string);
+    static FieldInfo* resolveField(ClassFile*, string, string);
+
+
+
+    static uint32_t nopFunction(Frame*);
+    static uint32_t aconst_nullFunction(Frame*);
+    static uint32_t iconst_m1Function(Frame*);
+    static uint32_t iconst_0Function(Frame*);
+    static uint32_t iconst_1Function(Frame*);
+    static uint32_t iconst_2Function(Frame*);
+    static uint32_t iconst_3Function(Frame*);
+    static uint32_t iconst_4Function(Frame*);
+    static uint32_t iconst_5Function(Frame*);
+    static uint32_t lconst_0Function(Frame*);
+    static uint32_t lconst_1Function(Frame*);
+    static uint32_t fconst_0Function(Frame*);
+    static uint32_t fconst_1Function(Frame*);
+    static uint32_t fconst_2Function(Frame*);
+    static uint32_t dconst_0Function(Frame*);
+    static uint32_t dconst_1Function(Frame*);
+    static uint32_t bipushFunction(Frame*);
+    static uint32_t sipushFunction(Frame*);
+    static uint32_t ldcFunction(Frame*);
+    static uint32_t ldc_wFunction(Frame*);
+    static uint32_t ldc2_wFunction(Frame*);
+
+    //Loads
+    static uint32_t iloadFunction(Frame*);
+    static uint32_t lloadFunction(Frame*);
+    static uint32_t floadFunction(Frame*);
+    static uint32_t dloadFunction(Frame*);
+    static uint32_t aloadFunction(Frame*);
+    static uint32_t iload_0Function(Frame*);
+    static uint32_t iload_1Function(Frame*);
+    static uint32_t iload_2Function(Frame*);
+    static uint32_t iload_3Function(Frame*);
+    static uint32_t lload_0Function(Frame*);
+    static uint32_t lload_1Function(Frame*);
+    static uint32_t lload_2Function(Frame*);
+    static uint32_t lload_3Function(Frame*);
+    static uint32_t fload_0Function(Frame*);
+    static uint32_t fload_1Function(Frame*);
+    static uint32_t fload_2Function(Frame*);
+    static uint32_t fload_3Function(Frame*);
+    static uint32_t dload_0Function(Frame*);
+    static uint32_t dload_1Function(Frame*);
+    static uint32_t dload_2Function(Frame*);
+    static uint32_t dload_3Function(Frame*);
+    static uint32_t aload_0Function(Frame*);
+    static uint32_t aload_1Function(Frame*);
+    static uint32_t aload_2Function(Frame*);
+    static uint32_t aload_3Function(Frame*);
+    static uint32_t ialoadFunction(Frame*);
+    static uint32_t laloadFunction(Frame*);
+    static uint32_t faloadFunction(Frame*);
+    static uint32_t daloadFunction(Frame*);
+    static uint32_t aaloadFunction(Frame*);
+    static uint32_t baloadFunction(Frame*);
+    static uint32_t caloadFunction(Frame*);
+    static uint32_t saloadFunction(Frame*);
+
+    //Stores
+    static uint32_t istoreFunction(Frame*);
+    static uint32_t lstoreFunction(Frame*);
+    static uint32_t fstoreFunction(Frame*);
+    static uint32_t dstoreFunction(Frame*);
+    static uint32_t astoreFunction(Frame*);
+    static uint32_t istore_0Function(Frame*);
+    static uint32_t istore_1Function(Frame*);
+    static uint32_t istore_2Function(Frame*);
+    static uint32_t istore_3Function(Frame*);
+    static uint32_t lstore_0Function(Frame*);
+    static uint32_t lstore_1Function(Frame*);
+    static uint32_t lstore_2Function(Frame*);
+    static uint32_t lstore_3Function(Frame*);
+    static uint32_t fstore_0Function(Frame*);
+    static uint32_t fstore_1Function(Frame*);
+    static uint32_t fstore_2Function(Frame*);
+    static uint32_t fstore_3Function(Frame*);
+    static uint32_t dstore_0Function(Frame*);
+    static uint32_t dstore_1Function(Frame*);
+    static uint32_t dstore_2Function(Frame*);
+    static uint32_t dstore_3Function(Frame*);
+    static uint32_t astore_0Function(Frame*);
+    static uint32_t astore_1Function(Frame*);
+    static uint32_t astore_2Function(Frame*);
+    static uint32_t astore_3Function(Frame*);
+    static uint32_t iastoreFunction(Frame*);
+    static uint32_t lastoreFunction(Frame*);
+    static uint32_t fastoreFunction(Frame*);
+    static uint32_t dastoreFunction(Frame*);
+    static uint32_t aastoreFunction(Frame*);
+    static uint32_t bastoreFunction(Frame*);
+    static uint32_t castoreFunction(Frame*);
+    static uint32_t sastoreFunction(Frame*);
+
+    //Stack
+    static uint32_t popFunction(Frame*);
+    static uint32_t pop2Function(Frame*);
+    static uint32_t dupFunction(Frame*);
+    static uint32_t dup_x1Function(Frame*);
+    static uint32_t dup_x2Function(Frame*);
+    static uint32_t dup2Function(Frame*);
+    static uint32_t dup2_x1Function(Frame*);
+    static uint32_t dup2_x2Function(Frame*);
+    static uint32_t swapFunction(Frame*);
+
+    //Math
+    static uint32_t iaddFunction(Frame*);
+    static uint32_t laddFunction(Frame*);
+    static uint32_t faddFunction(Frame*);
+    static uint32_t daddFunction(Frame*);
+    static uint32_t isubFunction(Frame*);
+    static uint32_t lsubFunction(Frame*);
+    static uint32_t fsubFunction(Frame*);
+    static uint32_t dsubFunction(Frame*);
+    static uint32_t imulFunction(Frame*);
+    static uint32_t lmulFunction(Frame*);
+    static uint32_t fmulFunction(Frame*);
+    static uint32_t dmulFunction(Frame*);
+    static uint32_t idivFunction(Frame*);
+    static uint32_t ldivOpFunction(Frame*);
+    static uint32_t fdivFunction(Frame*);
+    static uint32_t ddivFunction(Frame*);
+    static uint32_t iremFunction(Frame*);
+    static uint32_t lremFunction(Frame*);
+    static uint32_t fremFunction(Frame*);
+    static uint32_t dremFunction(Frame*);
+    static uint32_t inegFunction(Frame*);
+    static uint32_t lnegFunction(Frame*);
+    static uint32_t fnegFunction(Frame*);
+    static uint32_t dnegFunction(Frame*);
+    static uint32_t ishlFunction(Frame*);
+    static uint32_t lshlFunction(Frame*);
+    static uint32_t ishrFunction(Frame*);
+    static uint32_t lshrFunction(Frame*);
+    static uint32_t iushrFunction(Frame*);
+    static uint32_t lushrFunction(Frame*);
+    static uint32_t iandFunction(Frame*);
+    static uint32_t landFunction(Frame*);
+    static uint32_t iorFunction(Frame*);
+    static uint32_t lorFunction(Frame*);
+    static uint32_t ixorFunction(Frame*);
+    static uint32_t lxorFunction(Frame*);
+    static uint32_t iincFunction(Frame*);
+
+    //Conversions
+    static uint32_t i2lFunction(Frame*);
+    static uint32_t i2fFunction(Frame*);
+    static uint32_t i2dFunction(Frame*);
+    static uint32_t l2iFunction(Frame*);
+    static uint32_t l2fFunction(Frame*);
+    static uint32_t l2dFunction(Frame*);
+    static uint32_t f2iFunction(Frame*);
+    static uint32_t f2lFunction(Frame*);
+    static uint32_t f2dFunction(Frame*);
+    static uint32_t d2iFunction(Frame*);
+    static uint32_t d2lFunction(Frame*);
+    static uint32_t d2fFunction(Frame*);
+    static uint32_t i2bFunction(Frame*);
+    static uint32_t i2cFunction(Frame*);
+    static uint32_t i2sFunction(Frame*);
+
+    //Comparisons
+    static uint32_t lcmpFunction(Frame*);
+    static uint32_t fcmplFunction(Frame*);
+    static uint32_t fcmpgFunction(Frame*);
+    static uint32_t dcmplFunction(Frame*);
+    static uint32_t dcmpgFunction(Frame*);
+    static uint32_t ifeqFunction(Frame*);
+    static uint32_t ifneFunction(Frame*);
+    static uint32_t ifltFunction(Frame*);
+    static uint32_t ifgeFunction(Frame*);
+    static uint32_t ifgtFunction(Frame*);
+    static uint32_t ifleFunction(Frame*);
+    static uint32_t if_icmpeqFunction(Frame*);
+    static uint32_t if_icmpneFunction(Frame*);
+    static uint32_t if_icmpltFunction(Frame*);
+    static uint32_t if_icmpgeFunction(Frame*);
+    static uint32_t if_icmpgtFunction(Frame*);
+    static uint32_t if_icmpleFunction(Frame*);
+    static uint32_t if_acmpeqFunction(Frame*);
+    static uint32_t if_acmpneFunction(Frame*);
+
+    //Control
+    static uint32_t gotoOpFunction(Frame*);
+    static uint32_t jsrFunction(Frame*);
+    static uint32_t retFunction(Frame*);
+    static uint32_t tableswitchFunction(Frame*);
+    static uint32_t lookupswitchFunction(Frame*);
+    static uint32_t ireturnFunction(Frame*);
+    static uint32_t lreturnFunction(Frame*);
+    static uint32_t freturnFunction(Frame*);
+    static uint32_t dreturnFunction(Frame*);
+    static uint32_t areturnFunction(Frame*);;
+    static uint32_t returnOpFunction(Frame*);
+
+    //References
+    static uint32_t getstaticFunction(Frame*);
+    static uint32_t putstaticFunction(Frame*);
+    static uint32_t getfieldFunction(Frame*);
+    static uint32_t putfieldFunction(Frame*);
+    static uint32_t invokevirtualFunction(Frame*);
+    static uint32_t invokespecialFunction(Frame*);
+    static uint32_t invokestaticFunction(Frame*);
+    static uint32_t invokeinterfaceFunction(Frame*);
+    static uint32_t invokedynamicFunction(Frame*);
+    static uint32_t newOpFunction(Frame*);
+    static uint32_t newarrayFunction(Frame*);
+    static uint32_t anewarrayFunction(Frame*);
+    static uint32_t arraylengthFunction(Frame*);
+    static uint32_t athrowFunction(Frame*);
+    // As quatro instrucoes seguintes nao precisam ser implementadas
+    static uint32_t checkcastFunction(Frame*);
+    static uint32_t instanceofFunction(Frame*);
+    static uint32_t monitorenterFunction(Frame*);
+    static uint32_t monitorexitFunction(Frame*);
+
+    //Extended
+    static uint32_t wideFunction(Frame*);
+    static uint32_t multianewarrayFunction(Frame*);
+    static uint32_t ifnullFunction(Frame*);
+    static uint32_t ifnonnullFunction(Frame*);
+    static uint32_t goto_wFunction(Frame*);
+    static uint32_t jsr_wFunction(Frame*);
 
     //Constants
     static const uint8_t nop = 0x00;

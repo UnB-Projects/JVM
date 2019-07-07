@@ -191,7 +191,7 @@ public:
         return length;
     };
     uint16_t getNameIndex() {
-        return nameIndex; 
+        return nameIndex;
     };
     uint16_t getDescriptorIndex() {
         return descriptorIndex;

@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "AttributeInfo.hpp"
+#include "Frame.hpp"
 
 
 using namespace std;
@@ -11,11 +12,12 @@ using namespace std;
 class FieldInfo {
 private:
     uint16_t accessFlags;
-    uint16_t nameIndex;
     uint16_t descriptorIndex;
     uint16_t attributesCount;
     vector<AttributeInfo*> attributes;
 public:
+    uint16_t nameIndex;
+    JavaType staticValue;
     static const uint16_t ACC_PUBLIC = 0x0001;
     static const uint16_t ACC_PRIVATE = 0x0002;
     static const uint16_t ACC_PROTECTED = 0x0004;

@@ -5,29 +5,29 @@ string ClassPrinter::interpretClassFlags(uint16_t accessFlags) {
     ostringstream outputFlagsStream;
 
     if (accessFlags & ClassFile::ACC_PUBLIC) {
-       identifiedFlags.push_back("public"); 
+       identifiedFlags.push_back("public");
     }
     if (accessFlags & ClassFile::ACC_FINAL) {
-       identifiedFlags.push_back("final"); 
+       identifiedFlags.push_back("final");
     }
     // For ClassFile structures, 0x0020 is ACC_SUPER, which has historical significance only
     // if (accessFlags & ClassFile::ACC_SUPER) {
-    //    identifiedFlags.push_back("super"); 
+    //    identifiedFlags.push_back("super");
     // }
     if (accessFlags & ClassFile::ACC_INTERFACE) {
-       identifiedFlags.push_back("interface"); 
+       identifiedFlags.push_back("interface");
     }
     if (accessFlags & ClassFile::ACC_ABSTRACT) {
-       identifiedFlags.push_back("abstract"); 
+       identifiedFlags.push_back("abstract");
     }
     if (accessFlags & ClassFile::ACC_SYNTHETIC) {
-       identifiedFlags.push_back("synthetic"); 
+       identifiedFlags.push_back("synthetic");
     }
     if (accessFlags & ClassFile::ACC_ANNOTATION) {
-       identifiedFlags.push_back("annotation"); 
+       identifiedFlags.push_back("annotation");
     }
     if (accessFlags & ClassFile::ACC_ENUM) {
-       identifiedFlags.push_back("enum"); 
+       identifiedFlags.push_back("enum");
     }
 
     outputFlagsStream << "[";
@@ -45,40 +45,40 @@ string ClassPrinter::interpretMethodFlags(uint16_t accessFlags) {
     ostringstream outputFlagsStream;
 
     if (accessFlags & MethodInfo::ACC_PUBLIC) {
-       identifiedFlags.push_back("public"); 
+       identifiedFlags.push_back("public");
     }
     if (accessFlags & MethodInfo::ACC_PRIVATE) {
-       identifiedFlags.push_back("private"); 
+       identifiedFlags.push_back("private");
     }
     if (accessFlags & MethodInfo::ACC_PROTECTED) {
-       identifiedFlags.push_back("protected"); 
+       identifiedFlags.push_back("protected");
     }
     if (accessFlags & MethodInfo::ACC_STATIC) {
-       identifiedFlags.push_back("static"); 
+       identifiedFlags.push_back("static");
     }
     if (accessFlags & MethodInfo::ACC_FINAL) {
-       identifiedFlags.push_back("final"); 
+       identifiedFlags.push_back("final");
     }
     if (accessFlags & MethodInfo::ACC_SYNCHRONIZED) {
-       identifiedFlags.push_back("synchronized"); 
+       identifiedFlags.push_back("synchronized");
     }
     if (accessFlags & MethodInfo::ACC_BRIDGE) {
-       identifiedFlags.push_back("bridge"); 
+       identifiedFlags.push_back("bridge");
     }
     if (accessFlags & MethodInfo::ACC_VARARGS) {
-       identifiedFlags.push_back("varargs"); 
+       identifiedFlags.push_back("varargs");
     }
     if (accessFlags & MethodInfo::ACC_NATIVE) {
-       identifiedFlags.push_back("native"); 
+       identifiedFlags.push_back("native");
     }
     if (accessFlags & MethodInfo::ACC_ABSTRACT) {
-       identifiedFlags.push_back("abstract"); 
+       identifiedFlags.push_back("abstract");
     }
     if (accessFlags & MethodInfo::ACC_STRICT) {
-       identifiedFlags.push_back("strict"); 
+       identifiedFlags.push_back("strict");
     }
     if (accessFlags & MethodInfo::ACC_SYNTHETIC) {
-       identifiedFlags.push_back("synthetic"); 
+       identifiedFlags.push_back("synthetic");
     }
 
     outputFlagsStream << "[";
@@ -96,31 +96,31 @@ string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
     ostringstream outputFlagsStream;
 
     if (accessFlags & FieldInfo::ACC_PUBLIC) {
-        identifiedFlags.push_back("public"); 
+        identifiedFlags.push_back("public");
     }
     if (accessFlags & FieldInfo::ACC_PRIVATE) {
-        identifiedFlags.push_back("private"); 
+        identifiedFlags.push_back("private");
     }
     if (accessFlags & FieldInfo::ACC_PROTECTED) {
-        identifiedFlags.push_back("protected"); 
+        identifiedFlags.push_back("protected");
     }
     if (accessFlags & FieldInfo::ACC_STATIC) {
-        identifiedFlags.push_back("static"); 
+        identifiedFlags.push_back("static");
     }
     if (accessFlags & FieldInfo::ACC_FINAL) {
-        identifiedFlags.push_back("final"); 
+        identifiedFlags.push_back("final");
     }
     if (accessFlags & FieldInfo::ACC_VOLATILE) {
-        identifiedFlags.push_back("volatile"); 
+        identifiedFlags.push_back("volatile");
     }
     if (accessFlags & FieldInfo::ACC_TRANSIENT) {
-        identifiedFlags.push_back("transient"); 
+        identifiedFlags.push_back("transient");
     }
     if (accessFlags & FieldInfo::ACC_SYNTHETIC) {
-        identifiedFlags.push_back("synthetic"); 
+        identifiedFlags.push_back("synthetic");
     }
     if (accessFlags & FieldInfo::ACC_ENUM) {
-        identifiedFlags.push_back("enum"); 
+        identifiedFlags.push_back("enum");
     }
 
     outputFlagsStream << "[";
@@ -133,8 +133,9 @@ string ClassPrinter::interpretFieldFlags(uint16_t accessFlags) {
 return outputFlagsStream.str();
 }
 
-ClassPrinter::ClassPrinter(ClassFile classFile) {
+ClassPrinter::ClassPrinter(ClassFile classFile, InstructionSet * instructionSet) {
     this->classFile = classFile;
+    this->instructionSet = instructionSet;
 }
 
 void ClassPrinter::printGeneralInformation() {
@@ -186,8 +187,13 @@ void ClassPrinter::printGeneralInformation() {
     printf("Major version:       %d [%s]\n", classFile.getMajorVersion(), version.c_str());
     printf("Constant pool count: %d\n", classFile.getConstantPoolCount());
     printf("Access flags:        0x%04x %s\n", classFile.getAccessFlags(), interpretClassFlags(classFile.getAccessFlags()).c_str());
-    printf("This class:          cp_info#%d <%s>\n", classFile.getThisClass(), constantPool[classFile.getThisClass()-1]->getInfo(constantPool).first.c_str());
-    printf("Super class:         cp_info#%d <%s>\n", classFile.getSuperClass(), constantPool[classFile.getSuperClass()-1]->getInfo(constantPool).first.c_str());
+    printf("This class:          cp_info #%d <%s>\n", classFile.getThisClass(), constantPool[classFile.getThisClass()-1]->getInfo(constantPool).first.c_str());
+    if(classFile.getSuperClass() == 0) {
+        printf("Super class:         cp_info #%d <%s>\n", classFile.getSuperClass(), "invalid constant pool reference");
+    }
+    else {
+        printf("Super class:         cp_info #%d <%s>\n", classFile.getSuperClass(), constantPool[classFile.getSuperClass()-1]->getInfo(constantPool).first.c_str());
+    }
     printf("Interfaces count:    %d\n", classFile.getInterfacesCount());
     printf("Fields count:        %d\n", classFile.getFieldsCount());
     printf("Methods count:       %d\n", classFile.getMethodsCount());
@@ -213,7 +219,7 @@ void ClassPrinter::printConstantPool() {
             info = cpInfo->getInfo(constantPool);
             cout << "CONSTANT_Fieldref_info" << endl;
             cout << "Class name:    cp_info #" << cpInfo->getFieldrefInfo().class_index << " <" << info.first << ">" << endl;
-            cout << "Name and type: cp_info #" << cpInfo->getFieldrefInfo().name_and_type_index << " <" << info.second << ">"; 
+            cout << "Name and type: cp_info #" << cpInfo->getFieldrefInfo().name_and_type_index << " <" << info.second << ">";
             break;
         case CPInfo::CONSTANT_Methodref:
             info = cpInfo->getInfo(constantPool);
@@ -226,7 +232,7 @@ void ClassPrinter::printConstantPool() {
             cout << "CONSTANT_InterfaceMethodref_info" << endl;
             cout << "Class name:    cp_info #" << cpInfo->getInterfaceMethodrefInfo().class_index << " <" << info.first << ">" << endl;
             cout << "Name and type: cp_info #" << cpInfo->getInterfaceMethodrefInfo().name_and_type_index << " <" << info.second << ">";
-            break;    
+            break;
         case CPInfo::CONSTANT_String:
             info = cpInfo->getInfo(constantPool);
             cout << "CONSTANT_String_info" << endl;
@@ -298,7 +304,7 @@ void ClassPrinter::printInterfaces() {
 void ClassPrinter::printFields() {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     vector<FieldInfo*> fields = classFile.getFields();
-    
+
     cout << "******************************Fields******************************" << endl << endl;
     cout << "Displayed members---------------------------------------------" << endl << endl;
     cout << "Member count: " << classFile.getFieldsCount() << endl << endl;
@@ -332,17 +338,17 @@ void ClassPrinter::printMethods() {
         string name = constantPool[nameIndex-1]->getInfo(constantPool).first;
         string descriptor = constantPool[descriptorIndex-1]->getInfo(constantPool).first;
         uint16_t accessFlags = method->getAccessFlags();
-        
+
         cout << "[" << i << "]" << name << endl;
         cout << "Name      :   " << "cp_info #" << nameIndex << " <" << name << ">" << endl;
         cout << "Descriptor:   " << "cp_info #" << descriptorIndex << " <" << descriptor << ">" << endl;
         printf("Access flags: 0x%04X %s\n", accessFlags, interpretMethodFlags(accessFlags).c_str());
         cout << endl;
 
-        printAttributes(method->getAttributes(), method->getAttributesCount());        
+        printAttributes(method->getAttributes(), method->getAttributesCount());
     }
-    
-    
+
+
 }
 
 void ClassPrinter::printSourceFileInfo(SourceFileAttribute* attribute) {
@@ -382,18 +388,15 @@ void ClassPrinter::printCodeExceptionTableInfo(ExceptionHandler* exceptionTable,
 void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     vector<CPInfo*> constantPool = classFile.getConstantPool();
     uint8_t* bytecode = attribute->getCode();
-    InstructionSet instructionsSet;
-    printf("chegou\n\n\n");
 
-    uint32_t instructionsCount = instructionsSet.getInstructionsCount();
-    Instruction* instructions = instructionsSet.getInstructionSet();
+    uint32_t instructionsCount = instructionSet->getInstructionsCount();
+    Instruction* instructions = instructionSet->getInstructionSet();
     cout << "Bytecode-----------" << endl;
     for (int i = 0; i < attribute->getCodeLength(); i++) {
         uint8_t opcode = bytecode[i];
         Instruction instruction = instructions[opcode];
 
         cout << i << ": " << instruction.getMnemonic() << " ";
-
 
         if (opcode == Instruction::wide) {
             uint8_t modifiedOpcode = bytecode[++i];
@@ -446,7 +449,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
 
             cout << low << " to " << high << endl;
 
-            for (int j = 0; j < high-low+1; j++) {
+            for (int j = low; j <= high; j++) {
                 uint8_t jumpByte1 = bytecode[i++];
                 uint8_t jumpByte2 = bytecode[i++];
                 uint8_t jumpByte3 = bytecode[i++];
@@ -454,7 +457,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 int32_t jump = (jumpByte1 << 24) | (jumpByte2 << 16) | (jumpByte3 << 8) | jumpByte4;
 
                 string sign = jump > 0 ? "+" : "";
-                printf("\t%d:    %d (%s%d)\n", j+1, baseAddress+jump, sign.c_str(), jump);
+                printf("\t%d:    %d (%s%d)\n", j, baseAddress+jump, sign.c_str(), jump);
             }
             string sign = defaultValue > 0 ? "+" : "";
             printf("\tdefault:    %d (%s%d)\n", baseAddress+defaultValue, sign.c_str(), defaultValue);
@@ -510,8 +513,11 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 uint8_t index = byte;
                 cout << "#" << +index << " <" << constantPool[index-1]->getInfo(constantPool).first << ">" << endl;
             }
-            else if((opcode == Instruction::bipush) ||
-                    (opcode >= Instruction::iload && opcode <= Instruction::aload) || 
+            else if ((opcode == Instruction::bipush)) {
+                int32_t value = (int8_t)byte;
+                cout << value << endl;
+            }
+            else if((opcode >= Instruction::iload && opcode <= Instruction::aload) ||
                     (opcode >= Instruction::istore && opcode <= Instruction::astore) ||
                     (opcode == Instruction::ret) ) {
                 uint8_t index = byte;
@@ -555,7 +561,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                 cout << index << " (" << sign << offset << ")" << endl;
             }
             else if ((opcode >= Instruction::getstatic && opcode <= Instruction::invokestatic)) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 string methodName = constantPool[index-1]->getInfo(constantPool).first;
                 string nameAndType = constantPool[index-1]->getInfo(constantPool).second;
                 int j = 0;
@@ -572,7 +578,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
                      (opcode == Instruction::anewarray) ||
                      (opcode == Instruction::checkcast) ||
                      (opcode == Instruction::instanceof)) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 string className = constantPool[index-1]->getInfo(constantPool).first;
                 cout << "#" << index << " <" << className << ">" << endl;
             }
@@ -582,7 +588,7 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
             uint8_t byte2 = bytecode[++i];
             uint8_t byte3 = bytecode[++i];
             if (opcode == Instruction::multianewarray) {
-                int16_t index = ((int16_t)byte1 << 8) | byte2;
+                uint16_t index = ((uint16_t)byte1 << 8) | byte2;
                 uint8_t dimensions = byte3;
                 CPInfo* info = constantPool[index-1];
 
@@ -624,11 +630,11 @@ void ClassPrinter::printCodeInfo(CodeAttribute* attribute) {
     cout << "Max Stack:               " << attribute->getMaxStack() << endl;
     cout << "Maximum local variables: " << attribute->getMaxLocals() << endl;
     cout << "Code Length:             " << attribute->getCodeLength() << endl;
-    
+
     //Printa os atributos do Code Attribute
     printAttributes(attribute->getAttributes(), attribute->getAttributesCount());
 
-    
+
 }
 
 void ClassPrinter::printLineNumberTableInfo(LineNumberTableAttribute* attribute) {
@@ -670,7 +676,7 @@ void ClassPrinter::printExceptionsInfo(ExceptionsAttribute* attribute) {
     for (int i = 0; i < attribute->getNumberOfExceptions(); i++) {
         uint16_t exceptionIndex = exceptionTable[i];
         string verbose = constantPool[exceptionIndex-1]->getInfo(constantPool).first;
-        
+
         printf("%d\tcp_info #%d\t%s\n", i, exceptionIndex, verbose.c_str());
     }
 }

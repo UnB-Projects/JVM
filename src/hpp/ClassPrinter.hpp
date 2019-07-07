@@ -2,7 +2,7 @@
 #define ___CLASSPRINTER_H___
 
 #if defined(_WIN32)										/*definicoes para limpar a tela e promover ilusao de movimento*/
-	#define CLEAR system("cls");						
+	#define CLEAR system("cls");
 #else
 	#define CLEAR system("clear");
 #endif
@@ -20,6 +20,7 @@ using namespace std;
 class ClassPrinter {
 private:
     ClassFile classFile;
+    InstructionSet * instructionSet;
     string interpretClassFlags(uint16_t);
     string interpretMethodFlags(uint16_t);
     string interpretFieldFlags(uint16_t);
@@ -41,7 +42,7 @@ private:
     void printInnerClassesInfo(InnerClassesAttribute*);
 
 public:
-    ClassPrinter(ClassFile classFile);
+    ClassPrinter(ClassFile classFile, InstructionSet * instructionSet);
     void print();
     //nao mudei o nome da funcao de baixo, dps nois ve como fica
     string Flag_names(int flag_byte, int parametro);

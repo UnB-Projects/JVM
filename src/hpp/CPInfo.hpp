@@ -142,7 +142,7 @@ public:
     ConstantFieldrefInfo getFieldrefInfo() {
         return this->CONSTANT_Fieldref_info;
     }
-    
+
     ConstantMethodrefInfo getMethodrefInfo() {
         return this->CONSTANT_Methodref_info;
     }
