@@ -1,15 +1,36 @@
+/** @file AttributeInfo.cpp
+ *  @brief Métodos com o objetivo de adquirir as informações dos atributos do arquivo .class 
+ *  @bug No known bugs.
+ */
 #include "../hpp/AttributeInfo.hpp"
 
+
+/** @class ConstantValueAttribute::read
+ *  @brief Método ler os valores das constantes dos atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return
+ */
 void ConstantValueAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
     constantValueIndex = twoByteReader.byteCatch(fp);
 }
+
+/** @class LineNumber::read
+ *  @brief Método visando ler os valores do LineNumber
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void LineNumber::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
     startPC = twoByteReader.byteCatch(fp);
     lineNumber = twoByteReader.byteCatch(fp);
 }
+/** @class LineNumber::read
+ *  @brief Método visando ler os valores da tabela de atributos do LineNumber
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void LineNumberTableAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
@@ -20,6 +41,11 @@ void LineNumberTableAttribute::read(FILE *fp) {
         lineNumberTable[i].read(fp);
     }
 }
+/** @class ExceptionHandler::read
+ *  @brief Método que visa armazenar os valores das exceções
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void ExceptionHandler::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
@@ -29,6 +55,11 @@ void ExceptionHandler::read(FILE *fp) {
     handlerPC = twoByteReader.byteCatch(fp);
     catchType = twoByteReader.byteCatch(fp);
 }
+/** @class CodeAttribute::read
+ *  @brief Método que visa armazenar os valores dos code dos atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPool) {
     ByteReader<uint8_t> oneByteReader;
@@ -57,6 +88,11 @@ void CodeAttribute::read(FILE *fp, vector<CPInfo*> constantPool) {
         attributes[i].read(fp, constantPool);
     }
 }
+/** @class ClassInfo::read
+ *  @brief Método que visa armazenar os valores das informações das classes
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void ClassInfo::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
@@ -65,6 +101,11 @@ void ClassInfo::read(FILE * fp) {
     innerNameIndex = twoByteReader.byteCatch(fp);
     innerClassAccessFlags = twoByteReader.byteCatch(fp);
 }
+/** @class InnerClassesAttribute::read
+ *  @brief Método que visa armazenar os valores do InnerClassesAttribute
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void InnerClassesAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
@@ -75,6 +116,11 @@ void InnerClassesAttribute::read(FILE *fp) {
         classes[i].read(fp);
     }   
 }
+/** @class ExceptionsAttribute::read
+ *  @brief Método que visa armazenar os valores das exceções dos atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 
 void ExceptionsAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
@@ -85,6 +131,11 @@ void ExceptionsAttribute::read(FILE *fp) {
     }
 }
 
+/** @class ExceptionsAttribute::read
+ *  @brief Método que visa armazenar os valores do SourceFileAttribute
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 void SourceFileAttribute::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
     sourcefileIndex = twoByteReader.byteCatch(fp);
@@ -94,6 +145,12 @@ void SourceFileAttribute::read(FILE * fp) {
 //     //TODO
 // }
 
+
+/** @class LocalVariable::read
+ *  @brief Método que visa armazenar os valores das variáveis locais
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 void LocalVariable::read(FILE * fp) {
     ByteReader<uint16_t> twoByteReader;
 
@@ -104,6 +161,11 @@ void LocalVariable::read(FILE * fp) {
     index = twoByteReader.byteCatch(fp);
 }
 
+/** @class LocalVariableTableAttribute::read
+ *  @brief Método que visa armazenar os valores das variáveis locais da tabela de atributos
+ *  @param fp ponteiro para o arquivo .class
+ *  @return 
+ */
 void LocalVariableTableAttribute::read(FILE *fp) {
     ByteReader<uint16_t> twoByteReader;
     localVariableTableLength = twoByteReader.byteCatch(fp);
@@ -115,6 +177,11 @@ void LocalVariableTableAttribute::read(FILE *fp) {
     }
 }
 
+/** @class AttributeInfo::read
+ *  @brief Método que visa armazenar os valores das informações dos atributos
+ *  @param fp ponteiro para o arquivo .class @param constantPool vetor do tipo CPInfo
+ *  @return 
+ */
 void AttributeInfo::read(FILE * fp, std::vector<CPInfo *> constantPool){
     CPInfo* cpInfo;
     ByteReader<uint8_t> oneByteReader;
