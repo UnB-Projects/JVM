@@ -1,3 +1,7 @@
+/** @file Frame.cpp
+ *  @brief Método para a criação do frame
+ *  @bug No known bugs.
+ */
 #include "../hpp/Frame.hpp"
 
 // Frame::Frame(vector<JavaType> localVariables, stack<JavaType> operandStack, vector<CPInfo*> constantPool) {
@@ -7,6 +11,11 @@
 //     this->localPC = 0;
 // }
 
+/** @fn Frame::Frame
+ *  @brief Construtor
+ *  @param constantPool do tipo CPInfo @param method do tipo MethodInfo @param jvmStack pilha do tipo Frame
+ *  @return
+ */
 Frame::Frame(vector<CPInfo*> constantPool, MethodInfo* method, stack<Frame>* jvmStack) {
     uint16_t attributesCount = method->getAttributesCount();
     AttributeInfo* attributes = method->getAttributes();

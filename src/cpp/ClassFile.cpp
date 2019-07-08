@@ -4,7 +4,7 @@
  */
 #include "../hpp/ClassFile.hpp"
 
-/** @class ClassFile::ClassFile
+/** @fn ClassFile::ClassFile
  *  @brief Método apenas para inicializar na main
  *  @param fp ponteiro para o arquivo .class
  *  @return

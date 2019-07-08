@@ -83,25 +83,86 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classExecutionEngine-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ExecutionEngine Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Classe que contém a estrutura para o interpretador funcionar;.  
+ <a href="classExecutionEngine.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="ExecutionEngine_8hpp_source.html">ExecutionEngine.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExecutionEngine_1_1execute.html">execute</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método com o objetivo de executar cada frame que está guardado na pilha.  <a href="classExecutionEngine_1_1execute.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExecutionEngine_1_1findMainMethod.html">findMainMethod</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método com o objetivo de encontrar a função main, já que é por ela que começa a execução do interpretador.  <a href="classExecutionEngine_1_1findMainMethod.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a001eeecb7503b7c065a1856621331d48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a001eeecb7503b7c065a1856621331d48"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ExecutionEngine</b> (<a class="el" href="classClassFile.html">ClassFile</a> *, <a class="el" href="classMethodArea.html">MethodArea</a> *, <a class="el" href="classInstructionSet.html">InstructionSet</a> *)</td></tr>
+<tr class="memitem:a001eeecb7503b7c065a1856621331d48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classExecutionEngine.html#a001eeecb7503b7c065a1856621331d48">ExecutionEngine</a> (<a class="el" href="classClassFile.html">ClassFile</a> *, <a class="el" href="classMethodArea.html">MethodArea</a> *, <a class="el" href="classInstructionSet.html">InstructionSet</a> *)</td></tr>
+<tr class="memdesc:a001eeecb7503b7c065a1856621331d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor.  <a href="#a001eeecb7503b7c065a1856621331d48">More...</a><br /></td></tr>
 <tr class="separator:a001eeecb7503b7c065a1856621331d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae94b5187f2d6b92b1ca162b4a040235f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae94b5187f2d6b92b1ca162b4a040235f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> ()</td></tr>
 <tr class="separator:ae94b5187f2d6b92b1ca162b4a040235f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Classe que contém a estrutura para o interpretador funcionar;. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a001eeecb7503b7c065a1856621331d48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ExecutionEngine::ExecutionEngine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classClassFile.html">ClassFile</a> *&#160;</td>
+          <td class="paramname"><em>classFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classMethodArea.html">MethodArea</a> *&#160;</td>
+          <td class="paramname"><em>methodArea</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classInstructionSet.html">InstructionSet</a> *&#160;</td>
+          <td class="paramname"><em>instructionSet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construtor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">classFile</td><td>do tipo <a class="el" href="classClassFile.html" title="Classe que contém toda a estrutura do .class. ">ClassFile</a> </td></tr>
+    <tr><td class="paramname">methodArea</td><td>do tipo <a class="el" href="classMethodArea.html">MethodArea</a> </td></tr>
+    <tr><td class="paramname">instructionSet</td><td><a class="el" href="classInstructionSet.html">InstructionSet</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/hpp/<a class="el" href="ExecutionEngine_8hpp_source.html">ExecutionEngine.hpp</a></li>
-<li>/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/ExecutionEngine.cpp</li>
+<li>/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/<a class="el" href="ExecutionEngine_8cpp.html">ExecutionEngine.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

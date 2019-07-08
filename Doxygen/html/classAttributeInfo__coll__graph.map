@@ -1,9 +1,9 @@
 <map id="AttributeInfo" name="AttributeInfo">
 <area shape="rect" id="node2" href="$classExceptionsAttribute.html" title="ExceptionsAttribute" alt="" coords="28,5,164,32"/>
 <area shape="rect" id="node3" href="$classSourceFileAttribute.html" title="Classe que contém as informações do index do SourceFile. " alt="" coords="29,56,163,83"/>
-<area shape="rect" id="node4" href="$classLocalVariableTableAttribute.html" title="LocalVariableTableAttribute" alt="" coords="5,107,187,133"/>
+<area shape="rect" id="node4" href="$classLocalVariableTableAttribute.html" title="Classe que contém as variáves locais na tabela de atributos. " alt="" coords="5,107,187,133"/>
 <area shape="rect" id="node5" href="$classInnerClassesAttribute.html" title="Classe que contém as informações dos atributos das classes. " alt="" coords="22,157,170,184"/>
 <area shape="rect" id="node6" href="$classCodeAttribute.html" title="Classe que consiste em armazenar as informações dos atributos. " alt="" coords="45,208,147,235"/>
 <area shape="rect" id="node7" href="$classConstantValueAttribute.html" title="Classe que consiste em armazenar as informações dos index referentes aos atributos. " alt="" coords="17,259,175,285"/>
-<area shape="rect" id="node8" href="$classLineNumberTableAttribute.html" title="LineNumberTableAttribute" alt="" coords="9,309,183,336"/>
+<area shape="rect" id="node8" href="$classLineNumberTableAttribute.html" title="Classe que contém as informações LineNumberTableAttribute contendo o tamanho da LineNumberTable e um ..." alt="" coords="9,309,183,336"/>
 </map>

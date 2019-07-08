@@ -1,5 +1,5 @@
 /** @file ExecutionEngine.hpp
- *  @brief Contém toda a estrutura para a exxecução do interpretador
+ *  @brief Contém toda a estrutura para a execução do interpretador
  *  @bug No known bugs.
  */
 #ifndef EXECUTION_ENGINE_H_INCLUDED

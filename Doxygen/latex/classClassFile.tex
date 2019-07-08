@@ -1,8 +1,58 @@
 \hypertarget{classClassFile}{}\section{Class\+File Class Reference}
 \label{classClassFile}\index{Class\+File@{Class\+File}}
+
+
+Classe que contém toda a estrutura do .class.  
+
+
+
+
+{\ttfamily \#include $<$Class\+File.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classClassFile_1_1ClassFile}{Class\+File}
+\begin{DoxyCompactList}\small\item\em Método para verificar se o inicio do Magic\+Number é 0x\+C\+A\+F\+E\+B\+A\+BE, caso contrário mostra erro. Além de setar todos os valores adquiridos das informações retiradas do .class. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setAccessFlags}{set\+Access\+Flags}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor do access\+Flag. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setAttributes}{set\+Attributes}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor dos atributos. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setAttributesCount}{set\+Attributes\+Count}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor da quantidade de atributos. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setConstantPool}{set\+Constant\+Pool}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor das Constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setConstantPoolCount}{set\+Constant\+Pool\+Count}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor do Quantidade de Constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setFields}{set\+Fields}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor das fields. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setFieldsCount}{set\+Fields\+Count}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor da quantidade de fields. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setInterfaces}{set\+Interfaces}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor das interfaces. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setInterfacesCount}{set\+Interfaces\+Count}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor da quantidade de Interfaces. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setMagic}{set\+Magic}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor do Magic. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setMajorVersion}{set\+Major\+Version}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor de Major\+Version. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setMethods}{set\+Methods}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor dos métodos. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setMethodsCount}{set\+Methods\+Count}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor da quantidade de métodos. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setMinor}{set\+Minor}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor do Minor. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setSuperClass}{set\+Super\+Class}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor de Super\+Class. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1setThisClass}{set\+This\+Class}
+\begin{DoxyCompactList}\small\item\em Método que armazena o valor do This\+Class. \end{DoxyCompactList}\item 
+class \hyperlink{classClassFile_1_1~ClassFile}{$\sim$\+Class\+File}
+\begin{DoxyCompactList}\small\item\em Destrutor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classClassFile_a47669d90346c9fa0db30ae582c74a199}{Class\+File} ()
+\begin{DoxyCompactList}\small\item\em Método apenas para inicializar na main. \end{DoxyCompactList}\item 
 {\bfseries Class\+File} (F\+I\+LE $\ast$fp)\hypertarget{classClassFile_aed7c4bc94d4d7aff8785a262befa19fc}{}\label{classClassFile_aed7c4bc94d4d7aff8785a262befa19fc}
 
 \item 
@@ -86,7 +136,36 @@ static const uint16\+\_\+t {\bfseries A\+C\+C\+\_\+\+E\+N\+UM} = 0x4000\hypertar
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Classe que contém toda a estrutura do .class. 
+
+\begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000017}{Bug}]No known bugs. \end{DoxyRefDesc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Class\+File@{Class\+File}!Class\+File@{Class\+File}}
+\index{Class\+File@{Class\+File}!Class\+File@{Class\+File}}
+\subsubsection[{\texorpdfstring{Class\+File()}{ClassFile()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Class\+File\+::\+Class\+File} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classClassFile_a47669d90346c9fa0db30ae582c74a199}{}\label{classClassFile_a47669d90346c9fa0db30ae582c74a199}
+
+
+Método apenas para inicializar na main. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em fp} & ponteiro para o arquivo .class \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/Class\+File.\+hpp\item 
-/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/Class\+File.\+cpp\end{DoxyCompactItemize}
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/\hyperlink{ClassFile_8hpp}{Class\+File.\+hpp}\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/\hyperlink{ClassFile_8cpp}{Class\+File.\+cpp}\end{DoxyCompactItemize}

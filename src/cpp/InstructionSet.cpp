@@ -1,7 +1,16 @@
+/** @file InstructionSet.cpp
+ *  @brief Métodos com o objetivo construir a instrução a ser executada 
+ *  @bug No known bugs.
+ */
 #include "../hpp/InstructionSet.hpp"
 
 ClassLoader* Instruction::classLoader;
 
+/** @fn InstructionSet::InstructionSet
+ *  @brief Construtor do instructionSet
+ *  @param classLoader do tipo ClassLoader
+ *  @return 
+ */
 InstructionSet::InstructionSet(ClassLoader * classLoader) {
     this->instructionsCount = 256;
     Instruction::setClassLoader(classLoader);

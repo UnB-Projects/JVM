@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['javatype',['JavaType',['../structJavaType.html',1,'']]],
-  ['javavirtualmachinethread',['JavaVirtualMachineThread',['../classJavaVirtualMachineThread.html',1,'']]]
+  ['innerclassesattribute',['InnerClassesAttribute',['../classInnerClassesAttribute.html',1,'']]],
+  ['instruction',['Instruction',['../classInstruction.html',1,'']]],
+  ['instructionset',['InstructionSet',['../classInstructionSet.html',1,'']]],
+  ['interfaceinfo',['InterfaceInfo',['../classInterfaceInfo.html',1,'']]],
+  ['interpretclassflags',['interpretClassFlags',['../classClassPrinter_1_1interpretClassFlags.html',1,'ClassPrinter']]],
+  ['interpretfieldflags',['interpretFieldFlags',['../classClassPrinter_1_1interpretFieldFlags.html',1,'ClassPrinter']]],
+  ['interpretmethodflags',['interpretMethodFlags',['../classClassPrinter_1_1interpretMethodFlags.html',1,'ClassPrinter']]]
 ];

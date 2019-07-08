@@ -1,3 +1,7 @@
+/** @file InstructionSet.hpp
+ *  @brief Objetivo de organizar a instrução a ser pega para a execução;
+ *  @bug No known bugs.
+ */
 #ifndef INSTRUCTION_SET_H
 #define INSTRUCTION_SET_H
 

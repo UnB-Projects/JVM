@@ -1,3 +1,7 @@
+/** @file Instruction.hpp
+ *  @brief Objetivo de criar uma instrução para a execução do interpretador
+ *  @bug No known bugs.
+ */
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
@@ -8,7 +12,9 @@
 #include "ClassLoader.hpp"
 
 using namespace std;
-
+/** @class Instruction
+*   @brief Classe que contém a estrutura de uma instrução a ser executada pelo interpretador; 
+*/
 class Instruction {
 private:
     string mnemonic;

@@ -1,3 +1,7 @@
+/** @file FieldInfo.hpp
+ *  @brief Contém toda a estrutura das informações das fields
+ *  @bug No known bugs.
+ */
 #ifndef FIELDINFO_H_INCLUDED
 #define FIELDINFO_H_INCLUDED
 
@@ -8,7 +12,9 @@
 
 
 using namespace std;
-
+/** @class FieldInfo
+*   @brief Classe que contém a estrutura de uma field; 
+*/
 class FieldInfo {
 private:
     uint16_t accessFlags;

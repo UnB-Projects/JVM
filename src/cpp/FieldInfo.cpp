@@ -1,3 +1,7 @@
+/** @file FieldInfo.cpp
+ *  @brief Métodos com o objetivo de armazenar toda a estrutura do FieldInfo
+ *  @bug No known bugs.
+ */
 #include "../hpp/FieldInfo.hpp"
 
 // FieldInfo::~FieldInfo() {   
@@ -6,6 +10,11 @@
 //     }
 // }
 
+/** @class FieldInfo::read
+ *  @brief Método com o objetivo de fazer a leitura das fields do .class
+ *  @param 
+ *  @return 
+ */
 void FieldInfo::read(FILE *fp, vector<CPInfo*> constantPool){
     ByteReader<uint16_t> twoByteReader;
 

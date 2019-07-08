@@ -1,3 +1,7 @@
+/** @file Frame.hpp
+ *  @brief Objetivo de criar um frame para a execução do interpretador
+ *  @bug No known bugs.
+ */
 #ifndef FRAME_H_INCLUDED
 #define FRAME_H_INCLUDED
 
@@ -28,6 +32,9 @@ struct JavaType {
     };
 };
 
+/** @class Frame
+ *  @brief Classe que contém todos os atributos para a criação de um frame
+ */
 class Frame {
 private:
     MethodInfo* method;

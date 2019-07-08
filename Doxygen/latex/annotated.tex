@@ -1,10 +1,12 @@
 \section{Class List}
 Here are the classes, structs, unions and interfaces with brief descriptions\+:\begin{DoxyCompactList}
-\item\contentsline{section}{\hyperlink{classAttributeInfo}{Attribute\+Info} }{\pageref{classAttributeInfo}}{}
-\item\contentsline{section}{\hyperlink{classByteReader}{Byte\+Reader$<$ T $>$} }{\pageref{classByteReader}}{}
-\item\contentsline{section}{\hyperlink{classClassFile}{Class\+File} }{\pageref{classClassFile}}{}
+\item\contentsline{section}{\hyperlink{classAttributeInfo}{Attribute\+Info} \\*Classe que contém as informações dos atributos }{\pageref{classAttributeInfo}}{}
+\item\contentsline{section}{\hyperlink{classByteReader}{Byte\+Reader$<$ T $>$} \\*Contém o método byte\+Catch -\/ busca fazer a leitura dos bytes do .class; }{\pageref{classByteReader}}{}
+\item\contentsline{section}{\hyperlink{classByteReader_3_01T_01_4}{Byte\+Reader$<$ T $>$} \\*Byte\+Catch(\+F\+I\+L\+E $\ast$ fp) busca o binário correspondendo ao tipo T }{\pageref{classByteReader_3_01T_01_4}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1ClassFile}{Class\+File\+::\+Class\+File} \\*Método para verificar se o inicio do Magic\+Number é 0x\+C\+A\+F\+E\+B\+A\+BE, caso contrário mostra erro. Além de setar todos os valores adquiridos das informações retiradas do .class }{\pageref{classClassFile_1_1ClassFile}}{}
+\item\contentsline{section}{\hyperlink{classClassFile}{Class\+File} \\*Classe que contém toda a estrutura do .class }{\pageref{classClassFile}}{}
 \item\contentsline{section}{\hyperlink{classClassInfo}{Class\+Info} \\*Classe que contém as informações gerais das classes }{\pageref{classClassInfo}}{}
-\item\contentsline{section}{\hyperlink{classClassLoader}{Class\+Loader} }{\pageref{classClassLoader}}{}
+\item\contentsline{section}{\hyperlink{classClassLoader}{Class\+Loader} \\*Classe que armazena o caminho para o arquivo .class e separa o \hyperlink{classMethodArea}{Method\+Area}; }{\pageref{classClassLoader}}{}
 \item\contentsline{section}{\hyperlink{classClassPrinter}{Class\+Printer} \\*Classe que contém a chamada de todos os métodos que visam mostrar na tela os campos do class\+File; }{\pageref{classClassPrinter}}{}
 \item\contentsline{section}{\hyperlink{classCodeAttribute}{Code\+Attribute} \\*Classe que consiste em armazenar as informações dos atributos }{\pageref{classCodeAttribute}}{}
 \item\contentsline{section}{\hyperlink{structConstantClassInfo}{Constant\+Class\+Info} }{\pageref{structConstantClassInfo}}{}
@@ -23,15 +25,30 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\hyperlink{structConstantUTF8Info}{Constant\+U\+T\+F8\+Info} }{\pageref{structConstantUTF8Info}}{}
 \item\contentsline{section}{\hyperlink{classConstantValueAttribute}{Constant\+Value\+Attribute} \\*Classe que consiste em armazenar as informações dos index referentes aos atributos }{\pageref{classConstantValueAttribute}}{}
 \item\contentsline{section}{\hyperlink{classCPInfo}{C\+P\+Info} }{\pageref{classCPInfo}}{}
+\item\contentsline{section}{\hyperlink{classCpInfo}{Cp\+Info} \\*Classe contém tag(uint8) e union que será um tipo diferente dependendo de qual tag que será passada; }{\pageref{classCpInfo}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1escapeString}{C\+P\+Info\+::escape\+String} \\*Método que visa trasnformar o valor da string passada }{\pageref{classCPInfo_1_1escapeString}}{}
 \item\contentsline{section}{\hyperlink{classExceptionAttribute}{Exception\+Attribute} \\*Classe contém number\+Of\+Exceptions e ponteiro para exception\+Index\+Table -\/ todos uint16; }{\pageref{classExceptionAttribute}}{}
 \item\contentsline{section}{\hyperlink{classExceptionHandler}{Exception\+Handler} \\*Classe que consiste em armazenar as informações das exceções }{\pageref{classExceptionHandler}}{}
 \item\contentsline{section}{\hyperlink{classExceptionsAttribute}{Exceptions\+Attribute} }{\pageref{classExceptionsAttribute}}{}
-\item\contentsline{section}{\hyperlink{classExecutionEngine}{Execution\+Engine} }{\pageref{classExecutionEngine}}{}
-\item\contentsline{section}{\hyperlink{classFieldInfo}{Field\+Info} }{\pageref{classFieldInfo}}{}
-\item\contentsline{section}{\hyperlink{classFrame}{Frame} }{\pageref{classFrame}}{}
+\item\contentsline{section}{\hyperlink{classExecutionEngine_1_1execute}{Execution\+Engine\+::execute} \\*Método com o objetivo de executar cada frame que está guardado na pilha }{\pageref{classExecutionEngine_1_1execute}}{}
+\item\contentsline{section}{\hyperlink{classExecutionEngine}{Execution\+Engine} \\*Classe que contém a estrutura para o interpretador funcionar; }{\pageref{classExecutionEngine}}{}
+\item\contentsline{section}{\hyperlink{classFieldInfo}{Field\+Info} \\*Classe que contém a estrutura de uma field; }{\pageref{classFieldInfo}}{}
+\item\contentsline{section}{\hyperlink{classExecutionEngine_1_1findMainMethod}{Execution\+Engine\+::find\+Main\+Method} \\*Método com o objetivo de encontrar a função main, já que é por ela que começa a execução do interpretador }{\pageref{classExecutionEngine_1_1findMainMethod}}{}
+\item\contentsline{section}{\hyperlink{classFrame}{Frame} \\*Classe que contém todos os atributos para a criação de um frame }{\pageref{classFrame}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getClassUTF8}{C\+P\+Info\+::get\+Class\+U\+T\+F8} \\*Método que visa nome da classe de contant\+Pool }{\pageref{classCPInfo_1_1getClassUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getDoubleNumber}{C\+P\+Info\+::get\+Double\+Number} \\*Método que visa armazenar o valor de um double }{\pageref{classCPInfo_1_1getDoubleNumber}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getFieldrefUTF8}{C\+P\+Info\+::get\+Fieldref\+U\+T\+F8} \\*Método que visa armazenar o valor em U\+T\+F8 das fields da constant\+Pool }{\pageref{classCPInfo_1_1getFieldrefUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getFloatNumber}{C\+P\+Info\+::get\+Float\+Number} \\*Método que visa armazenar um valor de float }{\pageref{classCPInfo_1_1getFloatNumber}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getInfo}{C\+P\+Info\+::get\+Info} \\*Método que visa armazenar o valor do par de acordo com a tag passada }{\pageref{classCPInfo_1_1getInfo}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getInterfaceMethodrefUTF8}{C\+P\+Info\+::get\+Interface\+Methodref\+U\+T\+F8} \\*Método que visa armazenar o valor em U\+T\+F8 das intefaces dos metodos da constant\+Pool }{\pageref{classCPInfo_1_1getInterfaceMethodrefUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getLongNumber}{C\+P\+Info\+::get\+Long\+Number} \\*Método que visa armazenar o valor de um long }{\pageref{classCPInfo_1_1getLongNumber}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getMethodrefUTF8}{C\+P\+Info\+::get\+Methodref\+U\+T\+F8} \\*Método que visa armazenar o valor em U\+T\+F8 dos methods da constant\+Pool }{\pageref{classCPInfo_1_1getMethodrefUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getNameAndTypeUTF8}{C\+P\+Info\+::get\+Name\+And\+Type\+U\+T\+F8} \\*Método que visa armazenar o valor em U\+T\+F8 do nome e tipo da constant\+Pool }{\pageref{classCPInfo_1_1getNameAndTypeUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getStringUTF8}{C\+P\+Info\+::get\+String\+U\+T\+F8} \\*Método que visa armazenar o valor da string da constant\+Pool }{\pageref{classCPInfo_1_1getStringUTF8}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1getUTF8}{C\+P\+Info\+::get\+U\+T\+F8} \\*Método que visa pegar a string U\+T\+F-\/8 }{\pageref{classCPInfo_1_1getUTF8}}{}
 \item\contentsline{section}{\hyperlink{classHeap}{Heap} }{\pageref{classHeap}}{}
 \item\contentsline{section}{\hyperlink{classInnerClassesAttribute}{Inner\+Classes\+Attribute} \\*Classe que contém as informações dos atributos das classes }{\pageref{classInnerClassesAttribute}}{}
-\item\contentsline{section}{\hyperlink{classInstruction}{Instruction} }{\pageref{classInstruction}}{}
+\item\contentsline{section}{\hyperlink{classInstruction}{Instruction} \\*Classe que contém a estrutura de uma instrução a ser executada pelo interpretador; }{\pageref{classInstruction}}{}
 \item\contentsline{section}{\hyperlink{classInstructionSet}{Instruction\+Set} }{\pageref{classInstructionSet}}{}
 \item\contentsline{section}{\hyperlink{classInterfaceInfo}{Interface\+Info} }{\pageref{classInterfaceInfo}}{}
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1interpretClassFlags}{Class\+Printer\+::interpret\+Class\+Flags} \\*Método para identificar a descrição da flag passada }{\pageref{classClassPrinter_1_1interpretClassFlags}}{}
@@ -39,10 +56,12 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1interpretMethodFlags}{Class\+Printer\+::interpret\+Method\+Flags} \\*Método para identificar a descrição da flag passada }{\pageref{classClassPrinter_1_1interpretMethodFlags}}{}
 \item\contentsline{section}{\hyperlink{structJavaType}{Java\+Type} }{\pageref{structJavaType}}{}
 \item\contentsline{section}{\hyperlink{classJavaVirtualMachineThread}{Java\+Virtual\+Machine\+Thread} }{\pageref{classJavaVirtualMachineThread}}{}
-\item\contentsline{section}{\hyperlink{classLineNumber}{Line\+Number} }{\pageref{classLineNumber}}{}
-\item\contentsline{section}{\hyperlink{classLineNumberTableAttribute}{Line\+Number\+Table\+Attribute} }{\pageref{classLineNumberTableAttribute}}{}
-\item\contentsline{section}{\hyperlink{classLocalVariable}{Local\+Variable} }{\pageref{classLocalVariable}}{}
-\item\contentsline{section}{\hyperlink{classLocalVariableTableAttribute}{Local\+Variable\+Table\+Attribute} }{\pageref{classLocalVariableTableAttribute}}{}
+\item\contentsline{section}{\hyperlink{classLineNumber}{Line\+Number} \\*Classe que contém as informações \hyperlink{classLineNumber}{Line\+Number} contendo start\+PC e o line\+Number }{\pageref{classLineNumber}}{}
+\item\contentsline{section}{\hyperlink{classLineNumberTableAttribute}{Line\+Number\+Table\+Attribute} \\*Classe que contém as informações \hyperlink{classLineNumberTableAttribute}{Line\+Number\+Table\+Attribute} contendo o tamanho da Line\+Number\+Table e um ponteiro do tipo \hyperlink{classLineNumber}{Line\+Number} }{\pageref{classLineNumberTableAttribute}}{}
+\item\contentsline{section}{\hyperlink{classClassLoader_1_1loadClassFile}{Class\+Loader\+::load\+Class\+File} \\*Método que visa carregar o arquivo .class }{\pageref{classClassLoader_1_1loadClassFile}}{}
+\item\contentsline{section}{\hyperlink{classClassLoader_1_1loadSuperClasses}{Class\+Loader\+::load\+Super\+Classes} \\*Método que visa carregar as super\+Classes o arquivo .class }{\pageref{classClassLoader_1_1loadSuperClasses}}{}
+\item\contentsline{section}{\hyperlink{classLocalVariable}{Local\+Variable} \\*Classe que contém as características das variáveis locais; }{\pageref{classLocalVariable}}{}
+\item\contentsline{section}{\hyperlink{classLocalVariableTableAttribute}{Local\+Variable\+Table\+Attribute} \\*Classe que contém as variáves locais na tabela de atributos }{\pageref{classLocalVariableTableAttribute}}{}
 \item\contentsline{section}{\hyperlink{classMethodArea}{Method\+Area} }{\pageref{classMethodArea}}{}
 \item\contentsline{section}{\hyperlink{classMethodInfo}{Method\+Info} }{\pageref{classMethodInfo}}{}
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1printAttributes}{Class\+Printer\+::print\+Attributes} \\*Método que visa mostrar na tela os atributos contidos no .class }{\pageref{classClassPrinter_1_1printAttributes}}{}
@@ -60,5 +79,35 @@ Here are the classes, structs, unions and interfaces with brief descriptions\+:\
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1printLineNumberTableInfo}{Class\+Printer\+::print\+Line\+Number\+Table\+Info} \\*Método que visa mostrar na tela o index, o start\+PC e o line\+Number; }{\pageref{classClassPrinter_1_1printLineNumberTableInfo}}{}
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1printLocalVariableTableInfo}{Class\+Printer\+::print\+Local\+Variable\+Table\+Info} \\*Método que visa mostrar na tela as características das varíaveis locais da tabela de informações; }{\pageref{classClassPrinter_1_1printLocalVariableTableInfo}}{}
 \item\contentsline{section}{\hyperlink{classClassPrinter_1_1printSourceFieldInfo}{Class\+Printer\+::print\+Source\+Field\+Info} \\*Método que visa mostrar na tela o index referente ao attribute localizado na tabela de constantpool }{\pageref{classClassPrinter_1_1printSourceFieldInfo}}{}
+\item\contentsline{section}{\hyperlink{classCodeAttribute_1_1read}{Code\+Attribute\+::read} \\*Método que visa armazenar os valores dos code dos atributos }{\pageref{classCodeAttribute_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classExceptionsAttribute_1_1read}{Exceptions\+Attribute\+::read} \\*Método que visa armazenar os valores das exceções dos atributos }{\pageref{classExceptionsAttribute_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classAttributeInfo_1_1read}{Attribute\+Info\+::read} \\*Método que visa armazenar os valores das informações dos atributos }{\pageref{classAttributeInfo_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1read}{C\+P\+Info\+::read} \\*Método que visa fazer a leitura da constantpool de acordo com o valor da tag }{\pageref{classCPInfo_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classExceptionHandler_1_1read}{Exception\+Handler\+::read} \\*Método que visa armazenar os valores das exceções }{\pageref{classExceptionHandler_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classFieldInfo_1_1read}{Field\+Info\+::read} \\*Método com o objetivo de fazer a leitura das fields do .class }{\pageref{classFieldInfo_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classConstantValueAttribute_1_1read}{Constant\+Value\+Attribute\+::read} \\*Método ler os valores das constantes dos atributos }{\pageref{classConstantValueAttribute_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classClassInfo_1_1read}{Class\+Info\+::read} \\*Método que visa armazenar os valores das informações das classes }{\pageref{classClassInfo_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classLineNumber_1_1read}{Line\+Number\+::read} \\*Método visando ler os valores do \hyperlink{classLineNumber}{Line\+Number} }{\pageref{classLineNumber_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classLocalVariable_1_1read}{Local\+Variable\+::read} \\*Método que visa armazenar os valores das variáveis locais }{\pageref{classLocalVariable_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classLocalVariableTableAttribute_1_1read}{Local\+Variable\+Table\+Attribute\+::read} \\*Método que visa armazenar os valores das variáveis locais da tabela de atributos }{\pageref{classLocalVariableTableAttribute_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classInnerClassesAttribute_1_1read}{Inner\+Classes\+Attribute\+::read} \\*Método que visa armazenar os valores do \hyperlink{classInnerClassesAttribute}{Inner\+Classes\+Attribute} }{\pageref{classInnerClassesAttribute_1_1read}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setAccessFlags}{Class\+File\+::set\+Access\+Flags} \\*Método que armazena o valor do access\+Flag }{\pageref{classClassFile_1_1setAccessFlags}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setAttributes}{Class\+File\+::set\+Attributes} \\*Método que armazena o valor dos atributos }{\pageref{classClassFile_1_1setAttributes}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setAttributesCount}{Class\+File\+::set\+Attributes\+Count} \\*Método que armazena o valor da quantidade de atributos }{\pageref{classClassFile_1_1setAttributesCount}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setConstantPool}{Class\+File\+::set\+Constant\+Pool} \\*Método que armazena o valor das Constant\+Pool }{\pageref{classClassFile_1_1setConstantPool}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setConstantPoolCount}{Class\+File\+::set\+Constant\+Pool\+Count} \\*Método que armazena o valor do Quantidade de Constant\+Pool }{\pageref{classClassFile_1_1setConstantPoolCount}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setFields}{Class\+File\+::set\+Fields} \\*Método que armazena o valor das fields }{\pageref{classClassFile_1_1setFields}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setFieldsCount}{Class\+File\+::set\+Fields\+Count} \\*Método que armazena o valor da quantidade de fields }{\pageref{classClassFile_1_1setFieldsCount}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setInterfaces}{Class\+File\+::set\+Interfaces} \\*Método que armazena o valor das interfaces }{\pageref{classClassFile_1_1setInterfaces}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setInterfacesCount}{Class\+File\+::set\+Interfaces\+Count} \\*Método que armazena o valor da quantidade de Interfaces }{\pageref{classClassFile_1_1setInterfacesCount}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setMagic}{Class\+File\+::set\+Magic} \\*Método que armazena o valor do Magic }{\pageref{classClassFile_1_1setMagic}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setMajorVersion}{Class\+File\+::set\+Major\+Version} \\*Método que armazena o valor de Major\+Version }{\pageref{classClassFile_1_1setMajorVersion}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setMethods}{Class\+File\+::set\+Methods} \\*Método que armazena o valor dos métodos }{\pageref{classClassFile_1_1setMethods}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setMethodsCount}{Class\+File\+::set\+Methods\+Count} \\*Método que armazena o valor da quantidade de métodos }{\pageref{classClassFile_1_1setMethodsCount}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setMinor}{Class\+File\+::set\+Minor} \\*Método que armazena o valor do Minor }{\pageref{classClassFile_1_1setMinor}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setSuperClass}{Class\+File\+::set\+Super\+Class} \\*Método que armazena o valor de Super\+Class }{\pageref{classClassFile_1_1setSuperClass}}{}
+\item\contentsline{section}{\hyperlink{classCPInfo_1_1setTag}{C\+P\+Info\+::set\+Tag} \\*Método que visa armazenar o valor da tag }{\pageref{classCPInfo_1_1setTag}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1setThisClass}{Class\+File\+::set\+This\+Class} \\*Método que armazena o valor do This\+Class }{\pageref{classClassFile_1_1setThisClass}}{}
 \item\contentsline{section}{\hyperlink{classSourceFileAttribute}{Source\+File\+Attribute} \\*Classe que contém as informações do index do Source\+File }{\pageref{classSourceFileAttribute}}{}
+\item\contentsline{section}{\hyperlink{classClassFile_1_1~ClassFile}{Class\+File\+::$\sim$\+Class\+File} \\*Destrutor }{\pageref{classClassFile_1_1~ClassFile}}{}
 \end{DoxyCompactList}

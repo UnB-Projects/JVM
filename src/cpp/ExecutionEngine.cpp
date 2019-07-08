@@ -1,5 +1,5 @@
 /** @file ExecutionEngine.cpp
- *  @brief Declarações das funções e dos atributos do Pool de constantes.
+ *  @brief Métodos de gerar a execução do interpretador
  *  @bug No known bugs.
  */
 #include "../hpp/ExecutionEngine.hpp"
