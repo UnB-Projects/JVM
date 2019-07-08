@@ -1,3 +1,7 @@
+/** @file MethodInfo.hpp
+ *  @brief Contém o armazenamento das informações do Method  
+ *  @bug No known bugs.
+ */
 #ifndef METHODINFO_H_INCLUDED
 #define METHODINFO_H_INCLUDED
 
@@ -6,6 +10,10 @@
 #include "AttributeInfo.hpp"
 
 using namespace std;
+/** @class MethodInfo
+*   @brief Classe que contém toda a estrutura de um Method
+*   @bug No known bugs.
+*/
 
 class MethodInfo {
 private:

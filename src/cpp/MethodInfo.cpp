@@ -1,11 +1,26 @@
+/** @file MethodInfo.cpp
+ *  @brief Contém métodos para manipulação da pilha de frames  
+ *  @bug No known bugs.
+ */
 #include "../hpp/MethodInfo.hpp"
 
+/** @fn ClassFile::ClassFile
+ *  @brief Destrutor
+ *  @param 
+ *  @return
+ */
 MethodInfo::~MethodInfo() {
     // for (auto a : attributes) {
     //     //TODO
     // }
 }
 
+
+/** @class MethodInfo::read
+ *  @brief Método que visa fazer leitura da estrutura do MethodInfo
+ *  @param fp ponteiro para o arquivo .class @param constantPool do tipo vetor de CPInfo
+ *  @return
+ */
 void MethodInfo::read(FILE *fp, vector<CPInfo*> constantPool) {
     ByteReader<uint16_t> reader;
 
