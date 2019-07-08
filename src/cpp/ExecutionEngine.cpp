@@ -1,5 +1,15 @@
+/** @file ExecutionEngine.cpp
+ *  @brief Declarações das funções e dos atributos do Pool de constantes.
+ *  @bug No known bugs.
+ */
 #include "../hpp/ExecutionEngine.hpp"
 
+
+/** @fn ExecutionEngine::ExecutionEngine
+ *  @brief Construtor
+ *  @param classFile do tipo ClassFile @param methodArea do tipo MethodArea @param instructionSet InstructionSet
+ *  @return
+ */
 ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea, InstructionSet* instructionSet) {
     vector<CPInfo*>constantPool = classFile->getConstantPool();
     string name = constantPool[classFile->getThisClass()-1]->getInfo(constantPool).first;
@@ -10,6 +20,11 @@ ExecutionEngine::ExecutionEngine(ClassFile* classFile, MethodArea* methodArea, I
     findMainMethod();
 }
 
+/** @class ExecutionEngine::findMainMethod
+ *  @brief Método com o objetivo de encontrar a função main, já que é por ela que começa a execução do interpretador
+ *  @param 
+ *  @return 
+ */
 void ExecutionEngine::findMainMethod() {
     ClassFile* mainClassFile = methodArea->getClassFile(mainClassFileName);
     vector<CPInfo*> constantPool = mainClassFile->getConstantPool();
@@ -34,6 +49,12 @@ void ExecutionEngine::findMainMethod() {
         exit(0);
     }
 }
+
+/** @class ExecutionEngine::execute
+ *  @brief Método com o objetivo de executar cada frame que está guardado na pilha
+ *  @param 
+ *  @return 
+ */
 
 void ExecutionEngine::execute() {
     ClassFile* mainClassFile = methodArea->getClassFile(mainClassFileName);
