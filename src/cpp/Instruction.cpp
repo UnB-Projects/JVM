@@ -195,7 +195,7 @@ uint32_t Instruction::iconst_2Function(Frame* frame) {
 /** @class Instruction::iconst_3Function
  *  @brief coloca um constante 3 do tipo inteiro na pilha de operandos
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
- *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado3811
  */
 uint32_t Instruction::iconst_3Function(Frame* frame) {
     JavaType constant;
@@ -2011,7 +2011,7 @@ uint32_t Instruction::ddivFunction(Frame* frame) {
 }
 
 /** @class Instruction::iremFunction
- *  @brief 
+ *  @brief Retorna o resto de dois numeors inteiros
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3012,7 +3012,7 @@ uint32_t Instruction::ifneFunction(Frame* frame) {
 }
 
 /** @class Instruction::ifltFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro deve ser menor do que que o segundo, se verdadeiro, pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3104,7 +3104,7 @@ uint8_t* bytecode = frame->getCode();
 }
 
 /** @class Instruction::if_icmpeqFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro deve ser igual o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3129,7 +3129,7 @@ uint32_t Instruction::if_icmpeqFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_icmpneFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro nao deve ser igual o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3154,7 +3154,7 @@ uint32_t Instruction::if_icmpneFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_icmpltFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro valor deve ser menor que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3179,7 +3179,7 @@ uint32_t Instruction::if_icmpltFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_icmpgeFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro valor deve ser menor ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3204,7 +3204,7 @@ uint32_t Instruction::if_icmpgeFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_icmpgtFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro valor deve ser maior que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3229,7 +3229,7 @@ uint32_t Instruction::if_icmpgtFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_icmpleFunction
- *  @brief 
+ *  @brief Compara dois inteiros onde o primeiro valor deve ser maior ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3254,7 +3254,7 @@ uint32_t Instruction::if_icmpleFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_acmpeqFunction
- *  @brief 
+ *  @brief Compara duas referencias, onde a primeira deve ser igual a segunda, se verdadeiro pula para o endereco calculado entre os dois bytes.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3265,7 +3265,7 @@ uint32_t Instruction::if_acmpeqFunction(Frame* frame) {
 }
 
 /** @class Instruction::if_acmpneFunction
- *  @brief 
+ *  @brief Compara duas referencias, onde a primeira deve ser não igual a segunda, se verdadeiro pula para o endereco calculado entre os dois bytes.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -3808,7 +3808,7 @@ uint32_t Instruction::putfieldFunction(Frame* frame) {
 }
 
 /** @class Instruction::invokevirtualFunction
- *  @brief 
+ *  @brief Invoca um metodo baseado na classe objeto
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4178,7 +4178,7 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
 }
 
 /** @class Instruction::invokespecialFunction
- *  @brief 
+ *  @brief Invoca metodo de inicializacao da instancia como privado, invoca metodos da superclasse e da classe atual.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4331,7 +4331,7 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
 }
 
 /** @class Instruction::invokestaticFunction
- *  @brief 
+ *  @brief Invoca um metodo de uma classe estatica
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4485,7 +4485,7 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
 }
 
 /** @class Instruction::invokeinterfaceFunction
- *  @brief 
+ *  @brief Invoca um metodo da interface.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4496,7 +4496,7 @@ uint32_t Instruction::invokeinterfaceFunction(Frame* frame) {
 }
 
 /** @class Instruction::invokedynamicFunction
- *  @brief 
+ *  @brief Invoca um metodo dinamico
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4507,7 +4507,7 @@ uint32_t Instruction::invokedynamicFunction(Frame* frame) {
 }
 
 /** @class Instruction::newOpFunction
- *  @brief 
+ *  @brief Cria um novo objeto
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4647,7 +4647,7 @@ map<string, JavaType>* Instruction::initializeFields(ClassFile* classFile) {
 
 
 /** @class Instruction::newarrayFunction
- *  @brief 
+ *  @brief Cria um novo array
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4723,7 +4723,7 @@ uint32_t Instruction::newarrayFunction(Frame* frame) {
 }
 
 /** @class Instruction::anewarrayFunction
- *  @brief 
+ *  @brief Cria um novo de array de referencias.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4751,7 +4751,7 @@ uint32_t Instruction::anewarrayFunction(Frame* frame) {
 }
 
 /** @class Instruction::arraylengthFunction
- *  @brief 
+ *  @brief Pega o tamanho do array
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4769,7 +4769,7 @@ uint32_t Instruction::arraylengthFunction(Frame* frame) {
 }
 
 /** @class Instruction::athrowFunction
- *  @brief 
+ *  @brief Lanca erros de excecoes
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4780,7 +4780,7 @@ uint32_t Instruction::athrowFunction(Frame* frame) {
 }
 
 /** @class Instruction::checkcastFunction
- *  @brief 
+ *  @brief Checa se o objeto e do tipo dado
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4791,7 +4791,7 @@ uint32_t Instruction::checkcastFunction(Frame* frame) {
 }
 
 /** @class Instruction::instanceofFunction
- *  @brief 
+ *  @brief Determina se o objeto e do tipo dado
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4802,7 +4802,7 @@ uint32_t Instruction::instanceofFunction(Frame* frame) {
 }
 
 /** @class Instruction::monitorenterFunction
- *  @brief 
+ *  @brief Entra no moitor para o objeto
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4813,7 +4813,7 @@ uint32_t Instruction::monitorenterFunction(Frame* frame) {
 }
 
 /** @class Instruction::monitorexitFunction
- *  @brief 
+ *  @brief Sai do monitor para o o objeto
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4824,7 +4824,7 @@ uint32_t Instruction::monitorexitFunction(Frame* frame) {
 }
 
 /** @class Instruction::wideFunction
- *  @brief 
+ *  @brief Extende o index da variavel local atraves de bytes adicionais
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4865,7 +4865,7 @@ vector<JavaType>* Instruction::buildMultiAnewArray(vector<int> dimensions, int i
 
 
 /** @class Instruction::multianewarrayFunction
- *  @brief 
+ *  @brief Cria um array multidimensional
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4898,7 +4898,7 @@ uint32_t Instruction::multianewarrayFunction(Frame* frame) {
 }
 
 /** @class Instruction::ifnullFunction
- *  @brief 
+ *  @brief Salta para branch se a referencia e nula.
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4921,7 +4921,7 @@ uint32_t Instruction::ifnullFunction(Frame* frame) {
 }
 
 /** @class Instruction::ifnonnullFunction
- *  @brief 
+ *  @brief Salta para branch se a referencia e nao nula
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4944,7 +4944,7 @@ uint32_t Instruction::ifnonnullFunction(Frame* frame) {
 }
 
 /** @class Instruction::goto_wFunction
- *  @brief 
+ *  @brief Salta pra branch sempre
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
@@ -4955,7 +4955,7 @@ uint32_t Instruction::goto_wFunction(Frame* frame) {
 }
 
 /** @class Instruction::jsr_wFunction
- *  @brief 
+ *  @brief Salta para branch sempre (wide index)
  *  @param Frame atual para utilizacao da pilha de operandos e pc atual
  *  @return inteiro sem sinal de 4 bytes com o pc atualizado
  */
