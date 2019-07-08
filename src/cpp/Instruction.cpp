@@ -1,32 +1,81 @@
+/** @file Instruction.cpp
+ *  @brief Objetivo de criar o corpo de um método que executa uma instrução do interpretador
+ *  @bug No known bugs.
+ */
 #include "../hpp/Instruction.hpp"
 
+/** @class Instruction::setClassLoader
+ *  @brief Seta o classLoader da classe como o classLoader lido e passado por parâmetro
+ *  @param classLoader do tipo ponteiro para ClassLoader
+ *  @return 
+ */
 void Instruction::setClassLoader(ClassLoader* classLoader) {
     Instruction::classLoader = classLoader;
 }
 
+/** @fn Instruction::Instruction
+ *  @brief Construtor da classe Instruction
+ *  @param 
+ *  @return 
+ */
 Instruction::Instruction() {
     //Para declarar sem argumentos
 }
 
+/** @fn Instruction::Instruction
+ *  @brief Sobrecarga do método construtor
+ *  @param String de mnemonicos, o contador de bytes e um ponteiro para Frame
+ *  @return 
+ */
 Instruction::Instruction(string mnemonic, uint32_t bytesCount, uint32_t (*func)(Frame*)) {
     this->mnemonic = mnemonic;
     this->bytesCount = bytesCount;
     this->func = func;
 }
 
+/** @class Instruction::setMnemonic
+ *  @brief Seta o mnemonico recebido no parametro para o mnemonico da instancia
+ *  @param String com o mnemonic
+ *  @return 
+ */
 void Instruction::setMnemonic(string mnemonic) {
     this->mnemonic = mnemonic;
 }
+
+
+/** @class Instruction::getMnemonic
+ *  @brief Obtem o mnemonico da instancia
+ *  @param
+ *  @return String com o mnemonic
+ */
+
 string Instruction::getMnemonic() {
     return this->mnemonic;
 }
+
+/** @class Instruction::setBytesCount
+ *  @brief Seta o bytesCount recebido no parametro para o bytesCount da instancia
+ *  @param inteiro sem sinal de 4 bytes com o bytesCount
+ *  @return 
+ */
 void Instruction::setBytesCount(uint32_t bytesCount) {
     this->bytesCount = bytesCount;
 }
+
+/** @class Instruction::getBytesCount
+ *  @brief Seta o bytesCount recebido no parametro para o bytesCount da instancia
+ *  @param 
+ *  @return inteiro sem sinal de 4 bytes com o bytesCount
+ */
 uint32_t Instruction::getBytesCount() {
     return this->bytesCount;
 }
 
+/** @class Instruction::resolveField
+ *  @brief Resolve as entradas do vetores de Fields, Interfaces para as Classes e Superclasses
+ *  @param currentClass do tipo ClassFile*, fieldName do tipo string e fieldDescriptor do tipo string
+ *  @return retorna um FieldInfo*
+ */
 FieldInfo* Instruction::resolveField(ClassFile* currentClass, string fieldName, string fieldDescriptor) {
     vector<CPInfo*> constantPool = currentClass->getConstantPool();
     MethodArea * methodArea = classLoader->getMethodArea();
@@ -69,9 +118,20 @@ FieldInfo* Instruction::resolveField(ClassFile* currentClass, string fieldName, 
     return noSuchField;
 }
 
+/** @class Instruction::nopFunction
+ *  @brief Nao faz nada, apenas incrementa o pc atual
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::nopFunction(Frame* frame) {
     return ++frame->localPC;
 }
+
+/** @class Instruction::aconst_nullFunction
+ *  @brief coloca uma referencia de objeto nulo na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aconst_nullFunction(Frame* frame) {
     JavaType null;
     null.tag = CAT_NULL;
@@ -79,6 +139,12 @@ uint32_t Instruction::aconst_nullFunction(Frame* frame) {
     frame->operandStack.push(null);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_m1Function
+ *  @brief coloca um constante -1 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_m1Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -86,6 +152,12 @@ uint32_t Instruction::iconst_m1Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_0Function
+ *  @brief coloca um constante 0 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_0Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -93,6 +165,12 @@ uint32_t Instruction::iconst_0Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_1Function
+ *  @brief coloca um constante 1 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_1Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -100,6 +178,12 @@ uint32_t Instruction::iconst_1Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_2Function
+ *  @brief coloca um constante 2 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_2Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -107,6 +191,12 @@ uint32_t Instruction::iconst_2Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_3Function
+ *  @brief coloca um constante 3 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_3Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -114,6 +204,12 @@ uint32_t Instruction::iconst_3Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_4Function
+ *  @brief coloca um constante 4 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_4Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -121,6 +217,12 @@ uint32_t Instruction::iconst_4Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iconst_5Function
+ *  @brief coloca um constante 5 do tipo inteiro na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iconst_5Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT1;
@@ -128,6 +230,12 @@ uint32_t Instruction::iconst_5Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lconst_0Function
+ *  @brief coloca um constante 0 do tipo long na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lconst_0Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT2;
@@ -135,6 +243,12 @@ uint32_t Instruction::lconst_0Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lconst_1Function
+ *  @brief coloca um constante 1 do tipo long na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lconst_1Function(Frame* frame) {
     JavaType constant;
     constant.tag = CAT2;
@@ -142,6 +256,12 @@ uint32_t Instruction::lconst_1Function(Frame* frame) {
     frame->operandStack.push(constant);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fconst_0Function
+ *  @brief coloca um constante 0.0 do tipo float na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fconst_0Function(Frame* frame) {
     JavaType value;
     float fconst = 0.0f;
@@ -151,6 +271,12 @@ uint32_t Instruction::fconst_0Function(Frame* frame) {
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fconst_1Function
+ *  @brief coloca um constante 1.0 do tipo float na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fconst_1Function(Frame* frame) {
     JavaType value;
     float fconst = 1.0f;
@@ -160,6 +286,12 @@ uint32_t Instruction::fconst_1Function(Frame* frame) {
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fconst_2Function
+ *  @brief coloca um constante 2.0 do tipo float na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fconst_2Function(Frame* frame) {
     JavaType value;
     float fconst = 2.0f;
@@ -169,6 +301,12 @@ uint32_t Instruction::fconst_2Function(Frame* frame) {
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dconst_0Function
+ *  @brief coloca um constante 0.0 do tipo double na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dconst_0Function(Frame* frame) {
     JavaType value;
     double dconst = 0.0;
@@ -178,6 +316,12 @@ uint32_t Instruction::dconst_0Function(Frame* frame) {
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dconst_1Function
+ *  @brief coloca um constante 1.0 do tipo double na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dconst_1Function(Frame* frame) {
     JavaType value;
     double dconst = 1.0;
@@ -187,6 +331,12 @@ uint32_t Instruction::dconst_1Function(Frame* frame) {
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::bipushFunction
+ *  @brief O byte imediato tem o sinal extendido para um int na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::bipushFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte = bytecode[++frame->localPC];
@@ -198,6 +348,12 @@ uint32_t Instruction::bipushFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::sipushFunction
+ *  @brief Os bytes byte1 e byte2 sem sinal sao concatenados com extensao de sinal e adicionados na pilha de operandos como um inteiro
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::sipushFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -210,6 +366,12 @@ uint32_t Instruction::sipushFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ldcFunction
+ *  @brief adiciona um item do constantPool na pilha de operandos e o index do ldc deve ser um index valido no constantPool atual
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ldcFunction(Frame* frame) {
     uint8_t * bytecode = frame->getCode();
     uint8_t byte = bytecode[++frame->localPC];
@@ -247,11 +409,23 @@ uint32_t Instruction::ldcFunction(Frame* frame) {
     return ++frame->localPC;
 }
 
+
+/** @class Instruction::ldc_wFunction
+ *  @brief adiciona um item do constantPool na pilha de operandos, porem o index vem com wide
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ldc_wFunction(Frame* frame) {
     printf("Instrucao ldc_wFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::ldc2_wFunction
+ *  @brief adiciona um item do constantPool na pilha de operandos e o index do ldc deve ser um index valido do tipo long ou double no constantPool atual
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ldc2_wFunction(Frame* frame) {
     uint8_t * bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -278,6 +452,12 @@ uint32_t Instruction::ldc2_wFunction(Frame* frame) {
     }
     return ++frame->localPC;
 }
+
+/** @class Instruction::iloadFunction
+ *  @brief Carrega um inteiro do vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iloadFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -288,6 +468,12 @@ uint32_t Instruction::iloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lloadFunction
+ *  @brief Carrega um long do vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lloadFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -298,6 +484,12 @@ uint32_t Instruction::lloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::floadFunction
+ *  @brief Carrega um float do vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::floadFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -308,6 +500,12 @@ uint32_t Instruction::floadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dloadFunction
+ *  @brief Carrega um double do vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dloadFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -318,6 +516,12 @@ uint32_t Instruction::dloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aloadFunction
+ *  @brief Carrega um array do vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aloadFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -328,102 +532,204 @@ uint32_t Instruction::aloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iload_0Function
+ *  @brief Carrega um inteiro do vetor de variaveis locais no index 0
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iload_0Function(Frame* frame) {
     JavaType value;
     value.type_int = frame->localVariables[0].type_int;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iload_1Function
+ *  @brief Carrega um inteiro do vetor de variaveis locais no index 1
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iload_1Function(Frame* frame) {
     JavaType value;
     value.type_int = frame->localVariables[1].type_int;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iload_2Function
+ *  @brief Carrega um inteiro do vetor de variaveis locais no index 2
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iload_2Function(Frame* frame) {
     JavaType value;
     value.type_int = frame->localVariables[2].type_int;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::iload_3Function
+ *  @brief Carrega um inteiro do vetor de variaveis locais no index 3
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iload_3Function(Frame* frame) {
     JavaType value;
     value.type_int = frame->localVariables[3].type_int;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lload_0Function
+ *  @brief Carrega um long do vetor de variaveis locais no index 0
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lload_0Function(Frame* frame) {
     JavaType value;
     value.type_long = frame->localVariables[0].type_long;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lload_1Function
+ *  @brief Carrega um long do vetor de variaveis locais no index 1
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lload_1Function(Frame* frame) {
     JavaType value;
     value.type_long = frame->localVariables[1].type_long;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lload_2Function
+ *  @brief Carrega um long do vetor de variaveis locais no index 2
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lload_2Function(Frame* frame) {
     JavaType value;
     value.type_long = frame->localVariables[2].type_long;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lload_3Function
+ *  @brief Carrega um long do vetor de variaveis locais no index 3
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lload_3Function(Frame* frame) {
     JavaType value;
     value.type_long = frame->localVariables[3].type_long;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fload_0Function
+ *  @brief Carrega um float do vetor de variaveis locais no index 0
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fload_0Function(Frame* frame) {
     JavaType value;
     value.type_float = frame->localVariables[0].type_float;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fload_1Function
+ *  @brief Carrega um float do vetor de variaveis locais no index 1
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fload_1Function(Frame* frame) {
     JavaType value;
     value.type_float = frame->localVariables[1].type_float;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fload_2Function
+ *  @brief Carrega um float do vetor de variaveis locais no index 2
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fload_2Function(Frame* frame) {
     JavaType value;
     value.type_float = frame->localVariables[2].type_float;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fload_3Function
+ *  @brief Carrega um float do vetor de variaveis locais no index 3
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fload_3Function(Frame* frame) {
     JavaType value;
     value.type_float = frame->localVariables[3].type_float;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dload_0Function
+ *  @brief Carrega um double do vetor de variaveis locais no index 0
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dload_0Function(Frame* frame) {
     JavaType value;
     value.type_double = frame->localVariables[0].type_double;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dload_1Function
+ *  @brief Carrega um double do vetor de variaveis locais no index 1
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dload_1Function(Frame* frame) {
     JavaType value;
     value.type_double = frame->localVariables[1].type_double;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dload_2Function
+ *  @brief Carrega um double do vetor de variaveis locais no index 2
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dload_2Function(Frame* frame) {
     JavaType value;
     value.type_double = frame->localVariables[2].type_double;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dload_3Function
+ *  @brief Carrega um double do vetor de variaveis locais no index 3
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dload_3Function(Frame* frame) {
     JavaType value;
     value.type_double = frame->localVariables[3].type_double;
     frame->operandStack.push(value);
     return ++frame->localPC;
 }
+
+/** @class Instruction::aload_0Function
+ *  @brief Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 0
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aload_0Function(Frame* frame) {
     JavaType objectref;
 
@@ -432,6 +738,12 @@ uint32_t Instruction::aload_0Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aload_1Function
+ *  @brief Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 1
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aload_1Function(Frame* frame) {
     JavaType objectref;
 
@@ -440,6 +752,12 @@ uint32_t Instruction::aload_1Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aload_2Function
+ *  @brief Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 2
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aload_2Function(Frame* frame) {
     JavaType objectref;
 
@@ -448,6 +766,12 @@ uint32_t Instruction::aload_2Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aload_3Function
+ *  @brief Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 3
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aload_3Function(Frame* frame) {
     JavaType objectref;
 
@@ -456,6 +780,12 @@ uint32_t Instruction::aload_3Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ialoadFunction
+ *  @brief Carrega uma inteiro de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ialoadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -472,6 +802,12 @@ uint32_t Instruction::ialoadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::laloadFunction
+ *  @brief Carrega uma long de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::laloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -488,6 +824,12 @@ uint32_t Instruction::laloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::faloadFunction
+ *  @brief Carrega um float de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::faloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -504,6 +846,12 @@ uint32_t Instruction::faloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::daloadFunction
+ *  @brief Carrega um double de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::daloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -520,6 +868,12 @@ uint32_t Instruction::daloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aaloadFunction
+ *  @brief Carrega uma referencia de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aaloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -536,6 +890,12 @@ uint32_t Instruction::aaloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::baloadFunction
+ *  @brief Carrega um byte de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::baloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -552,6 +912,12 @@ uint32_t Instruction::baloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::caloadFunction
+ *  @brief Carrega um char de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::caloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -568,6 +934,12 @@ uint32_t Instruction::caloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::saloadFunction
+ *  @brief Carrega um short de um array
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::saloadFunction(Frame* frame) {
     JavaType index;
     JavaType arrayref;
@@ -584,6 +956,12 @@ uint32_t Instruction::saloadFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::istoreFunction
+ *  @brief Guarda um inteiro no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::istoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -596,6 +974,12 @@ uint32_t Instruction::istoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lstoreFunction
+ *  @brief Guarda um long no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lstoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -608,6 +992,12 @@ uint32_t Instruction::lstoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fstoreFunction
+ *  @brief Guarda um float no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fstoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -620,6 +1010,12 @@ uint32_t Instruction::fstoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dstoreFunction
+ *  @brief Guarda um double no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dstoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -632,6 +1028,12 @@ uint32_t Instruction::dstoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::astoreFunction
+ *  @brief Guarda uma referencia no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::astoreFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t index = bytecode[++frame->localPC];
@@ -644,86 +1046,188 @@ uint32_t Instruction::astoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::istore_0Function
+ *  @brief Guarda um inteiro no indice 0 no vetor de variaveis locais 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::istore_0Function(Frame* frame) {
     frame->localVariables[0] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::istore_1Function
+ *  @brief Guarda um inteiro no indice 1 no vetor de variaveis locais 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::istore_1Function(Frame* frame) {
     frame->localVariables[1] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::istore_2Function
+ *  @brief Guarda um inteiro no indice 2 no vetor de variaveis locais 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::istore_2Function(Frame* frame) {
     frame->localVariables[2] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::istore_3Function
+ *  @brief Guarda um inteiro no indice 3 no vetor de variaveis locais 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::istore_3Function(Frame* frame) {
     frame->localVariables[3] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::lstore_0Function
+ *  @brief Guarda um long no indice 0 no vetor de variaveis locais 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lstore_0Function(Frame* frame) {
     frame->localVariables[0] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::lstore_1Function
+ *  @brief Guarda um long no indice 1 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lstore_1Function(Frame* frame) {
     frame->localVariables[1] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::lstore_2Function
+ *  @brief Guarda um long no indice 2 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lstore_2Function(Frame* frame) {
     frame->localVariables[2] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::lstore_3Function
+ *  @brief Guarda um long no indice 3 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lstore_3Function(Frame* frame) {
     frame->localVariables[3] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::fstore_0Function
+ *  @brief Guarda um float no indice 0 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fstore_0Function(Frame* frame) {
     frame->localVariables[0] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::fstore_1Function
+ *  @brief Guarda um float no indice 1 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fstore_1Function(Frame* frame) {
     frame->localVariables[1] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::fstore_2Function
+ *  @brief Guarda um float no indice 2 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fstore_2Function(Frame* frame) {
     frame->localVariables[2] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::fstore_3Function
+ *  @brief Guarda um float no indice 3 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fstore_3Function(Frame* frame) {
     frame->localVariables[3] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::dstore_0Function
+ *  @brief Guarda um double no indice 0 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dstore_0Function(Frame* frame) {
     frame->localVariables[0] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::dstore_1Function
+ *  @brief Guarda um double no indice 1 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dstore_1Function(Frame* frame) {
     frame->localVariables[1] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::dstore_2Function
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dstore_2Function(Frame* frame) {
     frame->localVariables[2] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::dstore_3Function
+ *  @brief Guarda um double no indice 3 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dstore_3Function(Frame* frame) {
     frame->localVariables[3] = frame->operandStack.top();
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::astore_0Function
+ *  @brief Guarda uma referencia no indice 0 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::astore_0Function(Frame* frame) {
     JavaType objectref;
 
@@ -734,6 +1238,12 @@ uint32_t Instruction::astore_0Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::astore_1Function
+ *  @brief Guarda uma referencia no indice 1 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::astore_1Function(Frame* frame) {
     JavaType objectref;
 
@@ -744,6 +1254,12 @@ uint32_t Instruction::astore_1Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::astore_2Function
+ *  @brief Guarda uma referencia no indice 2 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::astore_2Function(Frame* frame) {
     JavaType objectref;
 
@@ -754,6 +1270,12 @@ uint32_t Instruction::astore_2Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::astore_3Function
+ *  @brief Guarda uma referencia no indice 3 no vetor de variaveis locais
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::astore_3Function(Frame* frame) {
     JavaType objectref;
 
@@ -764,6 +1286,12 @@ uint32_t Instruction::astore_3Function(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iastoreFunction
+ *  @brief Guarda um inteiro em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iastoreFunction(Frame* frame) {
     JavaType value;
     JavaType index;
@@ -781,6 +1309,12 @@ uint32_t Instruction::iastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lastoreFunction
+ *  @brief Guarda um long em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lastoreFunction(Frame* frame) {
     JavaType value;
     JavaType index;
@@ -798,6 +1332,12 @@ uint32_t Instruction::lastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fastoreFunction
+ *  @brief Guarda um float em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fastoreFunction(Frame* frame) {
     JavaType value;
     JavaType index;
@@ -815,6 +1355,12 @@ uint32_t Instruction::fastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dastoreFunction
+ *  @brief Guarda um double em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dastoreFunction(Frame* frame) {
     JavaType value;
     JavaType index;
@@ -832,6 +1378,12 @@ uint32_t Instruction::dastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::aastoreFunction
+ *  @brief Guarda uma refenrencia em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::aastoreFunction(Frame* frame) {
     JavaType value = frame->operandStack.top();
     frame->operandStack.pop();
@@ -845,6 +1397,12 @@ uint32_t Instruction::aastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::bastoreFunction
+ *  @brief Guarda um byte em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::bastoreFunction(Frame* frame) {
     JavaType value;
     JavaType byteValue;
@@ -866,6 +1424,12 @@ uint32_t Instruction::bastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::castoreFunction
+ *  @brief Guarda um char em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::castoreFunction(Frame* frame) {
     JavaType value;
     JavaType charValue;
@@ -887,6 +1451,12 @@ uint32_t Instruction::castoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::sastoreFunction
+ *  @brief Guarda um short em um vetor
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::sastoreFunction(Frame* frame) {
     JavaType value;
     JavaType shortValue;
@@ -908,15 +1478,33 @@ uint32_t Instruction::sastoreFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::popFunction
+ *  @brief Desempilha o valor do topo da pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::popFunction(Frame* frame) {
     frame->operandStack.pop();
     return ++frame->localPC;
 }
+
+/** @class Instruction::pop2Function
+ *  @brief Desempilha um ou dois operandos do topo da pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::pop2Function(Frame* frame) {
     printf("Instrucao pop2Function nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::dupFunction
+ *  @brief Desempilha um elemento do topo da pilha de operandos e o guarda duas vezes na mesma
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dupFunction(Frame* frame) {
     JavaType duplicated = frame->operandStack.top();
     frame->operandStack.pop();
@@ -925,16 +1513,34 @@ uint32_t Instruction::dupFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dup_x1Function
+ *  @brief Desempilha o topo da pilha, o duplica, o coloca abaixo do novo topo e o empilha novamente
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dup_x1Function(Frame* frame) {
     printf("Instrucao dup_x1Function nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::dup_x2Function
+ *  @brief Desempilha o topo da pilha, o duplica, o coloca 2 elementos abaixo do novo topo e o empilha novamente
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dup_x2Function(Frame* frame) {
     printf("Instrucao dup_x2Function nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::dup2Function
+ *  @brief Desempilha os dois elementos do topo da pilha, os duplica e os coloca novamente na pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dup2Function(Frame* frame) {
     if (frame->operandStack.top().tag == CAT1) {
         JavaType value1 = frame->operandStack.top();
@@ -958,21 +1564,45 @@ uint32_t Instruction::dup2Function(Frame* frame) {
     }
     return ++frame->localPC;
 }
+
+/** @class Instruction::dup2_x1Function
+ *  @brief Desempilha dois topos da pilha, os duplica, os coloca abaixo do novo topo e os empilha novamente
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dup2_x1Function(Frame* frame) {
     printf("Instrucao dup2_x1Function nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::dup2_x2Function
+ *  @brief Desempilha dois topos da pilha, os duplica, os colocam 2 elementos abaixo do novo topo e os empilham novamente
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dup2_x2Function(Frame* frame) {
     printf("Instrucao dup2_x2Function nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::swapFunction
+ *  @brief Troca de lugar os dois elementos mais ao topo da pilha de operandos
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::swapFunction(Frame* frame) {
     printf("Instrucao swapFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::iaddFunction
+ *  @brief Soma dois inteiros
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iaddFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -989,6 +1619,12 @@ uint32_t Instruction::iaddFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::laddFunction
+ *  @brief Soma dois longs
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::laddFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1004,6 +1640,12 @@ uint32_t Instruction::laddFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::faddFunction
+ *  @brief Soma dois floats
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::faddFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1028,6 +1670,12 @@ uint32_t Instruction::faddFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::daddFunction
+ *  @brief Soma dois doubles
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::daddFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1052,6 +1700,12 @@ uint32_t Instruction::daddFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::isubFunction
+ *  @brief Subtrai dois inteiros
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::isubFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1068,6 +1722,12 @@ uint32_t Instruction::isubFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lsubFunction
+ *  @brief Subtrai dois longs
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lsubFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1083,6 +1743,12 @@ uint32_t Instruction::lsubFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fsubFunction
+ *  @brief Subtrai dois floats
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fsubFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1107,6 +1773,12 @@ uint32_t Instruction::fsubFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dsubFunction
+ *  @brief Subtrai dois doubles
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dsubFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1131,6 +1803,12 @@ uint32_t Instruction::dsubFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::imulFunction
+ *  @brief Multiplica dois inteiros
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::imulFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1147,6 +1825,12 @@ uint32_t Instruction::imulFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lmulFunction
+ *  @brief Multiplica dois longs
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lmulFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1162,6 +1846,12 @@ uint32_t Instruction::lmulFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fmulFunction
+ *  @brief Multiplica dois floats
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fmulFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1186,6 +1876,12 @@ uint32_t Instruction::fmulFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dmulFunction
+ *  @brief Multiplica dois doubles
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dmulFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1210,6 +1906,12 @@ uint32_t Instruction::dmulFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::idivFunction
+ *  @brief Divide dois inteiros
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::idivFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1226,6 +1928,12 @@ uint32_t Instruction::idivFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ldivOpFunction
+ *  @brief Divide dois longs
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ldivOpFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1241,6 +1949,12 @@ uint32_t Instruction::ldivOpFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fdivFunction
+ *  @brief Divide dois floats
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fdivFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1265,6 +1979,12 @@ uint32_t Instruction::fdivFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ddivFunction
+ *  @brief Divide dois doubles
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ddivFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1289,6 +2009,12 @@ uint32_t Instruction::ddivFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iremFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iremFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1305,6 +2031,12 @@ uint32_t Instruction::iremFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lremFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lremFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1321,6 +2053,12 @@ uint32_t Instruction::lremFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fremFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fremFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1345,6 +2083,12 @@ uint32_t Instruction::fremFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dremFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dremFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1369,6 +2113,12 @@ uint32_t Instruction::dremFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::inegFunction
+ *  @brief Inverte o sinal do topo da pilha de operando do tipo inteiro
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::inegFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1382,6 +2132,12 @@ uint32_t Instruction::inegFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lnegFunction
+ *  @brief Inverte o sinal do topo da pilha de operando do tipo long
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lnegFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1395,6 +2151,12 @@ uint32_t Instruction::lnegFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fnegFunction
+ *  @brief Inverte o sinal do topo da pilha de operando do tipo float
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fnegFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1413,6 +2175,12 @@ uint32_t Instruction::fnegFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::dnegFunction
+ *  @brief Inverte o sinal do topo da pilha de operando do tipo double
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dnegFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1431,6 +2199,12 @@ uint32_t Instruction::dnegFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ishlFunction
+ *  @brief Puxa para a esquerda o topo (desde que seja do tipo inteiro)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ishlFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1447,6 +2221,12 @@ uint32_t Instruction::ishlFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lshlFunction
+ *  @brief Puxa para a esquerda o topo (desde que seja do tipo long)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lshlFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1463,6 +2243,12 @@ uint32_t Instruction::lshlFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ishrFunction
+ *  @brief Puxa para a direita o topo (desde que seja do tipo inteiro)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ishrFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1479,6 +2265,12 @@ uint32_t Instruction::ishrFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lshrFunction
+ *  @brief Puxa para a direita o topo (desde que seja do tipo long)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lshrFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1495,6 +2287,12 @@ uint32_t Instruction::lshrFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iushrFunction
+ *  @brief Puxa para a direita o topo (desde que seja do tipo inteiro sem sinal)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iushrFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1511,6 +2309,12 @@ uint32_t Instruction::iushrFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lushrFunction
+ *  @brief Puxa para a direita o topo (desde que seja do tipo long sem sinal)
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lushrFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1527,6 +2331,12 @@ uint32_t Instruction::lushrFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iandFunction
+ *  @brief Executa uma operacao logica 'e' nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iandFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1542,6 +2352,12 @@ uint32_t Instruction::iandFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::landFunction
+ *  @brief Executa uma operacao logica 'e' nos dois elementos do tipo long do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::landFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1557,6 +2373,12 @@ uint32_t Instruction::landFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iorFunction
+ *  @brief Executa uma operacao logica 'ou' nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iorFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1572,6 +2394,12 @@ uint32_t Instruction::iorFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lorFunction
+ *  @brief Executa uma operacao logica 'ou' nos dois elementos do tipo long do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lorFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1587,6 +2415,12 @@ uint32_t Instruction::lorFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ixorFunction
+ *  @brief Executa uma operacao logica 'ou exclusivo' nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ixorFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1602,6 +2436,12 @@ uint32_t Instruction::ixorFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::lxorFunction
+ *  @brief Executa uma operacao logica 'ou exclusivos' nos dois elementos long do topo da pilha de operandos e empilha o resultado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lxorFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1617,6 +2457,12 @@ uint32_t Instruction::lxorFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::iincFunction
+ *  @brief Incrementa o inteiro no topo da pilha
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::iincFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -1628,6 +2474,12 @@ uint32_t Instruction::iincFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2lFunction
+ *  @brief Converte um inteiro para um tipo long
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2lFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1639,6 +2491,12 @@ uint32_t Instruction::i2lFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2fFunction
+ *  @brief Converte um inteiro para um tipo float
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2fFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1653,6 +2511,12 @@ uint32_t Instruction::i2fFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2dFunction
+ *  @brief Converte um inteiro para um tipo double
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2dFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1667,6 +2531,12 @@ uint32_t Instruction::i2dFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::l2iFunction
+ *  @brief Converte um long para um tipo inteiro
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::l2iFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1678,6 +2548,12 @@ uint32_t Instruction::l2iFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::l2fFunction
+ *  @brief Converte um long para um tipo float
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::l2fFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1691,6 +2567,12 @@ uint32_t Instruction::l2fFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::l2dFunction
+ *  @brief Converte um long para um tipo double
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::l2dFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1704,6 +2586,12 @@ uint32_t Instruction::l2dFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::f2iFunction
+ *  @brief Converte um float para um tipo inteiro
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::f2iFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1719,6 +2607,12 @@ uint32_t Instruction::f2iFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::f2lFunction
+ *  @brief Converte um float para um tipo long
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::f2lFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1734,6 +2628,12 @@ uint32_t Instruction::f2lFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::f2dFunction
+ *  @brief Converte um float para um tipo double
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::f2dFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1751,6 +2651,12 @@ uint32_t Instruction::f2dFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::d2iFunction
+ *  @brief Converte um double para um tipo inteiro
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::d2iFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1766,6 +2672,12 @@ uint32_t Instruction::d2iFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::d2lFunction
+ *  @brief Converte um double para um tipo long
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::d2lFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1781,6 +2693,12 @@ uint32_t Instruction::d2lFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::d2fFunction
+ *  @brief Converte um double para um tipo float
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::d2fFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1798,6 +2716,12 @@ uint32_t Instruction::d2fFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2bFunction
+ *  @brief Converte um inteiro para um tipo byte
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2bFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1809,6 +2733,12 @@ uint32_t Instruction::i2bFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2cFunction
+ *  @brief Converte um inteiro para um char
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2cFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1820,6 +2750,12 @@ uint32_t Instruction::i2cFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::i2sFunction
+ *  @brief Converte um inteiro para um tipo short
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::i2sFunction(Frame* frame) {
     JavaType value;
     JavaType result;
@@ -1831,6 +2767,12 @@ uint32_t Instruction::i2sFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::lcmpFunction
+ *  @brief Compara dois elementos do topo da pilha de operandos do tipo long
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lcmpFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1858,6 +2800,12 @@ uint32_t Instruction::lcmpFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::fcmplFunction
+ *  @brief Compara dois elementos do topo da pilha de operandos do tipo float e empilha -1 no topo caso algum seja NaN
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fcmplFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1893,6 +2841,12 @@ uint32_t Instruction::fcmplFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::fcmpgFunction
+ *  @brief Compara dois elementos do topo da pilha de operandos do tipo float e empilha 1 caso algum seja NaN
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::fcmpgFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1928,6 +2882,12 @@ uint32_t Instruction::fcmpgFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dcmplFunction
+ *  @brief Compara dois elementos do topo da pilha de operandos do tipo double e empilha -1 no topo caso algum seja NaN
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dcmplFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1963,6 +2923,12 @@ uint32_t Instruction::dcmplFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::dcmpgFunction
+ *  @brief Compara dois elementos do topo da pilha de operandos do tipo double e empilha 1 caso algum seja NaN
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dcmpgFunction(Frame* frame) {
     JavaType value1;
     JavaType value2;
@@ -1998,6 +2964,12 @@ uint32_t Instruction::dcmpgFunction(Frame* frame) {
     frame->operandStack.push(result);
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifeqFunction
+ *  @brief Compara se dois inteiros sao iguais e se forem pula para o endereco calculado entre os dois bytes
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifeqFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2015,6 +2987,12 @@ uint32_t Instruction::ifeqFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifneFunction
+ *  @brief Compara se dois inteiros nao sao iguais e se forem pula para o endereco calculado entre os dois bytes
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifneFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2032,6 +3010,12 @@ uint32_t Instruction::ifneFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifltFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifltFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2049,6 +3033,12 @@ uint32_t Instruction::ifltFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifgeFunction
+ *  @brief Compara dois inteiros onde o primeiro deve ser maior ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifgeFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2066,6 +3056,12 @@ uint32_t Instruction::ifgeFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifgtFunction
+ *  @brief Compara dois inteiros onde o primeiro deve ser maior que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifgtFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2083,6 +3079,12 @@ uint32_t Instruction::ifgtFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifleFunction
+ *  @brief Compara dois inteiros onde o primeiro deve ser menor que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifleFunction(Frame* frame) {
 uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2100,6 +3102,12 @@ uint8_t* bytecode = frame->getCode();
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpeqFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpeqFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2119,6 +3127,12 @@ uint32_t Instruction::if_icmpeqFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpneFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpneFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2138,6 +3152,12 @@ uint32_t Instruction::if_icmpneFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpltFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpltFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2157,6 +3177,12 @@ uint32_t Instruction::if_icmpltFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpgeFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpgeFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2176,6 +3202,12 @@ uint32_t Instruction::if_icmpgeFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpgtFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpgtFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2195,6 +3227,12 @@ uint32_t Instruction::if_icmpgtFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_icmpleFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_icmpleFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2214,16 +3252,34 @@ uint32_t Instruction::if_icmpleFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::if_acmpeqFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_acmpeqFunction(Frame* frame) {
     printf("Instrucao if_acmpeqFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::if_acmpneFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::if_acmpneFunction(Frame* frame) {
     printf("Instrucao if_acmpneFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::gotoOpFunction
+ *  @brief Concatena os bits e pula para o endereco encontrado
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::gotoOpFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2234,16 +3290,34 @@ uint32_t Instruction::gotoOpFunction(Frame* frame) {
     frame->localPC = baseAddress + branchOffset;
     return frame->localPC;
 }
+
+/** @class Instruction::jsrFunction
+ *  @brief Pula para uma subrotina 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::jsrFunction(Frame* frame) {
     printf("Instrucao jsrFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::retFunction
+ *  @brief Retorna o valor de uma subrotina
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::retFunction(Frame* frame) {
     printf("Instrucao retFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::tableswitchFunction
+ *  @brief Executa High - Low e define o range dos cases do switch, se nenhum caso passar o pulo é feito para o default
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::tableswitchFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2288,6 +3362,12 @@ uint32_t Instruction::tableswitchFunction(Frame* frame) {
     frame->localPC = baseAddress + defaultValue;
     return frame->localPC;
 }
+
+/** @class Instruction::lookupswitchFunction
+ *  @brief Calcula atraves do npairs os indexs de cada case e executa os pulos partindo de um offset somado ao endereco base
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lookupswitchFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -2332,6 +3412,12 @@ uint32_t Instruction::lookupswitchFunction(Frame* frame) {
     frame->localPC = baseAddress + defaultValue;
     return frame->localPC;
 }
+
+/** @class Instruction::ireturnFunction
+ *  @brief Retorna um inteiro do metodo
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ireturnFunction(Frame* frame) {
     JavaType value;
 
@@ -2344,6 +3430,12 @@ uint32_t Instruction::ireturnFunction(Frame* frame) {
     invoker->operandStack.push(value);
     return invoker->localPC;
 }
+
+/** @class Instruction::lreturnFunction
+ *  @brief Retorna um long do metodo
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::lreturnFunction(Frame* frame) {
     JavaType value;
 
@@ -2356,6 +3448,12 @@ uint32_t Instruction::lreturnFunction(Frame* frame) {
     invoker->operandStack.push(value);
     return invoker->localPC;
 }
+
+/** @class Instruction::freturnFunction
+ *  @brief Retorna um float do metodo
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::freturnFunction(Frame* frame) {
     JavaType value;
 
@@ -2368,6 +3466,12 @@ uint32_t Instruction::freturnFunction(Frame* frame) {
     invoker->operandStack.push(value);
     return invoker->localPC;
 }
+
+/** @class Instruction::dreturnFunction
+ *  @brief Retorna um double do metodo
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::dreturnFunction(Frame* frame) {
    JavaType value;
 
@@ -2380,6 +3484,12 @@ uint32_t Instruction::dreturnFunction(Frame* frame) {
     invoker->operandStack.push(value);
     return invoker->localPC;
 }
+
+/** @class Instruction::areturnFunction
+ *  @brief Retorna uma referencia do metodo
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::areturnFunction(Frame* frame) {
     JavaType value;
 
@@ -2392,12 +3502,24 @@ uint32_t Instruction::areturnFunction(Frame* frame) {
     invoker->operandStack.push(value);
     return invoker->localPC;
 }
+
+/** @class Instruction::returnOpFunction
+ *  @brief Sinaliza o final do metodo com um retorno void
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::returnOpFunction(Frame* frame) {
     if (!frame->operandStack.empty()) {
         printf("A pilha de operandos nao esta vazia! Pode haver erros!\n");
     }
     return frame->localPC;
 }
+
+/** @class Instruction::getstaticFunction
+ *  @brief Recupera o campo estatico
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::getstaticFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -2500,6 +3622,12 @@ uint32_t Instruction::getstaticFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::putstaticFunction
+ *  @brief Seta o campo estatico
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::putstaticFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -2611,6 +3739,12 @@ uint32_t Instruction::putstaticFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::getfieldFunction
+ *  @brief Recupera o campo estatico da classe
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::getfieldFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -2637,6 +3771,12 @@ uint32_t Instruction::getfieldFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::putfieldFunction
+ *  @brief Seta o campo no objeto
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::putfieldFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -2666,6 +3806,12 @@ uint32_t Instruction::putfieldFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::invokevirtualFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::invokevirtualFunction(Frame* frame) {
     MethodArea * methodArea = classLoader->getMethodArea();
     uint8_t* bytecode = frame->getCode();
@@ -3030,6 +4176,12 @@ uint32_t Instruction::invokevirtualFunction(Frame* frame) {
     }
     return ++frame->localPC;
 }
+
+/** @class Instruction::invokespecialFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::invokespecialFunction(Frame* frame) {
     MethodArea * methodArea = classLoader->getMethodArea();
     uint8_t* bytecode = frame->getCode();
@@ -3177,6 +4329,12 @@ uint32_t Instruction::invokespecialFunction(Frame* frame) {
     frame->localPC++;
     return staticMethodFrame.localPC;
 }
+
+/** @class Instruction::invokestaticFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::invokestaticFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -3325,16 +4483,34 @@ uint32_t Instruction::invokestaticFunction(Frame* frame) {
     frame->localPC++;
     return staticMethodFrame.localPC;
 }
+
+/** @class Instruction::invokeinterfaceFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::invokeinterfaceFunction(Frame* frame) {
     printf("Instrucao invokeinterfaceFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::invokedynamicFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::invokedynamicFunction(Frame* frame) {
     printf("Instrucao invokedynamicFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::newOpFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::newOpFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -3469,6 +4645,12 @@ map<string, JavaType>* Instruction::initializeFields(ClassFile* classFile) {
 }
 
 
+
+/** @class Instruction::newarrayFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::newarrayFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t atype = bytecode[++frame->localPC];
@@ -3539,6 +4721,12 @@ uint32_t Instruction::newarrayFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::anewarrayFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::anewarrayFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -3561,6 +4749,12 @@ uint32_t Instruction::anewarrayFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::arraylengthFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::arraylengthFunction(Frame* frame) {
     JavaType arrayref = frame->operandStack.top();
     frame->operandStack.pop();
@@ -3573,31 +4767,67 @@ uint32_t Instruction::arraylengthFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::athrowFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::athrowFunction(Frame* frame) {
     printf("Instrucao athrowFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::checkcastFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::checkcastFunction(Frame* frame) {
     printf("Instrucao checkcastFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::instanceofFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::instanceofFunction(Frame* frame) {
     printf("Instrucao instanceofFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::monitorenterFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::monitorenterFunction(Frame* frame) {
     printf("Instrucao monitorenterFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::monitorexitFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::monitorexitFunction(Frame* frame) {
     printf("Instrucao monitorexitFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::wideFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::wideFunction(Frame* frame) {
     printf("Instrucao wideFunction nao implementada ainda!\n");
     exit(0);
@@ -3633,6 +4863,12 @@ vector<JavaType>* Instruction::buildMultiAnewArray(vector<int> dimensions, int i
     return array;
 }
 
+
+/** @class Instruction::multianewarrayFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::multianewarrayFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint8_t byte1 = bytecode[++frame->localPC];
@@ -3660,6 +4896,12 @@ uint32_t Instruction::multianewarrayFunction(Frame* frame) {
     frame->operandStack.push(arrayref);
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifnullFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifnullFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -3677,6 +4919,12 @@ uint32_t Instruction::ifnullFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::ifnonnullFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::ifnonnullFunction(Frame* frame) {
     uint8_t* bytecode = frame->getCode();
     uint32_t baseAddress = frame->localPC;
@@ -3694,11 +4942,23 @@ uint32_t Instruction::ifnonnullFunction(Frame* frame) {
 
     return ++frame->localPC;
 }
+
+/** @class Instruction::goto_wFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::goto_wFunction(Frame* frame) {
     printf("Instrucao goto_wFunction nao implementada ainda!\n");
     exit(0);
     return -1;
 }
+
+/** @class Instruction::jsr_wFunction
+ *  @brief 
+ *  @param Frame atual para utilizacao da pilha de operandos e pc atual
+ *  @return inteiro sem sinal de 4 bytes com o pc atualizado
+ */
 uint32_t Instruction::jsr_wFunction(Frame* frame) {
     printf("Instrucao jsr_wFunction nao implementada ainda!\n");
     exit(0);
