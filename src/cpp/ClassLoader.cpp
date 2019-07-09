@@ -18,6 +18,17 @@ ClassFile ClassLoader::loadClassFile(string className) {
         ClassFile classFile(fp);
         methodArea->insertClass(classFile);
         fclose(fp);
+
+        vector<CPInfo*> constantPool = classFile.getConstantPool();
+        uint16_t thisClassIndex = classFile.getThisClass();
+        CPInfo* classInfo = constantPool[thisClassIndex-1];
+        string classClassName = classInfo->getInfo(constantPool).first;
+
+        if (className.compare(classClassName) != 0) {
+            printf("O nome do .class nao bate com o nome da classe encontrato no constant pool!\n");
+            exit(-1);
+        }
+
         return classFile;
     }
     cout << "Nao foi possivel abrir o arquivo! Programa terminado!" << projectPath << " " << className << endl;
