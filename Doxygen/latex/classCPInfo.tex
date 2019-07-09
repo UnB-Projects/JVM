@@ -1,0 +1,188 @@
+\hypertarget{classCPInfo}{}\section{C\+P\+Info Class Reference}
+\label{classCPInfo}\index{C\+P\+Info@{C\+P\+Info}}
+
+
+Collaboration diagram for C\+P\+Info\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classCPInfo__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classCPInfo_1_1escapeString}{escape\+String}
+\begin{DoxyCompactList}\small\item\em Método que visa trasnformar o valor da string passada. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getClassUTF8}{get\+Class\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa nome da classe de contant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getDoubleNumber}{get\+Double\+Number}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor de um double. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getFieldrefUTF8}{get\+Fieldref\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor em U\+T\+F8 das fields da constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getFloatNumber}{get\+Float\+Number}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar um valor de float. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getInfo}{get\+Info}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor do par de acordo com a tag passada. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getInterfaceMethodrefUTF8}{get\+Interface\+Methodref\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor em U\+T\+F8 das intefaces dos metodos da constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getLongNumber}{get\+Long\+Number}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor de um long. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getMethodrefUTF8}{get\+Methodref\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor em U\+T\+F8 dos methods da constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getNameAndTypeUTF8}{get\+Name\+And\+Type\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor em U\+T\+F8 do nome e tipo da constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getStringUTF8}{get\+String\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor da string da constant\+Pool. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1getUTF8}{get\+U\+T\+F8}
+\begin{DoxyCompactList}\small\item\em Método que visa pegar a string U\+T\+F-\/8. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1read}{read}
+\begin{DoxyCompactList}\small\item\em Método que visa fazer a leitura da constantpool de acordo com o valor da tag. \end{DoxyCompactList}\item 
+class \hyperlink{classCPInfo_1_1setTag}{set\+Tag}
+\begin{DoxyCompactList}\small\item\em Método que visa armazenar o valor da tag. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCPInfo_a1144cdca5a5bba9e8709ad6a20053bc7}{$\sim$\+C\+P\+Info} ()
+\begin{DoxyCompactList}\small\item\em Destrutor. \end{DoxyCompactList}\item 
+void {\bfseries read} (F\+I\+LE $\ast$fp)\hypertarget{classCPInfo_ab5fffd0d4433673806891f92edd67826}{}\label{classCPInfo_ab5fffd0d4433673806891f92edd67826}
+
+\item 
+void {\bfseries set\+Tag} (uint8\+\_\+t tag)\hypertarget{classCPInfo_aaa647d37b2b238aafcacddd027aeafe8}{}\label{classCPInfo_aaa647d37b2b238aafcacddd027aeafe8}
+
+\item 
+pair$<$ string, string $>$ {\bfseries get\+Info} (vector$<$ \hyperlink{classCPInfo}{C\+P\+Info} $\ast$ $>$ constant\+Pool)\hypertarget{classCPInfo_a331977da199d8fa56995f9de3bcb837b}{}\label{classCPInfo_a331977da199d8fa56995f9de3bcb837b}
+
+\item 
+float {\bfseries get\+Float\+Number} ()\hypertarget{classCPInfo_ab1f2f8f848bcc2fec287a243ee19ee69}{}\label{classCPInfo_ab1f2f8f848bcc2fec287a243ee19ee69}
+
+\item 
+int64\+\_\+t {\bfseries get\+Long\+Number} ()\hypertarget{classCPInfo_adec66ffc8ee4a552223e7b232a1ab5c1}{}\label{classCPInfo_adec66ffc8ee4a552223e7b232a1ab5c1}
+
+\item 
+double {\bfseries get\+Double\+Number} ()\hypertarget{classCPInfo_a65f562eac59444e0571e665f0af4bfc4}{}\label{classCPInfo_a65f562eac59444e0571e665f0af4bfc4}
+
+\item 
+uint8\+\_\+t {\bfseries get\+Tag} ()\hypertarget{classCPInfo_abea4ee7bf02eec0d9d5b86fc90f024f1}{}\label{classCPInfo_abea4ee7bf02eec0d9d5b86fc90f024f1}
+
+\item 
+\hyperlink{structConstantClassInfo}{Constant\+Class\+Info} {\bfseries get\+Class\+Info} ()\hypertarget{classCPInfo_a64411575d297ff8b50684ca5b0c93471}{}\label{classCPInfo_a64411575d297ff8b50684ca5b0c93471}
+
+\item 
+\hyperlink{structConstantFieldrefInfo}{Constant\+Fieldref\+Info} {\bfseries get\+Fieldref\+Info} ()\hypertarget{classCPInfo_ac671e911cb4b8872bd55d9a5b9f146d9}{}\label{classCPInfo_ac671e911cb4b8872bd55d9a5b9f146d9}
+
+\item 
+\hyperlink{structConstantMethodrefInfo}{Constant\+Methodref\+Info} {\bfseries get\+Methodref\+Info} ()\hypertarget{classCPInfo_ae3903d798cb11da2eb29062926a7b3f3}{}\label{classCPInfo_ae3903d798cb11da2eb29062926a7b3f3}
+
+\item 
+\hyperlink{structConstantInterfaceMethodrefInfo}{Constant\+Interface\+Methodref\+Info} {\bfseries get\+Interface\+Methodref\+Info} ()\hypertarget{classCPInfo_a42a8c3a04e943cf3e861f05078561e87}{}\label{classCPInfo_a42a8c3a04e943cf3e861f05078561e87}
+
+\item 
+\hyperlink{structConstantStringInfo}{Constant\+String\+Info} {\bfseries get\+String\+Info} ()\hypertarget{classCPInfo_adb44f35169d1e959e5c53e6a76bfcbf5}{}\label{classCPInfo_adb44f35169d1e959e5c53e6a76bfcbf5}
+
+\item 
+\hyperlink{structConstantIntegerInfo}{Constant\+Integer\+Info} {\bfseries get\+Integer\+Info} ()\hypertarget{classCPInfo_ac4ceb48810a05b9e9b7fbd2839f9e1e4}{}\label{classCPInfo_ac4ceb48810a05b9e9b7fbd2839f9e1e4}
+
+\item 
+\hyperlink{structConstantFloatInfo}{Constant\+Float\+Info} {\bfseries get\+Float\+Info} ()\hypertarget{classCPInfo_ac293e1108e36e6296e3b85576689e6cb}{}\label{classCPInfo_ac293e1108e36e6296e3b85576689e6cb}
+
+\item 
+\hyperlink{structConstantLongInfo}{Constant\+Long\+Info} {\bfseries get\+Long\+Info} ()\hypertarget{classCPInfo_ad493f187e55c0f37c2705f159a7487d9}{}\label{classCPInfo_ad493f187e55c0f37c2705f159a7487d9}
+
+\item 
+\hyperlink{structConstantDoubleInfo}{Constant\+Double\+Info} {\bfseries get\+Double\+Info} ()\hypertarget{classCPInfo_a7192445d7605e9515e3b4a5883f3b0ef}{}\label{classCPInfo_a7192445d7605e9515e3b4a5883f3b0ef}
+
+\item 
+\hyperlink{structConstantNameAndTypeInfo}{Constant\+Name\+And\+Type\+Info} {\bfseries get\+Name\+And\+Type\+Info} ()\hypertarget{classCPInfo_ae9f2c4975801d3cfc6b98a115b26fe55}{}\label{classCPInfo_ae9f2c4975801d3cfc6b98a115b26fe55}
+
+\item 
+\hyperlink{structConstantUTF8Info}{Constant\+U\+T\+F8\+Info} {\bfseries get\+U\+T\+F8\+Info} ()\hypertarget{classCPInfo_a0f40798aeacc26f85a901fc7244687a1}{}\label{classCPInfo_a0f40798aeacc26f85a901fc7244687a1}
+
+\item 
+\hyperlink{structConstantMethodHandleInfo}{Constant\+Method\+Handle\+Info} {\bfseries get\+Method\+Handle\+Info} ()\hypertarget{classCPInfo_ac8c8db8663473d3ee4074ee67f30c058}{}\label{classCPInfo_ac8c8db8663473d3ee4074ee67f30c058}
+
+\item 
+\hyperlink{structConstantMethodTypeInfo}{Constant\+Method\+Type\+Info} {\bfseries get\+Method\+Type\+Info} ()\hypertarget{classCPInfo_a35c31d16b5c67a7293b15a1f1613099a}{}\label{classCPInfo_a35c31d16b5c67a7293b15a1f1613099a}
+
+\item 
+\hyperlink{structConstantInvokeDynamicInfo}{Constant\+Invoke\+Dynamic\+Info} {\bfseries get\+Invoke\+Dynamic\+Info} ()\hypertarget{classCPInfo_a11f6eeeb39bf257a303ff640d3072bca}{}\label{classCPInfo_a11f6eeeb39bf257a303ff640d3072bca}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Class} = 7\hypertarget{classCPInfo_afa2a0609b98677906efec69abd8a48e6}{}\label{classCPInfo_afa2a0609b98677906efec69abd8a48e6}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Fieldref} = 9\hypertarget{classCPInfo_a55527798317b6fd08bcbfe6052ef16a5}{}\label{classCPInfo_a55527798317b6fd08bcbfe6052ef16a5}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Methodref} = 10\hypertarget{classCPInfo_a940e4557888d69b7be96c80549fd05f8}{}\label{classCPInfo_a940e4557888d69b7be96c80549fd05f8}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Interface\+Methodref} = 11\hypertarget{classCPInfo_a3ee335fb3cd4cc6326b5a6c07027f46a}{}\label{classCPInfo_a3ee335fb3cd4cc6326b5a6c07027f46a}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+String} = 8\hypertarget{classCPInfo_a5215334161f77865ffa2aae8606116e6}{}\label{classCPInfo_a5215334161f77865ffa2aae8606116e6}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Integer} = 3\hypertarget{classCPInfo_a442a6646025f8501cdf7d263e82c3912}{}\label{classCPInfo_a442a6646025f8501cdf7d263e82c3912}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Float} = 4\hypertarget{classCPInfo_aefa44ca817dd8dd7c07e951eaa472c36}{}\label{classCPInfo_aefa44ca817dd8dd7c07e951eaa472c36}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Long} = 5\hypertarget{classCPInfo_ac2edc4b97a087c8ffb458043ab38a025}{}\label{classCPInfo_ac2edc4b97a087c8ffb458043ab38a025}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Double} = 6\hypertarget{classCPInfo_a7e53dd2f4979eabea7224ec11e12f603}{}\label{classCPInfo_a7e53dd2f4979eabea7224ec11e12f603}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Name\+And\+Type} = 12\hypertarget{classCPInfo_af2407f4efc21cd1b7d92242a128804c7}{}\label{classCPInfo_af2407f4efc21cd1b7d92242a128804c7}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Utf8} = 1\hypertarget{classCPInfo_a716493735ca550f026bd00af6b709425}{}\label{classCPInfo_a716493735ca550f026bd00af6b709425}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Handle} = 15\hypertarget{classCPInfo_aa57a93a2e444d75369af492bf0885c96}{}\label{classCPInfo_aa57a93a2e444d75369af492bf0885c96}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Method\+Type} = 16\hypertarget{classCPInfo_af366bc74160698ae239cf9c8dbdd4df1}{}\label{classCPInfo_af366bc74160698ae239cf9c8dbdd4df1}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Invoke\+Dynamic} = 18\hypertarget{classCPInfo_a7930e6f14535f70bbc74fa557156e423}{}\label{classCPInfo_a7930e6f14535f70bbc74fa557156e423}
+
+\item 
+static const uint8\+\_\+t {\bfseries C\+O\+N\+S\+T\+A\+N\+T\+\_\+\+Empty} = 0\hypertarget{classCPInfo_a5a40f7d553974f74c028484d0fafde0c}{}\label{classCPInfo_a5a40f7d553974f74c028484d0fafde0c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{C\+P\+Info@{C\+P\+Info}!````~C\+P\+Info@{$\sim$\+C\+P\+Info}}
+\index{````~C\+P\+Info@{$\sim$\+C\+P\+Info}!C\+P\+Info@{C\+P\+Info}}
+\subsubsection[{\texorpdfstring{$\sim$\+C\+P\+Info()}{~CPInfo()}}]{\setlength{\rightskip}{0pt plus 5cm}C\+P\+Info\+::$\sim$\+C\+P\+Info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classCPInfo_a1144cdca5a5bba9e8709ad6a20053bc7}{}\label{classCPInfo_a1144cdca5a5bba9e8709ad6a20053bc7}
+
+
+Destrutor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em class\+File} & arquivo .class \\
+\hline
+{\em instruction\+Set} & conjunto de instruções \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/C\+P\+Info.\+hpp\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/C\+P\+Info.\+cpp\end{DoxyCompactItemize}

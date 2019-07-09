@@ -1,0 +1,77 @@
+\hypertarget{classFrame}{}\section{Frame Class Reference}
+\label{classFrame}\index{Frame@{Frame}}
+
+
+Classe que contém todos os atributos para a criação de um frame.  
+
+
+
+
+{\ttfamily \#include $<$Frame.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFrame_a422ab83c8b29489601a4bac02d4e171e}{Frame} (vector$<$ \hyperlink{classCPInfo}{C\+P\+Info} $\ast$ $>$, \hyperlink{classMethodInfo}{Method\+Info} $\ast$, stack$<$ \hyperlink{classFrame}{Frame} $>$ $\ast$)
+\begin{DoxyCompactList}\small\item\em Construtor. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ {\bfseries get\+Code} ()\hypertarget{classFrame_aac40e0ebfeb7b3298b59c37a7f4e3006}{}\label{classFrame_aac40e0ebfeb7b3298b59c37a7f4e3006}
+
+\item 
+uint32\+\_\+t {\bfseries get\+Code\+Length} ()\hypertarget{classFrame_a9233523486da4fa4ac786883f519fe17}{}\label{classFrame_a9233523486da4fa4ac786883f519fe17}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \hyperlink{classCPInfo}{C\+P\+Info} $\ast$ $>$ {\bfseries constant\+Pool}\hypertarget{classFrame_a7f1b0dca3dccb5cf3c92c35f1d0f2ef3}{}\label{classFrame_a7f1b0dca3dccb5cf3c92c35f1d0f2ef3}
+
+\item 
+stack$<$ \hyperlink{structJavaType}{Java\+Type} $>$ {\bfseries operand\+Stack}\hypertarget{classFrame_a5ed7f6e3ef7c99846894cb09597a3b3f}{}\label{classFrame_a5ed7f6e3ef7c99846894cb09597a3b3f}
+
+\item 
+vector$<$ \hyperlink{structJavaType}{Java\+Type} $>$ {\bfseries local\+Variables}\hypertarget{classFrame_af2f6d1ea56afb31babe6b10d3718bb65}{}\label{classFrame_af2f6d1ea56afb31babe6b10d3718bb65}
+
+\item 
+stack$<$ \hyperlink{classFrame}{Frame} $>$ $\ast$ {\bfseries jvm\+Stack}\hypertarget{classFrame_a985706d77698649f468e37414612a9a8}{}\label{classFrame_a985706d77698649f468e37414612a9a8}
+
+\item 
+uint32\+\_\+t {\bfseries local\+PC}\hypertarget{classFrame_a1e4cb428fe4e3008590cb9bebfdca2a1}{}\label{classFrame_a1e4cb428fe4e3008590cb9bebfdca2a1}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Classe que contém todos os atributos para a criação de um frame. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Frame@{Frame}!Frame@{Frame}}
+\index{Frame@{Frame}!Frame@{Frame}}
+\subsubsection[{\texorpdfstring{Frame(vector$<$ C\+P\+Info $\ast$ $>$, Method\+Info $\ast$, stack$<$ Frame $>$ $\ast$)}{Frame(vector< CPInfo * >, MethodInfo *, stack< Frame > *)}}]{\setlength{\rightskip}{0pt plus 5cm}Frame\+::\+Frame (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf C\+P\+Info} $\ast$ $>$}]{constant\+Pool, }
+\item[{{\bf Method\+Info} $\ast$}]{method, }
+\item[{stack$<$ {\bf Frame} $>$ $\ast$}]{jvm\+Stack}
+\end{DoxyParamCaption}
+)}\hypertarget{classFrame_a422ab83c8b29489601a4bac02d4e171e}{}\label{classFrame_a422ab83c8b29489601a4bac02d4e171e}
+
+
+Construtor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em constant\+Pool} & do tipo \hyperlink{classCPInfo}{C\+P\+Info} \\
+\hline
+{\em method} & do tipo \hyperlink{classMethodInfo}{Method\+Info} \\
+\hline
+{\em jvm\+Stack} & pilha do tipo \hyperlink{classFrame}{Frame} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/\hyperlink{Frame_8hpp}{Frame.\+hpp}\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/\hyperlink{Frame_8cpp}{Frame.\+cpp}\end{DoxyCompactItemize}

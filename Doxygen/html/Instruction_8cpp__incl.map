@@ -1,0 +1,13 @@
+<map id="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/Instruction.cpp" name="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/Instruction.cpp">
+<area shape="rect" id="node2" href="$Instruction_8hpp.html" title="Objetivo de criar uma instrução para a execução do interpretador. " alt="" coords="247,109,392,136"/>
+<area shape="rect" id="node6" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="396,483,480,509"/>
+<area shape="rect" id="node18" href="$ClassLoader_8hpp_source.html" title="ClassLoader.hpp" alt="" coords="610,184,730,211"/>
+<area shape="rect" id="node9" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="491,707,579,733"/>
+<area shape="rect" id="node16" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="289,557,401,584"/>
+<area shape="rect" id="node15" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="309,781,425,808"/>
+<area shape="rect" id="node17" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="395,632,513,659"/>
+<area shape="rect" id="node19" href="$ClassFile_8hpp.html" title="Contém toda a estrura do .class definida pela documentação. " alt="" coords="619,333,721,360"/>
+<area shape="rect" id="node22" href="$MethodArea_8hpp.html" title="Contém o armazenamento das informações do MethodArea. " alt="" coords="709,259,826,285"/>
+<area shape="rect" id="node20" href="$FieldInfo_8hpp.html" title="Contém toda a estrutura das informações das fields. " alt="" coords="469,408,567,435"/>
+<area shape="rect" id="node21" href="$InterfaceInfo_8hpp.html" title="Contém o armazenamento das informações das interfaces. " alt="" coords="43,707,163,733"/>
+</map>
