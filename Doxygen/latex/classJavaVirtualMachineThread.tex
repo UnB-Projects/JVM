@@ -1,8 +1,28 @@
 \hypertarget{classJavaVirtualMachineThread}{}\section{Java\+Virtual\+Machine\+Thread Class Reference}
 \label{classJavaVirtualMachineThread}\index{Java\+Virtual\+Machine\+Thread@{Java\+Virtual\+Machine\+Thread}}
+
+
+Classe que contém toda a estrutura de manipulação da pilha de frames.  
+
+
+
+
+{\ttfamily \#include $<$Java\+Virtual\+Machine\+Thread.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classJavaVirtualMachineThread_1_1incrementPcBy}{increment\+Pc\+By}
+\begin{DoxyCompactList}\small\item\em Método que incrementa o PC. \end{DoxyCompactList}\item 
+class \hyperlink{classJavaVirtualMachineThread_1_1popFromJVMStack}{pop\+From\+J\+V\+M\+Stack}
+\begin{DoxyCompactList}\small\item\em Método que retira o frame do topo da pilha. \end{DoxyCompactList}\item 
+class \hyperlink{classJavaVirtualMachineThread_1_1pushToJVMStack}{push\+To\+J\+V\+M\+Stack}
+\begin{DoxyCompactList}\small\item\em Método que armazena o frame na pilha. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classJavaVirtualMachineThread_ac478c8af0d1f18465bbd79d30f0ce285}{Java\+Virtual\+Machine\+Thread} ()
+\begin{DoxyCompactList}\small\item\em Construtor do \hyperlink{classJavaVirtualMachineThread}{Java\+Virtual\+Machine\+Thread}. \end{DoxyCompactList}\item 
 void {\bfseries push\+To\+J\+V\+M\+Stack} (\hyperlink{classFrame}{Frame})\hypertarget{classJavaVirtualMachineThread_a347d58ff764721a09d5f9c50ec0bd573}{}\label{classJavaVirtualMachineThread_a347d58ff764721a09d5f9c50ec0bd573}
 
 \item 
@@ -29,7 +49,33 @@ uint32\+\_\+t {\bfseries pc}\hypertarget{classJavaVirtualMachineThread_a7edbe3bd
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Classe que contém toda a estrutura de manipulação da pilha de frames. 
+
+\begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000029}{Bug}]No known bugs. \end{DoxyRefDesc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Java\+Virtual\+Machine\+Thread@{Java\+Virtual\+Machine\+Thread}!Java\+Virtual\+Machine\+Thread@{Java\+Virtual\+Machine\+Thread}}
+\index{Java\+Virtual\+Machine\+Thread@{Java\+Virtual\+Machine\+Thread}!Java\+Virtual\+Machine\+Thread@{Java\+Virtual\+Machine\+Thread}}
+\subsubsection[{\texorpdfstring{Java\+Virtual\+Machine\+Thread()}{JavaVirtualMachineThread()}}]{\setlength{\rightskip}{0pt plus 5cm}Java\+Virtual\+Machine\+Thread\+::\+Java\+Virtual\+Machine\+Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classJavaVirtualMachineThread_ac478c8af0d1f18465bbd79d30f0ce285}{}\label{classJavaVirtualMachineThread_ac478c8af0d1f18465bbd79d30f0ce285}
+
+
+Construtor do \hyperlink{classJavaVirtualMachineThread}{Java\+Virtual\+Machine\+Thread}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/Java\+Virtual\+Machine\+Thread.\+hpp\item 
-/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/Java\+Virtual\+Machine\+Thread.\+cpp\end{DoxyCompactItemize}
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/\hyperlink{JavaVirtualMachineThread_8hpp}{Java\+Virtual\+Machine\+Thread.\+hpp}\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/\hyperlink{JavaVirtualMachineThread_8cpp}{Java\+Virtual\+Machine\+Thread.\+cpp}\end{DoxyCompactItemize}

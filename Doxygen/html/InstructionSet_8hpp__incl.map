@@ -3,11 +3,11 @@
 <area shape="rect" id="node18" href="$ClassLoader_8hpp_source.html" title="ClassLoader.hpp" alt="" coords="307,184,427,211"/>
 <area shape="rect" id="node6" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="350,483,434,509"/>
 <area shape="rect" id="node9" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="509,707,597,733"/>
-<area shape="rect" id="node16" href="$MethodInfo_8hpp_source.html" title="MethodInfo.hpp" alt="" coords="560,557,672,584"/>
+<area shape="rect" id="node16" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="560,557,672,584"/>
 <area shape="rect" id="node15" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="695,781,811,808"/>
 <area shape="rect" id="node17" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="626,632,745,659"/>
 <area shape="rect" id="node19" href="$ClassFile_8hpp.html" title="Contém toda a estrura do .class definida pela documentação. " alt="" coords="590,333,693,360"/>
-<area shape="rect" id="node22" href="$MethodArea_8hpp_source.html" title="MethodArea.hpp" alt="" coords="308,259,425,285"/>
+<area shape="rect" id="node22" href="$MethodArea_8hpp.html" title="Contém o armazenamento das informações do MethodArea. " alt="" coords="308,259,425,285"/>
 <area shape="rect" id="node20" href="$FieldInfo_8hpp.html" title="Contém toda a estrutura das informações das fields. " alt="" coords="593,408,690,435"/>
-<area shape="rect" id="node21" href="$InterfaceInfo_8hpp_source.html" title="InterfaceInfo.hpp" alt="" coords="1027,707,1147,733"/>
+<area shape="rect" id="node21" href="$InterfaceInfo_8hpp.html" title="Contém o armazenamento das informações das interfaces. " alt="" coords="1027,707,1147,733"/>
 </map>

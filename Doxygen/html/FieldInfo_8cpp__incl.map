@@ -4,5 +4,5 @@
 <area shape="rect" id="node13" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="500,184,584,211"/>
 <area shape="rect" id="node8" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="120,483,236,509"/>
 <area shape="rect" id="node9" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="247,408,335,435"/>
-<area shape="rect" id="node15" href="$MethodInfo_8hpp_source.html" title="MethodInfo.hpp" alt="" coords="540,259,652,285"/>
+<area shape="rect" id="node15" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="540,259,652,285"/>
 </map>

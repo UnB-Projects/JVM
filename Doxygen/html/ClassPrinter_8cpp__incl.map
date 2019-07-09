@@ -5,11 +5,11 @@
 <area shape="rect" id="node13" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="421,856,509,883"/>
 <area shape="rect" id="node16" href="$FieldInfo_8hpp.html" title="Contém toda a estrutura das informações das fields. " alt="" coords="809,557,906,584"/>
 <area shape="rect" id="node17" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="543,781,662,808"/>
-<area shape="rect" id="node20" href="$MethodInfo_8hpp_source.html" title="MethodInfo.hpp" alt="" coords="771,707,883,733"/>
-<area shape="rect" id="node21" href="$InterfaceInfo_8hpp_source.html" title="InterfaceInfo.hpp" alt="" coords="888,856,1008,883"/>
+<area shape="rect" id="node20" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="771,707,883,733"/>
+<area shape="rect" id="node21" href="$InterfaceInfo_8hpp.html" title="Contém o armazenamento das informações das interfaces. " alt="" coords="888,856,1008,883"/>
 <area shape="rect" id="node15" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="635,931,751,957"/>
 <area shape="rect" id="node18" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="691,632,775,659"/>
 <area shape="rect" id="node23" href="$Instruction_8hpp.html" title="Objetivo de criar uma instrução para a execução do interpretador. " alt="" coords="1183,259,1291,285"/>
 <area shape="rect" id="node26" href="$ClassLoader_8hpp_source.html" title="ClassLoader.hpp" alt="" coords="1347,333,1467,360"/>
-<area shape="rect" id="node27" href="$MethodArea_8hpp_source.html" title="MethodArea.hpp" alt="" coords="1336,408,1453,435"/>
+<area shape="rect" id="node27" href="$MethodArea_8hpp.html" title="Contém o armazenamento das informações do MethodArea. " alt="" coords="1336,408,1453,435"/>
 </map>

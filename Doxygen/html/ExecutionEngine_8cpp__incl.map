@@ -1,16 +1,16 @@
 <map id="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/ExecutionEngine.cpp" name="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/ExecutionEngine.cpp">
-<area shape="rect" id="node2" href="$ExecutionEngine_8hpp.html" title="Contém toda a estrutura para a exxecução do interpretador. " alt="" coords="574,109,757,136"/>
+<area shape="rect" id="node2" href="$ExecutionEngine_8hpp.html" title="Contém toda a estrutura para a execução do interpretador. " alt="" coords="574,109,757,136"/>
 <area shape="rect" id="node4" href="$ClassFile_8hpp.html" title="Contém toda a estrura do .class definida pela documentação. " alt="" coords="514,483,617,509"/>
 <area shape="rect" id="node20" href="$ClassLoader_8hpp_source.html" title="ClassLoader.hpp" alt="" coords="635,333,755,360"/>
-<area shape="rect" id="node21" href="$MethodArea_8hpp_source.html" title="MethodArea.hpp" alt="" coords="507,408,624,435"/>
+<area shape="rect" id="node21" href="$MethodArea_8hpp.html" title="Contém o armazenamento das informações do MethodArea. " alt="" coords="507,408,624,435"/>
 <area shape="rect" id="node23" href="$Heap_8hpp_source.html" title="Heap.hpp" alt="" coords="1278,408,1357,435"/>
 <area shape="rect" id="node24" href="$InstructionSet_8hpp.html" title="Objetivo de organizar a instrução a ser pega para a execução;. " alt="" coords="723,184,851,211"/>
-<area shape="rect" id="node27" href="$JavaVirtualMachineThread_8hpp_source.html" title="JavaVirtualMachineThread.hpp" alt="" coords="899,557,1101,584"/>
+<area shape="rect" id="node27" href="$JavaVirtualMachineThread_8hpp.html" title="Contém toda a estrutura da manipulação da pilha de frame;. " alt="" coords="899,557,1101,584"/>
 <area shape="rect" id="node9" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="389,856,477,883"/>
 <area shape="rect" id="node14" href="$FieldInfo_8hpp.html" title="Contém toda a estrutura das informações das fields. " alt="" coords="603,557,701,584"/>
 <area shape="rect" id="node15" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="409,781,527,808"/>
-<area shape="rect" id="node18" href="$MethodInfo_8hpp_source.html" title="MethodInfo.hpp" alt="" coords="704,707,816,733"/>
-<area shape="rect" id="node19" href="$InterfaceInfo_8hpp_source.html" title="InterfaceInfo.hpp" alt="" coords="43,856,163,883"/>
+<area shape="rect" id="node18" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="704,707,816,733"/>
+<area shape="rect" id="node19" href="$InterfaceInfo_8hpp.html" title="Contém o armazenamento das informações das interfaces. " alt="" coords="43,856,163,883"/>
 <area shape="rect" id="node13" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="94,931,210,957"/>
 <area shape="rect" id="node16" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="855,632,939,659"/>
 <area shape="rect" id="node25" href="$Instruction_8hpp.html" title="Objetivo de criar uma instrução para a execução do interpretador. " alt="" coords="754,259,862,285"/>

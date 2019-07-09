@@ -1,6 +1,6 @@
 <map id="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/hpp/Frame.hpp" name="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/hpp/Frame.hpp">
 <area shape="rect" id="node5" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="295,259,383,285"/>
-<area shape="rect" id="node12" href="$MethodInfo_8hpp_source.html" title="MethodInfo.hpp" alt="" coords="456,109,568,136"/>
+<area shape="rect" id="node12" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="456,109,568,136"/>
 <area shape="rect" id="node11" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="494,333,610,360"/>
 <area shape="rect" id="node13" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="453,184,571,211"/>
 </map>

@@ -11,17 +11,437 @@ Classe que contém a estrutura de uma instrução a ser executada pelo interpret
 
 
 
-Collaboration diagram for Instruction\+:
-\nopagebreak
+Collaboration diagram for Instruction\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=172pt]{classInstruction__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classInstruction_1_1aaloadFunction}{aaload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma referencia de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aastoreFunction}{aastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma refenrencia em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aconst__nullFunction}{aconst\+\_\+null\+Function}
+\begin{DoxyCompactList}\small\item\em coloca uma referencia de objeto nulo na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aload__0Function}{aload\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 0. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aload__1Function}{aload\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 1. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aload__2Function}{aload\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 2. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aload__3Function}{aload\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma referencia (ponteiro/vetor) do vetor de variaveis locais no index 3. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1aloadFunction}{aload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um array do vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1anewarrayFunction}{anewarray\+Function}
+\begin{DoxyCompactList}\small\item\em Cria um novo de array de referencias. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1areturnFunction}{areturn\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna uma referencia do metodo. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1arraylengthFunction}{arraylength\+Function}
+\begin{DoxyCompactList}\small\item\em Pega o tamanho do array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1astore__0Function}{astore\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma referencia no indice 0 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1astore__1Function}{astore\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma referencia no indice 1 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1astore__2Function}{astore\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma referencia no indice 2 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1astore__3Function}{astore\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma referencia no indice 3 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1astoreFunction}{astore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda uma referencia no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1athrowFunction}{athrow\+Function}
+\begin{DoxyCompactList}\small\item\em Lanca erros de excecoes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1baloadFunction}{baload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um byte de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1bastoreFunction}{bastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um byte em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1bipushFunction}{bipush\+Function}
+\begin{DoxyCompactList}\small\item\em O byte imediato tem o sinal extendido para um int na pilha de operandos. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1caloadFunction}{caload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um char de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1castoreFunction}{castore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um char em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1checkcastFunction}{checkcast\+Function}
+\begin{DoxyCompactList}\small\item\em Checa se o objeto e do tipo dado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1d2fFunction}{d2f\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um double para um tipo float. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1d2iFunction}{d2i\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um double para um tipo inteiro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1d2lFunction}{d2l\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um double para um tipo long. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1daddFunction}{dadd\+Function}
+\begin{DoxyCompactList}\small\item\em Soma dois doubles. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1daloadFunction}{daload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dastoreFunction}{dastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um double em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dcmpgFunction}{dcmpg\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois elementos do topo da pilha de operandos do tipo double e empilha 1 caso algum seja NaN. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dcmplFunction}{dcmpl\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois elementos do topo da pilha de operandos do tipo double e empilha -\/1 no topo caso algum seja NaN. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dconst__0Function}{dconst\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 0.\+0 do tipo double na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dconst__1Function}{dconst\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 1.\+0 do tipo double na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ddivFunction}{ddiv\+Function}
+\begin{DoxyCompactList}\small\item\em Divide dois doubles. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dload__0Function}{dload\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double do vetor de variaveis locais no index 0. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dload__1Function}{dload\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double do vetor de variaveis locais no index 1. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dload__2Function}{dload\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double do vetor de variaveis locais no index 2. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dload__3Function}{dload\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double do vetor de variaveis locais no index 3. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dloadFunction}{dload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um double do vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dmulFunction}{dmul\+Function}
+\begin{DoxyCompactList}\small\item\em Multiplica dois doubles. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dnegFunction}{dneg\+Function}
+\begin{DoxyCompactList}\small\item\em Inverte o sinal do topo da pilha de operando do tipo double. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dremFunction}{drem\+Function}
+\item 
+class \hyperlink{classInstruction_1_1dreturnFunction}{dreturn\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna um double do metodo. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dstore__0Function}{dstore\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um double no indice 0 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dstore__1Function}{dstore\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um double no indice 1 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dstore__2Function}{dstore\+\_\+2\+Function}
+\item 
+class \hyperlink{classInstruction_1_1dstore__3Function}{dstore\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um double no indice 3 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dstoreFunction}{dstore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um double no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dsubFunction}{dsub\+Function}
+\begin{DoxyCompactList}\small\item\em Subtrai dois doubles. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dup2__x1Function}{dup2\+\_\+x1\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha dois topos da pilha, os duplica, os coloca abaixo do novo topo e os empilha novamente. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dup2__x2Function}{dup2\+\_\+x2\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha dois topos da pilha, os duplica, os colocam 2 elementos abaixo do novo topo e os empilham novamente. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dup2Function}{dup2\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha os dois elementos do topo da pilha, os duplica e os coloca novamente na pilha de operandos. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dup__x1Function}{dup\+\_\+x1\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha o topo da pilha, o duplica, o coloca abaixo do novo topo e o empilha novamente. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dup__x2Function}{dup\+\_\+x2\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha o topo da pilha, o duplica, o coloca 2 elementos abaixo do novo topo e o empilha novamente. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1dupFunction}{dup\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha um elemento do topo da pilha de operandos e o guarda duas vezes na mesma. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1f2dFunction}{f2d\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um float para um tipo double. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1f2iFunction}{f2i\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um float para um tipo inteiro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1f2lFunction}{f2l\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um float para um tipo long. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1faddFunction}{fadd\+Function}
+\begin{DoxyCompactList}\small\item\em Soma dois floats. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1faloadFunction}{faload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fastoreFunction}{fastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fcmpgFunction}{fcmpg\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois elementos do topo da pilha de operandos do tipo float e empilha 1 caso algum seja NaN. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fcmplFunction}{fcmpl\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois elementos do topo da pilha de operandos do tipo float e empilha -\/1 no topo caso algum seja NaN. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fconst__0Function}{fconst\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 0.\+0 do tipo float na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fconst__1Function}{fconst\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 1.\+0 do tipo float na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fconst__2Function}{fconst\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 2.\+0 do tipo float na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fdivFunction}{fdiv\+Function}
+\begin{DoxyCompactList}\small\item\em Divide dois floats. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fload__0Function}{fload\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float do vetor de variaveis locais no index 0. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fload__1Function}{fload\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float do vetor de variaveis locais no index 1. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fload__2Function}{fload\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float do vetor de variaveis locais no index 2. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fload__3Function}{fload\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float do vetor de variaveis locais no index 3. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1floadFunction}{fload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um float do vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fmulFunction}{fmul\+Function}
+\begin{DoxyCompactList}\small\item\em Multiplica dois floats. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fnegFunction}{fneg\+Function}
+\begin{DoxyCompactList}\small\item\em Inverte o sinal do topo da pilha de operando do tipo float. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fremFunction}{frem\+Function}
+\item 
+class \hyperlink{classInstruction_1_1freturnFunction}{freturn\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna um float do metodo. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fstore__0Function}{fstore\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float no indice 0 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fstore__1Function}{fstore\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float no indice 1 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fstore__2Function}{fstore\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float no indice 2 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fstore__3Function}{fstore\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float no indice 3 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fstoreFunction}{fstore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um float no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1fsubFunction}{fsub\+Function}
+\begin{DoxyCompactList}\small\item\em Subtrai dois floats. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1getBytesCount}{get\+Bytes\+Count}
+\begin{DoxyCompactList}\small\item\em Seta o bytes\+Count recebido no parametro para o bytes\+Count da instancia. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1getfieldFunction}{getfield\+Function}
+\begin{DoxyCompactList}\small\item\em Recupera o campo estatico da classe. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1getMnemonic}{get\+Mnemonic}
+\begin{DoxyCompactList}\small\item\em Obtem o mnemonico da instancia. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1getstaticFunction}{getstatic\+Function}
+\begin{DoxyCompactList}\small\item\em Recupera o campo estatico. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1goto__wFunction}{goto\+\_\+w\+Function}
+\begin{DoxyCompactList}\small\item\em Salta pra branch sempre. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1gotoOpFunction}{goto\+Op\+Function}
+\begin{DoxyCompactList}\small\item\em Concatena os bits e pula para o endereco encontrado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2bFunction}{i2b\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um tipo byte. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2cFunction}{i2c\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um char. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2dFunction}{i2d\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um tipo double. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2fFunction}{i2f\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um tipo float. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2lFunction}{i2l\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um tipo long. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1i2sFunction}{i2s\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um inteiro para um tipo short. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iaddFunction}{iadd\+Function}
+\begin{DoxyCompactList}\small\item\em Soma dois inteiros. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ialoadFunction}{iaload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma inteiro de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iandFunction}{iand\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}e\textquotesingle{} nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iastoreFunction}{iastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__0Function}{iconst\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 0 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__1Function}{iconst\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 1 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__2Function}{iconst\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 2 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__3Function}{iconst\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 3 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__4Function}{iconst\+\_\+4\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 4 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__5Function}{iconst\+\_\+5\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 5 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iconst__m1Function}{iconst\+\_\+m1\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante -\/1 do tipo inteiro na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1idivFunction}{idiv\+Function}
+\begin{DoxyCompactList}\small\item\em Divide dois inteiros. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__acmpeqFunction}{if\+\_\+acmpeq\+Function}
+\begin{DoxyCompactList}\small\item\em Compara duas referencias, onde a primeira deve ser igual a segunda, se verdadeiro pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__acmpneFunction}{if\+\_\+acmpne\+Function}
+\begin{DoxyCompactList}\small\item\em Compara duas referencias, onde a primeira deve ser não igual a segunda, se verdadeiro pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpeqFunction}{if\+\_\+icmpeq\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro deve ser igual o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpgeFunction}{if\+\_\+icmpge\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro valor deve ser menor ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpgtFunction}{if\+\_\+icmpgt\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro valor deve ser maior que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpleFunction}{if\+\_\+icmple\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro valor deve ser maior ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpltFunction}{if\+\_\+icmplt\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro valor deve ser menor que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1if__icmpneFunction}{if\+\_\+icmpne\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro nao deve ser igual o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifeqFunction}{ifeq\+Function}
+\begin{DoxyCompactList}\small\item\em Compara se dois inteiros sao iguais e se forem pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifgeFunction}{ifge\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro deve ser maior ou igual que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifgtFunction}{ifgt\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro deve ser maior que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifleFunction}{ifle\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro deve ser menor que o segundo, se verdadeiro,pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifltFunction}{iflt\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois inteiros onde o primeiro deve ser menor do que que o segundo, se verdadeiro, pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifneFunction}{ifne\+Function}
+\begin{DoxyCompactList}\small\item\em Compara se dois inteiros nao sao iguais e se forem pula para o endereco calculado entre os dois bytes. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifnonnullFunction}{ifnonnull\+Function}
+\begin{DoxyCompactList}\small\item\em Salta para branch se a referencia e nao nula. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ifnullFunction}{ifnull\+Function}
+\begin{DoxyCompactList}\small\item\em Salta para branch se a referencia e nula. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iincFunction}{iinc\+Function}
+\begin{DoxyCompactList}\small\item\em Incrementa o inteiro no topo da pilha. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iload__0Function}{iload\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um inteiro do vetor de variaveis locais no index 0. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iload__1Function}{iload\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um inteiro do vetor de variaveis locais no index 1. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iload__2Function}{iload\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um inteiro do vetor de variaveis locais no index 2. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iload__3Function}{iload\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um inteiro do vetor de variaveis locais no index 3. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iloadFunction}{iload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um inteiro do vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1imulFunction}{imul\+Function}
+\begin{DoxyCompactList}\small\item\em Multiplica dois inteiros. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1inegFunction}{ineg\+Function}
+\begin{DoxyCompactList}\small\item\em Inverte o sinal do topo da pilha de operando do tipo inteiro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1instanceofFunction}{instanceof\+Function}
+\begin{DoxyCompactList}\small\item\em Determina se o objeto e do tipo dado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1invokedynamicFunction}{invokedynamic\+Function}
+\begin{DoxyCompactList}\small\item\em Invoca um metodo dinamico. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1invokeinterfaceFunction}{invokeinterface\+Function}
+\begin{DoxyCompactList}\small\item\em Invoca um metodo da interface. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1invokespecialFunction}{invokespecial\+Function}
+\begin{DoxyCompactList}\small\item\em Invoca metodo de inicializacao da instancia como privado, invoca metodos da superclasse e da classe atual. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1invokestaticFunction}{invokestatic\+Function}
+\begin{DoxyCompactList}\small\item\em Invoca um metodo de uma classe estatica. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1invokevirtualFunction}{invokevirtual\+Function}
+\begin{DoxyCompactList}\small\item\em Invoca um metodo baseado na classe objeto. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iorFunction}{ior\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}ou\textquotesingle{} nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iremFunction}{irem\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna o resto de dois numeors inteiros. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ireturnFunction}{ireturn\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna um inteiro do metodo. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ishlFunction}{ishl\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a esquerda o topo (desde que seja do tipo inteiro) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ishrFunction}{ishr\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a direita o topo (desde que seja do tipo inteiro) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1istore__0Function}{istore\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro no indice 0 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1istore__1Function}{istore\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro no indice 1 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1istore__2Function}{istore\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro no indice 2 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1istore__3Function}{istore\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro no indice 3 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1istoreFunction}{istore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um inteiro no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1isubFunction}{isub\+Function}
+\begin{DoxyCompactList}\small\item\em Subtrai dois inteiros. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1iushrFunction}{iushr\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a direita o topo (desde que seja do tipo inteiro sem sinal) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ixorFunction}{ixor\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}ou exclusivo\textquotesingle{} nos dois elementos inteiros do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1jsr__wFunction}{jsr\+\_\+w\+Function}
+\begin{DoxyCompactList}\small\item\em Salta para branch sempre (wide index) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1jsrFunction}{jsr\+Function}
+\begin{DoxyCompactList}\small\item\em Pula para uma subrotina. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1l2dFunction}{l2d\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um long para um tipo double. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1l2fFunction}{l2f\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um long para um tipo float. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1l2iFunction}{l2i\+Function}
+\begin{DoxyCompactList}\small\item\em Converte um long para um tipo inteiro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1laddFunction}{ladd\+Function}
+\begin{DoxyCompactList}\small\item\em Soma dois longs. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1laloadFunction}{laload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega uma long de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1landFunction}{land\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}e\textquotesingle{} nos dois elementos do tipo long do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lastoreFunction}{lastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lcmpFunction}{lcmp\+Function}
+\begin{DoxyCompactList}\small\item\em Compara dois elementos do topo da pilha de operandos do tipo long. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lconst__0Function}{lconst\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 0 do tipo long na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lconst__1Function}{lconst\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em coloca um constante 1 do tipo long na pilha de operandos \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ldc2__wFunction}{ldc2\+\_\+w\+Function}
+\begin{DoxyCompactList}\small\item\em adiciona um item do constant\+Pool na pilha de operandos e o index do ldc deve ser um index valido do tipo long ou double no constant\+Pool atual \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ldc__wFunction}{ldc\+\_\+w\+Function}
+\begin{DoxyCompactList}\small\item\em adiciona um item do constant\+Pool na pilha de operandos, porem o index vem com wide \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ldcFunction}{ldc\+Function}
+\begin{DoxyCompactList}\small\item\em adiciona um item do constant\+Pool na pilha de operandos e o index do ldc deve ser um index valido no constant\+Pool atual \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1ldivOpFunction}{ldiv\+Op\+Function}
+\begin{DoxyCompactList}\small\item\em Divide dois longs. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lload__0Function}{lload\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um long do vetor de variaveis locais no index 0. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lload__1Function}{lload\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um long do vetor de variaveis locais no index 1. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lload__2Function}{lload\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um long do vetor de variaveis locais no index 2. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lload__3Function}{lload\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um long do vetor de variaveis locais no index 3. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lloadFunction}{lload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um long do vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lmulFunction}{lmul\+Function}
+\begin{DoxyCompactList}\small\item\em Multiplica dois longs. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lnegFunction}{lneg\+Function}
+\begin{DoxyCompactList}\small\item\em Inverte o sinal do topo da pilha de operando do tipo long. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lookupswitchFunction}{lookupswitch\+Function}
+\begin{DoxyCompactList}\small\item\em Calcula atraves do npairs os indexs de cada case e executa os pulos partindo de um offset somado ao endereco base. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lorFunction}{lor\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}ou\textquotesingle{} nos dois elementos do tipo long do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lremFunction}{lrem\+Function}
+\item 
+class \hyperlink{classInstruction_1_1lreturnFunction}{lreturn\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna um long do metodo. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lshlFunction}{lshl\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a esquerda o topo (desde que seja do tipo long) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lshrFunction}{lshr\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a direita o topo (desde que seja do tipo long) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lstore__0Function}{lstore\+\_\+0\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long no indice 0 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lstore__1Function}{lstore\+\_\+1\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long no indice 1 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lstore__2Function}{lstore\+\_\+2\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long no indice 2 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lstore__3Function}{lstore\+\_\+3\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long no indice 3 no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lstoreFunction}{lstore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um long no vetor de variaveis locais. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lsubFunction}{lsub\+Function}
+\begin{DoxyCompactList}\small\item\em Subtrai dois longs. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lushrFunction}{lushr\+Function}
+\begin{DoxyCompactList}\small\item\em Puxa para a direita o topo (desde que seja do tipo long sem sinal) \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1lxorFunction}{lxor\+Function}
+\begin{DoxyCompactList}\small\item\em Executa uma operacao logica \textquotesingle{}ou exclusivos\textquotesingle{} nos dois elementos long do topo da pilha de operandos e empilha o resultado. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1monitorenterFunction}{monitorenter\+Function}
+\begin{DoxyCompactList}\small\item\em Entra no moitor para o objeto. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1monitorexitFunction}{monitorexit\+Function}
+\begin{DoxyCompactList}\small\item\em Sai do monitor para o o objeto. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1multianewarrayFunction}{multianewarray\+Function}
+\begin{DoxyCompactList}\small\item\em Cria um array multidimensional. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1newarrayFunction}{newarray\+Function}
+\begin{DoxyCompactList}\small\item\em Cria um novo array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1newOpFunction}{new\+Op\+Function}
+\begin{DoxyCompactList}\small\item\em Cria um novo objeto. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1nopFunction}{nop\+Function}
+\begin{DoxyCompactList}\small\item\em Nao faz nada, apenas incrementa o pc atual. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1pop2Function}{pop2\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha um ou dois operandos do topo da pilha de operandos. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1popFunction}{pop\+Function}
+\begin{DoxyCompactList}\small\item\em Desempilha o valor do topo da pilha de operandos. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1putfieldFunction}{putfield\+Function}
+\begin{DoxyCompactList}\small\item\em Seta o campo no objeto. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1putstaticFunction}{putstatic\+Function}
+\begin{DoxyCompactList}\small\item\em Seta o campo estatico. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1resolveField}{resolve\+Field}
+\begin{DoxyCompactList}\small\item\em Resolve as entradas do vetores de Fields, Interfaces para as Classes e Superclasses. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1retFunction}{ret\+Function}
+\begin{DoxyCompactList}\small\item\em Retorna o valor de uma subrotina. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1returnOpFunction}{return\+Op\+Function}
+\begin{DoxyCompactList}\small\item\em Sinaliza o final do metodo com um retorno void. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1saloadFunction}{saload\+Function}
+\begin{DoxyCompactList}\small\item\em Carrega um short de um array. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1sastoreFunction}{sastore\+Function}
+\begin{DoxyCompactList}\small\item\em Guarda um short em um vetor. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1setBytesCount}{set\+Bytes\+Count}
+\begin{DoxyCompactList}\small\item\em Seta o bytes\+Count recebido no parametro para o bytes\+Count da instancia. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1setClassLoader}{set\+Class\+Loader}
+\begin{DoxyCompactList}\small\item\em Seta o class\+Loader da classe como o class\+Loader lido e passado por parâmetro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1setMnemonic}{set\+Mnemonic}
+\begin{DoxyCompactList}\small\item\em Seta o mnemonico recebido no parametro para o mnemonico da instancia. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1sipushFunction}{sipush\+Function}
+\begin{DoxyCompactList}\small\item\em Os bytes byte1 e byte2 sem sinal sao concatenados com extensao de sinal e adicionados na pilha de operandos como um inteiro. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1swapFunction}{swap\+Function}
+\begin{DoxyCompactList}\small\item\em Troca de lugar os dois elementos mais ao topo da pilha de operandos. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1tableswitchFunction}{tableswitch\+Function}
+\begin{DoxyCompactList}\small\item\em Executa High -\/ Low e define o range dos cases do switch, se nenhum caso passar o pulo é feito para o default. \end{DoxyCompactList}\item 
+class \hyperlink{classInstruction_1_1wideFunction}{wide\+Function}
+\begin{DoxyCompactList}\small\item\em Extende o index da variavel local atraves de bytes adicionais. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{classInstruction_aebd15229c1651af49dcb203707e7a2d5}{Instruction} ()
+\begin{DoxyCompactList}\small\item\em Construtor da classe \hyperlink{classInstruction}{Instruction}. \end{DoxyCompactList}\item 
 {\bfseries Instruction} (string, uint32\+\_\+t, uint32\+\_\+t($\ast$)(\hyperlink{classFrame}{Frame} $\ast$))\hypertarget{classInstruction_a796b0697656d6d1230d94f942680245b}{}\label{classInstruction_a796b0697656d6d1230d94f942680245b}
 
 \item 
@@ -1308,8 +1728,29 @@ static const uint8\+\_\+t {\bfseries T\+\_\+\+L\+O\+NG} = 11\hypertarget{classIn
 \subsection{Detailed Description}
 Classe que contém a estrutura de uma instrução a ser executada pelo interpretador;. 
 
+\subsection{Constructor \& Destructor Documentation}
+\index{Instruction@{Instruction}!Instruction@{Instruction}}
+\index{Instruction@{Instruction}!Instruction@{Instruction}}
+\subsubsection[{\texorpdfstring{Instruction()}{Instruction()}}]{\setlength{\rightskip}{0pt plus 5cm}Instruction\+::\+Instruction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classInstruction_aebd15229c1651af49dcb203707e7a2d5}{}\label{classInstruction_aebd15229c1651af49dcb203707e7a2d5}
+
+
+Construtor da classe \hyperlink{classInstruction}{Instruction}. 
+
+Sobrecarga do método construtor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
 /home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/hpp/\hyperlink{Instruction_8hpp}{Instruction.\+hpp}\item 
-/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/Instruction.\+cpp\item 
+/home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/\hyperlink{Instruction_8cpp}{Instruction.\+cpp}\item 
 /home/arturhbs/\+Documentos/unb/8 semestre/\+S\+B/\+J\+V\+M/src/cpp/\hyperlink{InstructionSet_8cpp}{Instruction\+Set.\+cpp}\end{DoxyCompactItemize}

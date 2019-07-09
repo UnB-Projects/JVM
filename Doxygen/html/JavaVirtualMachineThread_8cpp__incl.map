@@ -1,0 +1,8 @@
+<map id="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/JavaVirtualMachineThread.cpp" name="/home/arturhbs/Documentos/unb/8 semestre/SB/JVM/src/cpp/JavaVirtualMachineThread.cpp">
+<area shape="rect" id="node2" href="$JavaVirtualMachineThread_8hpp.html" title="Contém toda a estrutura da manipulação da pilha de frame;. " alt="" coords="45,109,218,151"/>
+<area shape="rect" id="node4" href="$Frame_8hpp.html" title="Objetivo de criar um frame para a execução do interpretador. " alt="" coords="135,199,219,225"/>
+<area shape="rect" id="node7" href="$CPInfo_8hpp_source.html" title="CPInfo.hpp" alt="" coords="477,423,565,449"/>
+<area shape="rect" id="node14" href="$MethodInfo_8hpp.html" title="Contém o armazenamento das informações do Method. " alt="" coords="278,273,390,300"/>
+<area shape="rect" id="node13" href="$ByteReader_8hpp.html" title="Declarações das funções do ByteReader para leitura dos bytes no arquivo .class. " alt="" coords="761,497,877,524"/>
+<area shape="rect" id="node15" href="$AttributeInfo_8hpp.html" title="Declarações das funções do AttributeInfo para tratamento dos atributos do arquivo ..." alt="" coords="461,348,580,375"/>
+</map>
